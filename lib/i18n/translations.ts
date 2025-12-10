@@ -1,0 +1,182 @@
+export type Language = 'ta' | 'en';
+
+export const translations = {
+    en: {
+        nav: {
+            home: "Home",
+            browse: "Browse",
+            bookmarks: "Bookmarks",
+            about: "About",
+            search: "Search Thirukkural...",
+        },
+        home: {
+            title: "Thirukkural Explorer",
+            subtitle: "Ulaga Podhumarai",
+            description: "Discover the timeless wisdom of Saint Thiruvalluvar. Explore 1330 couplets on virtue, wealth, and love.",
+            browseBtn: "Browse All Kurals",
+            randomBtn: "Random Kural",
+            bookmarksBtn: "My Bookmarks",
+            featured: "Featured Kurals",
+            viewAll: "View all",
+            dailyKural: "Kural of the Day",
+        },
+        browse: {
+            title: "Browse Kurals",
+            subtitle: "Explore the Thirukkural by section, chapter, or topic.",
+            paal: "Paal",
+            iyal: "Iyal",
+            adhigaram: "Adhigaram",
+            allPaal: "All Paal",
+            allIyal: "All Iyal",
+            allAdhigaram: "All Adhigaram",
+            clearFilters: "Clear Filters",
+            showing: "Showing",
+            results: "results",
+            noResults: "No kurals found matching your filters.",
+            previous: "Previous",
+            next: "Next",
+            page: "Page",
+            of: "of"
+        },
+        bookmarks: {
+            title: "Your Bookmarks",
+            emptyTitle: "No Bookmarks Yet",
+            emptyMsg: "You haven't bookmarked any Kurals yet. Browse the collection and save your favorites.",
+            startBrowsing: "Start Browsing",
+            savedCount: "saved Kurals"
+        },
+        likes: {
+            title: "Liked Kurals",
+            emptyTitle: "No Likes Yet",
+            emptyMsg: "You haven't liked any Kurals yet. Show some love!",
+            startBrowsing: "Start Browsing",
+            savedCount: "liked Kurals"
+        },
+        kural: {
+            number: "Kural",
+            like: "Like",
+            liked: "Liked",
+            save: "Save",
+            saved: "Saved",
+            share: "Share",
+            meaning: "Meaning",
+            explanation: "Explanation",
+            tamil: "Tamil",
+            english: "English",
+            vilakam: "Vilakam (Tamil Meaning)",
+            mk: "Kalaignar Urai",
+            mv: "Mu. Varadarajan Urai",
+            sp: "Solomon Pappaiah Urai"
+        },
+        about: {
+            title: "About Thirukkural",
+            description: "A masterpiece of Tamil literature.",
+            thiruvalluvar: "Thiruvalluvar",
+            thiruvalluvarDesc: "Thirukkural is traditionally attributed to Thiruvalluvar, a poet and philosopher. It is considered one of the greatest works on ethics and morality.",
+            structure: "Structure",
+            aram: "Aram (Virtue)",
+            aramDesc: "Deals with moral values of an individual.",
+            porul: "Porul (Wealth)",
+            porulDesc: "Deals with socio-economic values, polity, society and administration.",
+            inbam: "Inbam (Love)",
+            inbamDesc: "Deals with psychological values and love.",
+            chapters: "Chapters",
+            appTitle: "About This App",
+            appDesc: "This explorer is built with Next.js, Tailwind CSS, and TypeScript."
+        },
+        footer: {
+            text: "Inspired by Thiruvalluvar • Data stored locally in your browser",
+            privacy: "Privacy",
+            terms: "Terms"
+        }
+    },
+    ta: {
+        nav: {
+            home: "முகப்பு",
+            browse: "உலாவு",
+            bookmarks: "குறிப்புகள்",
+            about: "பற்றி",
+            search: "திருக்குறளைத் தேடுக...",
+        },
+        home: {
+            title: "திருக்குறள்",
+            subtitle: "உலகப் பொதுமறை",
+            description: "திருவள்ளுவரின் காலத்தால் அழியாத ஞானத்தைக் கண்டறியவும். அறம், பொருள், இன்பம் ஆகிய 1330 குறள்களை ஆராயுங்கள்.",
+            browseBtn: "அனைத்து குறள்கள்",
+            randomBtn: "தோரய குறள்",
+            bookmarksBtn: "என் குறிப்புகள்",
+            featured: "சிறப்புக் குறள்கள்",
+            viewAll: "அனைத்தையும் பார்",
+            dailyKural: "இன்றைய குறள்",
+        },
+        browse: {
+            title: "குறள்களை உலாவுக",
+            subtitle: "பால், இயல் அல்லது அதிகாரம் வாரியாக திருக்குறளை ஆராயுங்கள்.",
+            paal: "பால்",
+            iyal: "இயல்",
+            adhigaram: "அதிகாரம்",
+            allPaal: "அனைத்து பால்கள்",
+            allIyal: "அனைத்து இயல்கள்",
+            allAdhigaram: "அனைத்து அதிகாரங்கள்",
+            clearFilters: "வடிகட்டிகளை அழி",
+            showing: "காண்பிக்கப்படுவது",
+            results: "முடிவுகள்",
+            noResults: "உங்கள் தேடலுக்கு குறள்கள் இல்லை.",
+            previous: "முந்தைய",
+            next: "அடுத்த",
+            page: "பக்கம்",
+            of: "இல்"
+        },
+        bookmarks: {
+            title: "உங்கள் குறிப்புகள்",
+            emptyTitle: "க்குறிப்புகள் இல்லை",
+            emptyMsg: "நீங்கள் இன்னும் எந்த குறளையும் குறிக்கவில்லை.",
+            startBrowsing: "தொடங்கவும்",
+            savedCount: "சேமிக்கப்பட்ட குறள்கள்"
+        },
+        likes: {
+            title: "விருப்பங்கள்",
+            emptyTitle: "விருப்பங்கள் இல்லை",
+            emptyMsg: "நீங்கள் இன்னும் எந்த குறளையும் விரும்பவில்லை.",
+            startBrowsing: "தொடங்கவும்",
+            savedCount: "விரும்பிய குறள்கள்"
+        },
+        kural: {
+            number: "குறள்",
+            like: "விருப்பு",
+            liked: "விரும்பப்பட்டது",
+            save: "சேமி",
+            saved: "சேமிக்கப்பட்டது",
+            share: "பகிர்",
+            meaning: "பொருள்",
+            explanation: "விளக்கம்",
+            tamil: "தமிழ்",
+            english: "ஆங்கிலம்",
+            vilakam: "விளக்கம் (தமிழ் பொருள்)",
+            mk: "கலைஞர் உரை",
+            mv: "மு. வரதராசனார் உரை",
+            sp: "சாலமன் பாப்பையா உரை"
+        },
+        about: {
+            title: "திருக்குறள் பற்றி",
+            description: "தமிழ் இலக்கியத்தின் தலைசிறந்த படைப்பு.",
+            thiruvalluvar: "திருவள்ளுவர்",
+            thiruvalluvarDesc: "திருக்குறள் திருவள்ளுவரால் இயற்றப்பட்டது. இது அறம், நீதி மற்றும் பண்புநலன்களைக் கூறும் உலகப் பொதுமறை.",
+            structure: "அமைப்பு",
+            aram: "அறத்துப்பால்",
+            aramDesc: "தனிமனித அறநெறிகளைக் கூறுகிறது.",
+            porul: "பொருட்பால்",
+            porulDesc: "சமூகம், அரசியல் மற்றும் பொருளாதாரம் பற்றிப் பேசுகிறது.",
+            inbam: "காமத்துப்பால்",
+            inbamDesc: "காதல் மற்றும் இல்லற இன்பத்தைப் பற்றிக் கூறுகிறது.",
+            chapters: "அதிகாரங்கள்",
+            appTitle: "இச்செயலி பற்றி",
+            appDesc: "இது Next.js மற்றும் Tailwind CSS கொண்டு உருவாக்கப்பட்டது."
+        },
+        footer: {
+            text: "திருவள்ளுவரால் ஈர்க்கப்பட்டது • தரவு உங்கள் உலாவியில் சேமிக்கப்படுகிறது",
+            privacy: "தனியுரிமை",
+            terms: "விதிமுறைகள்"
+        }
+    }
+};
