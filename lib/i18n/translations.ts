@@ -8,6 +8,7 @@ export const translations = {
             bookmarks: "Bookmarks",
             about: "About",
             search: "Search Thirukkural...",
+            kurals: "Kurals",
         },
         home: {
             title: "Thirukkural Explorer",
@@ -97,6 +98,7 @@ export const translations = {
             bookmarks: "குறிப்புகள்",
             about: "பற்றி",
             search: "திருக்குறளைத் தேடுக...",
+            kurals: "குறள்கள்",
         },
         home: {
             title: "திருக்குறள்",

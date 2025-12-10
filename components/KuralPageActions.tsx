@@ -37,7 +37,7 @@ export default function KuralPageActions({ kural }: KuralPageActionsProps) {
     return (
         <div className="flex items-center gap-3 relative">
             <button
-                onClick={() => toggleLike(kural)}
+                onClick={() => toggleLike(kural.number)}
                 className={`p-2.5 rounded-full transition-all border ${liked ? 'text-red-500 bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-900' : 'text-gray-400 bg-white dark:bg-black/20 border-gray-200 dark:border-white/10 hover:text-red-500 hover:border-red-200'}`}
                 title={liked ? t.kural.liked : t.kural.like}
             >
@@ -46,7 +46,7 @@ export default function KuralPageActions({ kural }: KuralPageActionsProps) {
                 </svg>
             </button>
             <button
-                onClick={() => toggleBookmark(kural)}
+                onClick={() => toggleBookmark(kural.number)}
                 className={`p-2.5 rounded-full transition-all border ${bookmarked ? 'text-blue-500 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-900' : 'text-gray-400 bg-white dark:bg-black/20 border-gray-200 dark:border-white/10 hover:text-blue-500 hover:border-blue-200'}`}
                 title={bookmarked ? t.kural.saved : t.kural.save}
             >
