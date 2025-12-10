@@ -79,7 +79,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="w-full max-w-5xl mx-auto relative z-10">
+        <div className="w-full max-w-5xl mx-auto relative z-20">
           <SearchBar variant="large" />
         </div>
 
