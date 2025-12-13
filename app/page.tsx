@@ -34,17 +34,21 @@ export default function Home() {
         }
         setRandomKurals(random);
 
-        // Daily Kural Logic (Seeded by date)
-        const today = new Date();
-        const dateStr = today.toISOString().split('T')[0];
+        // Random Kural Logic (Seeded by 8-hour interval)
+        const now = Date.now();
+        const intervalMs = 8 * 60 * 60 * 1000;
+        const timeBucket = Math.floor(now / intervalMs);
+
+        // Use bucket as seed for randomness
+        const seedStr = timeBucket.toString();
         let hash = 0;
-        for (let i = 0; i < dateStr.length; i++) {
-          hash = ((hash << 5) - hash) + dateStr.charCodeAt(i);
+        for (let i = 0; i < seedStr.length; i++) {
+          hash = ((hash << 5) - hash) + seedStr.charCodeAt(i);
           hash |= 0;
         }
         const positiveHash = Math.abs(hash);
-        const dailyIndex = positiveHash % all.length;
-        setDailyKural(all[dailyIndex]);
+        const index = positiveHash % all.length;
+        setDailyKural(all[index]);
       } catch (e) {
         console.error(e);
       }
@@ -88,7 +92,7 @@ export default function Home() {
 
 
             <div className="flex flex-col items-center gap-4 text-center px-4 mt-6 relative">
-              <div className="flex items-start justify-center gap-4 relative z-10 transition-transform hover:scale-[1.02] duration-500 ease-out cursor-default">
+              <Link href={`/kural/${dailyKural.number}`} className="flex items-start justify-center gap-4 relative z-10 transition-transform hover:scale-[1.02] duration-500 ease-out cursor-pointer">
                 <span className="font-serif text-8xl text-violet-400/40 dark:text-violet-500/40 -mt-4 select-none">
                   &ldquo;
                 </span>
@@ -103,7 +107,7 @@ export default function Home() {
                 <span className="font-serif text-8xl text-violet-400/40 dark:text-violet-500/40 mt-auto select-none">
                   &rdquo;
                 </span>
-              </div>
+              </Link>
 
               {/* Action Buttons & Badge Container */}
               <div className="relative z-10 flex items-center justify-center gap-6 mt-0">
