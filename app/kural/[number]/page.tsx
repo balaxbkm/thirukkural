@@ -25,6 +25,19 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
 
     const kuralNumber = kural.number;
 
+    const [aiExplanation, setAiExplanation] = useState<string | null>(null);
+    const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+    const handleAskAI = () => {
+        setIsAnalyzing(true);
+        // Simulate AI Analysis
+        setTimeout(() => {
+            const simulatedResponse = `**AI Analysis for Kural ${kural.number}:**\n\nThis couplet belongs to the **${kural.paal}** (Division of ${kural.paal === 'Arathuppaal' ? 'Virtue' : kural.paal === 'Porutpaal' ? 'Wealth' : 'Love'}) and specifically the **${kural.adhigaram}** chapter.\n\n**Core Insight:**\nThiruvalluvar helps us understand that "${kural.meaning_en}"\n\n**Modern Context:**\nIn today's fast-paced world, this wisdom reminds us to embody the principles of ${kural.adhigaram} to lead a balanced and fulfilling life.`;
+            setAiExplanation(simulatedResponse);
+            setIsAnalyzing(false);
+        }, 2000);
+    };
+
     return (
         <div className="max-w-4xl mx-auto space-y-8 pb-20 animate-in fade-in slide-in-from-bottom-4 duration-700">
 
@@ -149,6 +162,55 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                             <p className="text-lg text-gray-700 dark:text-gray-200 leading-loose italic">
                                 &ldquo;{kural.meaning_en}&rdquo;
                             </p>
+                        </div>
+
+                        {/* AI Explanation Section */}
+                        <div className="space-y-4 pt-6 border-t border-gray-200 dark:border-white/10">
+                            <h2 className="text-lg font-semibold text-teal-600 dark:text-teal-400 flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                                    <path d="M12 2a10 10 0 1 0 10 10H12V2z" />
+                                    <path d="M12 12 2.1 12a10.1 10.1 0 0 0 16.9 3" />
+                                    <path d="M22 12h-10" />
+                                </svg>
+                                {t.kural.aiExplanation}
+                            </h2>
+
+                            {!aiExplanation && !isAnalyzing && (
+                                <button
+                                    onClick={handleAskAI}
+                                    className="px-6 py-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white rounded-xl font-medium shadow-lg shadow-teal-500/20 hover:shadow-teal-500/40 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                                        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                                    </svg>
+                                    {t.kural.askAI}
+                                </button>
+                            )}
+
+                            {isAnalyzing && (
+                                <div className="flex items-center gap-3 text-teal-600 dark:text-teal-400 animate-pulse">
+                                    <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                                    <span className="font-medium">{t.kural.analyzing}</span>
+                                </div>
+                            )}
+
+                            {aiExplanation && (
+                                <div className="p-6 rounded-2xl bg-teal-50/50 dark:bg-teal-900/10 border border-teal-100 dark:border-teal-900/30 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                                    <div className="prose prose-teal dark:prose-invert max-w-none">
+                                        <p className="whitespace-pre-wrap text-lg text-gray-700 dark:text-gray-200 leading-relaxed font-sans">
+                                            {aiExplanation}
+                                        </p>
+                                    </div>
+                                    <div className="mt-4 flex justify-end">
+                                        <button
+                                            onClick={() => setAiExplanation(null)}
+                                            className="text-xs text-teal-600 dark:text-teal-400 hover:underline opacity-60 hover:opacity-100 transition-opacity"
+                                        >
+                                            Reset
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                     </div>

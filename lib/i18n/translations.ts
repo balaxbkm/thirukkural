@@ -67,7 +67,10 @@ export const translations = {
             vilakam: "Vilakam (Tamil Meaning)",
             mk: "Kalaignar Urai",
             mv: "Mu. Varadarajan Urai",
-            sp: "Solomon Pappaiah Urai"
+            sp: "Solomon Pappaiah Urai",
+            aiExplanation: "AI Explanation",
+            askAI: "Ask AI for detailed explanation",
+            analyzing: "AI is analyzing..."
         },
         about: {
             title: "About Thirukkural",
@@ -157,7 +160,10 @@ export const translations = {
             vilakam: "விளக்கம் (தமிழ் பொருள்)",
             mk: "கலைஞர் உரை",
             mv: "மு. வரதராசனார் உரை",
-            sp: "சாலமன் பாப்பையா உரை"
+            sp: "சாலமன் பாப்பையா உரை",
+            aiExplanation: "செயற்கை நுண்ணறிவு விளக்கம்",
+            askAI: "AI விளக்கம் கேட்க",
+            analyzing: "AI ஆய்வு செய்கிறது..."
         },
         about: {
             title: "திருக்குறள் பற்றி",
