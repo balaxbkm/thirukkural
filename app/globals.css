@@ -116,3 +116,10 @@ body {
   scrollbar-width: none;
   /* Firefox */
 }
+
+/* Force pointer cursor for all interactive elements */
+a,
+button,
+[role="button"] {
+  cursor: pointer;
+}

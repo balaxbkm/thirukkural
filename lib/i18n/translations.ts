@@ -46,17 +46,9 @@ export const translations = {
             startBrowsing: "Start Browsing",
             savedCount: "saved Kurals"
         },
-        likes: {
-            title: "Liked Kurals",
-            emptyTitle: "No Likes Yet",
-            emptyMsg: "You haven't liked any Kurals yet. Show some love!",
-            startBrowsing: "Start Browsing",
-            savedCount: "liked Kurals"
-        },
+
         kural: {
             number: "Kural",
-            like: "Like",
-            liked: "Liked",
             save: "Save",
             saved: "Saved",
             share: "Share",
@@ -64,6 +56,7 @@ export const translations = {
             explanation: "Explanation",
             tamil: "Tamil",
             english: "English",
+            englishMeaning: "Meaning in English",
             vilakam: "Vilakam (Tamil Meaning)",
             mk: "Kalaignar Urai",
             mv: "Mu. Varadarajan Urai",
@@ -139,17 +132,9 @@ export const translations = {
             startBrowsing: "தொடங்கவும்",
             savedCount: "சேமிக்கப்பட்ட குறள்கள்"
         },
-        likes: {
-            title: "விருப்பங்கள்",
-            emptyTitle: "விருப்பங்கள் இல்லை",
-            emptyMsg: "நீங்கள் இன்னும் எந்த குறளையும் விரும்பவில்லை.",
-            startBrowsing: "தொடங்கவும்",
-            savedCount: "விரும்பிய குறள்கள்"
-        },
+
         kural: {
             number: "குறள்",
-            like: "விருப்பு",
-            liked: "விரும்பப்பட்டது",
             save: "சேமி",
             saved: "சேமிக்கப்பட்டது",
             share: "பகிர்",
@@ -157,6 +142,7 @@ export const translations = {
             explanation: "விளக்கம்",
             tamil: "தமிழ்",
             english: "ஆங்கிலம்",
+            englishMeaning: "Meaning in English",
             vilakam: "விளக்கம் (தமிழ் பொருள்)",
             mk: "கலைஞர் உரை",
             mv: "மு. வரதராசனார் உரை",

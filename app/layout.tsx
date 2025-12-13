@@ -32,11 +32,15 @@ export const metadata: Metadata = {
   description: "Explore the timeless wisdom of Thirukkural with a modern glassmorphism design.",
 };
 
-export default function RootLayout({
+import { getPaalAdhigarams } from "@/lib/kural-data";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const adhigaramData = await getPaalAdhigarams();
+
   return (
     <html lang="ta" className={`${outfit.variable} ${muktaMalar.variable} ${oi.variable}`} suppressHydrationWarning>
       <body className="antialiased min-h-screen flex flex-col font-sans selection:bg-blue-500/30" suppressHydrationWarning>
@@ -47,7 +51,7 @@ export default function RootLayout({
               <main className="flex-grow pt-24 px-4 max-w-[1600px] mx-auto w-full">
                 {children}
               </main>
-              <Footer />
+              <Footer adhigaramData={adhigaramData} />
             </ThemeProvider>
           </UserKuralActionsProvider>
         </LanguageProvider>

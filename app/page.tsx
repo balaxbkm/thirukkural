@@ -14,7 +14,7 @@ import KuralCard from "@/components/KuralCard";
 
 export default function Home() {
   const { t } = useLanguage();
-  const { isLiked, toggleLike, isBookmarked, toggleBookmark } = useUserKuralActions();
+  const { isBookmarked, toggleBookmark } = useUserKuralActions();
   const [bookmarkToast, setBookmarkToast] = useState(false);
   const [randomKurals, setRandomKurals] = useState<any[]>([]);
   const [dailyKural, setDailyKural] = useState<any>(null);
@@ -122,27 +122,7 @@ export default function Home() {
               <div className="relative z-10 flex items-center justify-center gap-6 mt-0">
 
                 {/* Like Button */}
-                <button
-                  onClick={() => toggleLike(dailyKural.number)}
-                  className="group p-3 rounded-full bg-white/40 dark:bg-slate-900/40 backdrop-blur-md border border-white/50 dark:border-white/10 shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 hover:border-red-200 dark:hover:border-red-900/50"
-                  aria-label="Like Kural"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill={isLiked(dailyKural.number) ? "currentColor" : "none"}
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className={`w-5 h-5 transition-colors duration-300 ${isLiked(dailyKural.number)
-                      ? "text-red-500"
-                      : "text-gray-500 dark:text-gray-400 group-hover:text-red-500"
-                      }`}
-                  >
-                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                  </svg>
-                </button>
+
 
                 {/* Bookmark Button */}
                 <button

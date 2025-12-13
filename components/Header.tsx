@@ -11,8 +11,8 @@ import { useUserKuralActions } from "@/lib/hooks/useUserKuralActions";
 export default function Header() {
     const pathname = usePathname();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const { t, language, setLanguage } = useLanguage();
-    const { likedKurals, bookmarkedKurals } = useUserKuralActions();
+    const { t, language } = useLanguage();
+    const { bookmarkedKurals } = useUserKuralActions();
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
 
@@ -21,13 +21,7 @@ export default function Header() {
     }, []);
 
     const navLinks = [
-        {
-            name: "Likes", href: "/likes", icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                </svg>
-            )
-        },
+
         {
             name: "Bookmarks", href: "/bookmarks", icon: (
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -37,18 +31,22 @@ export default function Header() {
         },
     ];
 
-    const toggleLanguage = () => {
-        setLanguage(language === 'en' ? 'ta' : 'en');
-    };
+
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-40 glass border-none !rounded-none transition-all duration-300">
+        <header className="fixed top-0 left-0 right-0 z-40 bg-white/70 dark:bg-slate-950/70 backdrop-blur-xl border-b border-white/10 transition-all duration-300">
+            <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent opacity-50"></div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3 group">
-                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-105 transition-transform rotate-3 group-hover:rotate-0">
-                            தி
+                        <div className="relative w-10 h-10 group-hover:scale-110 transition-transform duration-300">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src="/logo.png"
+                                alt="Logo"
+                                className="w-full h-full object-contain drop-shadow-md rounded-lg"
+                            />
                         </div>
                         <span className="hidden sm:block text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200 tracking-tight">
                             {language === 'ta' ? 'திருக்குறள்' : 'Thirukkural Explorer'}
@@ -62,22 +60,22 @@ export default function Header() {
 
                     {/* Desktop Nav */}
                     <div className="hidden md:flex gap-4 items-center">
-                        <nav className="flex gap-3 items-center">
+                        <nav className="flex gap-1 items-center">
                             {navLinks.map((link) => {
-                                const count = link.name === "Likes" ? likedKurals.length : bookmarkedKurals.length;
+                                const count = bookmarkedKurals.length;
                                 return (
                                     <Link
                                         key={link.href}
                                         href={link.href}
-                                        className={`relative p-2.5 rounded-xl transition-all duration-300 group ${pathname === link.href
+                                        className={`relative p-2.5 rounded-full transition-all duration-300 group ${pathname === link.href
                                             ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400"
-                                            : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                                            : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10 hover:text-gray-900 dark:hover:text-white"
                                             }`}
                                         aria-label={link.name}
                                     >
                                         {link.icon}
                                         {count > 0 && (
-                                            <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 text-[9px] font-bold text-white shadow-sm ring-2 ring-white dark:ring-slate-900 group-hover:scale-110 transition-transform">
+                                            <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 text-[9px] font-bold text-white shadow-sm ring-2 ring-white dark:ring-slate-900 group-hover:scale-110 transition-transform">
                                                 {count > 9 ? '9+' : count}
                                             </span>
                                         )}
@@ -86,34 +84,34 @@ export default function Header() {
                             })}
                         </nav>
 
-                        <button
-                            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                            className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                            aria-label="Toggle Theme"
-                        >
-                            {mounted && theme === 'dark' ? (
-                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                                </svg>
-                            ) : (
-                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                                </svg>
-                            )}
-                        </button>
-                        <button
-                            onClick={toggleLanguage}
-                            className="px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                        >
-                            {language === 'en' ? 'தமிழ்' : 'English'}
-                        </button>
+                        {/* Divider */}
+                        <div className="h-6 w-px bg-gray-200 dark:bg-white/10 mx-1" />
+
+                        <div className="flex items-center gap-3">
+                            <button
+                                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                                className="p-2.5 rounded-full bg-gray-100 dark:bg-white/10 text-gray-500 dark:text-amber-400 hover:bg-gray-200 dark:hover:bg-white/20 hover:text-amber-500 transition-all active:scale-95 shadow-sm"
+                                aria-label="Toggle Theme"
+                            >
+                                {mounted && theme === 'dark' ? (
+                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                                    </svg>
+                                ) : (
+                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                                    </svg>
+                                )}
+                            </button>
+
+                        </div>
                     </div>
 
                     {/* Mobile Menu Button */}
                     <div className="flex md:hidden gap-4 items-center">
                         <button
                             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                            className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                            className="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
                             aria-label="Toggle Theme"
                         >
                             {mounted && theme === 'dark' ? (
@@ -126,14 +124,9 @@ export default function Header() {
                                 </svg>
                             )}
                         </button>
+
                         <button
-                            onClick={toggleLanguage}
-                            className="px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                        >
-                            {language === 'en' ? 'தமிழ்' : 'Eng'}
-                        </button>
-                        <button
-                            className="p-2 text-gray-700 dark:text-gray-300 hover:bg-black/5 rounded-lg transition-colors"
+                            className="p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full transition-colors"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             aria-label="Toggle menu"
                         >

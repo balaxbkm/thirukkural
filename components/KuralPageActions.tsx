@@ -11,8 +11,8 @@ interface KuralPageActionsProps {
 
 export default function KuralPageActions({ kural }: KuralPageActionsProps) {
     const { t } = useLanguage();
-    const { isLiked, isBookmarked, toggleLike, toggleBookmark } = useUserKuralActions();
-    const liked = isLiked(kural.number);
+    const { isBookmarked, toggleBookmark } = useUserKuralActions();
+
     const bookmarked = isBookmarked(kural.number);
     const [showToast, setShowToast] = useState(false);
 
@@ -36,15 +36,7 @@ export default function KuralPageActions({ kural }: KuralPageActionsProps) {
 
     return (
         <div className="flex items-center gap-3 relative">
-            <button
-                onClick={() => toggleLike(kural.number)}
-                className={`p-2.5 rounded-full transition-all border ${liked ? 'text-red-500 bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-900' : 'text-gray-400 bg-white dark:bg-black/20 border-gray-200 dark:border-white/10 hover:text-red-500 hover:border-red-200'}`}
-                title={liked ? t.kural.liked : t.kural.like}
-            >
-                <svg className="w-5 h-5" fill={liked ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-            </button>
+
             <button
                 onClick={() => toggleBookmark(kural.number)}
                 className={`p-2.5 rounded-full transition-all border ${bookmarked ? 'text-blue-500 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-900' : 'text-gray-400 bg-white dark:bg-black/20 border-gray-200 dark:border-white/10 hover:text-blue-500 hover:border-blue-200'}`}
