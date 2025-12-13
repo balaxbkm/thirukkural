@@ -14,7 +14,8 @@ import KuralCard from "@/components/KuralCard";
 
 export default function Home() {
   const { t } = useLanguage();
-  const { isLiked, toggleLike } = useUserKuralActions();
+  const { isLiked, toggleLike, isBookmarked, toggleBookmark } = useUserKuralActions();
+  const [bookmarkToast, setBookmarkToast] = useState(false);
   const [randomKurals, setRandomKurals] = useState<any[]>([]);
   const [dailyKural, setDailyKural] = useState<any>(null);
   const [allKurals, setAllKurals] = useState<any[]>([]);
@@ -65,6 +66,14 @@ export default function Home() {
       setDailyKural(allKurals[randomIndex]);
       setIsRotating(false);
     }, 500);
+  };
+
+  const handleBookmark = (num: number) => {
+    toggleBookmark(num);
+    if (!isBookmarked(num)) {
+      setBookmarkToast(true);
+      setTimeout(() => setBookmarkToast(false), 2000);
+    }
   };
 
   return (
@@ -135,6 +144,29 @@ export default function Home() {
                   </svg>
                 </button>
 
+                {/* Bookmark Button */}
+                <button
+                  onClick={() => handleBookmark(dailyKural.number)}
+                  className="group p-3 rounded-full bg-white/40 dark:bg-slate-900/40 backdrop-blur-md border border-white/50 dark:border-white/10 shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 hover:border-blue-200 dark:hover:border-blue-900/50"
+                  aria-label="Bookmark Kural"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill={isBookmarked(dailyKural.number) ? "currentColor" : "none"}
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className={`w-5 h-5 transition-colors duration-300 ${isBookmarked(dailyKural.number)
+                      ? "text-blue-500"
+                      : "text-gray-500 dark:text-gray-400 group-hover:text-blue-500"
+                      }`}
+                  >
+                    <path d="M5 5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16l-7-3.5L5 21V5Z" />
+                  </svg>
+                </button>
+
                 {/* Badge Link */}
                 <Link href={`/kural/${dailyKural.number}`} className="group cursor-pointer hover:scale-105 transition-all duration-300">
                   <div className="flex items-center gap-2 px-5 py-2 rounded-full bg-white/40 dark:bg-slate-900/40 backdrop-blur-md border border-white/50 dark:border-white/10 shadow-sm hover:shadow-md hover:border-violet-200 dark:hover:border-violet-800 transition-all">
@@ -165,6 +197,16 @@ export default function Home() {
                   </svg>
                 </button>
               </div>
+
+              {/* Toast Notification */}
+              {bookmarkToast && (
+                <div className="absolute top-full mt-4 left-1/2 transform -translate-x-1/2 bg-blue-600/90 text-white text-sm font-bold py-2 px-5 rounded-full backdrop-blur-md animate-in fade-in slide-in-from-top-2 zoom-in duration-300 z-50 flex items-center gap-2 shadow-xl">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Saved to Bookmarks
+                </div>
+              )}
 
               {/* Optional: Add a subtle link wrapper if they want to click through, but clean for now */}
             </div>

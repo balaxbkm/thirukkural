@@ -17,6 +17,15 @@ export default function KuralCard({ kural }: KuralCardProps) {
     const bookmarked = isBookmarked(kural.number);
 
     const [showToast, setShowToast] = useState(false);
+    const [bookmarkToast, setBookmarkToast] = useState(false);
+
+    const handleBookmark = () => {
+        toggleBookmark(kural.number);
+        if (!bookmarked) {
+            setBookmarkToast(true);
+            setTimeout(() => setBookmarkToast(false), 2000);
+        }
+    };
 
     const handleShare = async (e: React.MouseEvent) => {
         e.preventDefault();
@@ -93,7 +102,7 @@ export default function KuralCard({ kural }: KuralCardProps) {
                         </svg>
                     </button>
                     <button
-                        onClick={() => toggleBookmark(kural.number)}
+                        onClick={handleBookmark}
                         className={`p-2 rounded-lg transition-all ${bookmarked ? 'text-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-400 hover:text-blue-500 hover:bg-gray-100 dark:hover:bg-white/5'}`}
                         title={bookmarked ? t.kural.saved : t.kural.save}
                     >
@@ -118,6 +127,16 @@ export default function KuralCard({ kural }: KuralCardProps) {
                 showToast && (
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/80 text-white text-xs py-2 px-4 rounded-full backdrop-blur-md animate-pulse z-50">
                         Link copied!
+                    </div>
+                )
+            }
+            {
+                bookmarkToast && (
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-600/90 text-white text-xs font-bold py-2 px-4 rounded-full backdrop-blur-md animate-in fade-in zoom-in duration-300 z-50 flex items-center gap-2 shadow-xl">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        Saved to Bookmarks
                     </div>
                 )
             }
