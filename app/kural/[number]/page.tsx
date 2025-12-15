@@ -7,11 +7,12 @@ import SearchBar from "@/components/SearchBar";
 import { useLanguage } from "@/lib/context/LanguageContext";
 import KuralPageActions from "@/components/KuralPageActions";
 import kuralsData from "@/data/thirukkural.json";
+import { generateKuralExplanation, AIExplanationResponse } from "@/app/actions/generate-kural-explanation";
 import { Kural } from "@/types/thirukkural";
 
 export default function KuralPage({ params }: { params: Promise<{ number: string }> }) {
     const { number } = use(params);
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
 
     // Find Kural
     // We need to find purely by number
@@ -25,24 +26,29 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
 
     const kuralNumber = kural.number;
 
-    const [aiExplanation, setAiExplanation] = useState<{
-        context: string;
-        insight: string;
-        modern: string;
-    } | null>(null);
+    const [aiExplanation, setAiExplanation] = useState<AIExplanationResponse | null>(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-    const handleAskAI = () => {
+    const handleAskAI = async () => {
         setIsAnalyzing(true);
-        // Simulate AI Analysis
-        setTimeout(() => {
-            setAiExplanation({
-                context: `This couplet belongs to the ${kural.paal} (Division of ${kural.paal === 'Arathuppaal' ? 'Virtue' : kural.paal === 'Porutpaal' ? 'Wealth' : 'Love'}) and specifically the ${kural.adhigaram} chapter.`,
-                insight: `Thiruvalluvar helps us understand that "${kural.meaning_en}"`,
-                modern: `In today's fast-paced world, this wisdom reminds us to embody the principles of ${kural.adhigaram} to lead a balanced and fulfilling life.`
-            });
-            setIsAnalyzing(false);
-        }, 2000);
+        setError(null);
+        try {
+            const explanation = await generateKuralExplanation(
+                kural.number,
+                kural.line1_ta,
+                kural.line2_ta,
+                kural.meaning_en
+            );
+            if (explanation) {
+                setAiExplanation(explanation);
+            } else {
+                setError(t.kural.aiError || "Unable to generate explanation. Please try again.");
+            }
+        } catch (err) {
+            setError(t.kural.aiError || "An error occurred. Please try again.");
+        }
+        setIsAnalyzing(false);
     };
 
     return (
@@ -171,6 +177,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                             </p>
                         </div>
 
+
                         {/* AI Explanation Section */}
                         <div className="space-y-4 pt-6 border-t border-gray-200 dark:border-white/10">
                             <h2 className="text-lg font-semibold text-teal-600 dark:text-teal-400 flex items-center gap-2">
@@ -201,64 +208,95 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                                 </div>
                             )}
 
+                            {error && (
+                                <div className="text-red-500 text-sm font-medium animate-in fade-in">
+                                    {error}
+                                </div>
+                            )}
+
                             {aiExplanation && (
-                                <div className="rounded-2xl bg-teal-50/50 dark:bg-teal-900/10 border border-teal-100 dark:border-teal-900/30 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700 shadow-sm">
-                                    <div className="p-6 space-y-6">
-                                        {/* Context Section */}
-                                        <div className="flex gap-4">
-                                            <div className="flex-shrink-0 mt-0.5">
-                                                <div className="w-10 h-10 rounded-full bg-teal-100 dark:bg-teal-800/50 flex items-center justify-center text-teal-600 dark:text-teal-300">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>
+                                <div className="relative group rounded-2xl p-[1px] bg-gradient-to-br from-teal-500 via-purple-500 to-amber-500 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                                    <div className="rounded-2xl bg-white dark:bg-gray-900/95 p-6 md:p-8 space-y-8 relative overflow-hidden backdrop-blur-xl">
+
+                                        {/* Background Glow */}
+                                        <div className="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                                        <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                                        {/* Top Section: Context & Insight */}
+                                        <div className="flex flex-col gap-6">
+                                            {/* Context Section */}
+                                            <div className="space-y-3">
+                                                <div className="flex items-center gap-2 text-teal-600 dark:text-teal-400">
+                                                    <div className="p-2 rounded-lg bg-teal-50 dark:bg-teal-900/30">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>
+                                                    </div>
+                                                    <h3 className="text-sm font-bold uppercase tracking-wider opacity-80">Context</h3>
                                                 </div>
-                                            </div>
-                                            <div className="space-y-1">
-                                                <h3 className="text-xs font-bold uppercase tracking-wider text-teal-800 dark:text-teal-200 opacity-70">Context</h3>
-                                                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                                                    {aiExplanation.context}
+                                                <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm md:text-base">
+                                                    {aiExplanation[language] ? aiExplanation[language].context : aiExplanation['en']!.context}
                                                 </p>
                                             </div>
-                                        </div>
 
-                                        {/* Insight Section */}
-                                        <div className="flex gap-4">
-                                            <div className="flex-shrink-0 mt-0.5">
-                                                <div className="w-10 h-10 rounded-full bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center text-violet-600 dark:text-violet-300">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M12 2a10 10 0 1 0 10 10H12V2z" /><path d="M12 12 2.1 12a10.1 10.1 0 0 0 16.9 3" /><path d="M22 12h-10" /></svg>
+                                            {/* Insight Section */}
+                                            <div className="space-y-3">
+                                                <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400">
+                                                    <div className="p-2 rounded-lg bg-violet-50 dark:bg-violet-900/30">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M12 2a10 10 0 1 0 10 10H12V2z" /><path d="M12 12 2.1 12a10.1 10.1 0 0 0 16.9 3" /><path d="M22 12h-10" /></svg>
+                                                    </div>
+                                                    <h3 className="text-sm font-bold uppercase tracking-wider opacity-80">Core Insight</h3>
+                                                </div>
+                                                <div className="relative">
+                                                    <p className="text-lg md:text-xl text-gray-800 dark:text-gray-100 font-medium leading-relaxed italic border-l-4 border-violet-500/30 pl-4 py-1">
+                                                        "{aiExplanation[language] ? aiExplanation[language].insight : aiExplanation['en']!.insight}"
+                                                    </p>
                                                 </div>
                                             </div>
-                                            <div className="space-y-2 w-full">
-                                                <h3 className="text-xs font-bold uppercase tracking-wider text-violet-800 dark:text-violet-200 opacity-70">Core Insight</h3>
-                                                <div className="p-4 rounded-xl bg-white/60 dark:bg-black/20 border border-violet-100 dark:border-violet-900/30 text-gray-800 dark:text-gray-100 font-medium italic relative">
-                                                    <span className="absolute top-2 left-2 text-4xl text-violet-200 dark:text-violet-900 select-none font-serif leading-none">&ldquo;</span>
-                                                    <p className="relative z-10 pl-4">{aiExplanation.insight}</p>
-                                                </div>
-                                            </div>
                                         </div>
 
-                                        {/* Modern Context Section */}
-                                        <div className="flex gap-4">
-                                            <div className="flex-shrink-0 mt-0.5">
-                                                <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-500">
+                                        {/* Divider */}
+                                        <div className="h-px w-full bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-700 to-transparent"></div>
+
+                                        {/* Bottom Section: Modern Relevance */}
+                                        <div className="space-y-4">
+                                            <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 mb-2">
+                                                <div className="p-2 rounded-lg bg-amber-50 dark:bg-amber-900/30">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                                                 </div>
+                                                <h3 className="text-sm font-bold uppercase tracking-wider opacity-80">Modern Application</h3>
                                             </div>
-                                            <div className="space-y-1">
-                                                <h3 className="text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-200 opacity-70">Modern Relevance</h3>
-                                                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                                                    {aiExplanation.modern}
-                                                </p>
+
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                {(aiExplanation[language] ? aiExplanation[language].modern : aiExplanation['en']!.modern).map((step, index) => (
+                                                    <div key={index} className="group/card relative p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors border border-gray-100 dark:border-gray-800 hover:border-amber-200 dark:hover:border-amber-800/50">
+                                                        <div className="absolute top-4 right-4 text-6xl font-black text-gray-200 dark:text-gray-800 group-hover/card:text-amber-500/10 transition-colors select-none -z-10 font-sans">
+                                                            {index + 1}
+                                                        </div>
+                                                        <div className="flex flex-col gap-2 h-full">
+                                                            <div className="w-6 h-6 rounded-full bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-400 flex items-center justify-center text-xs font-bold mb-1">
+                                                                {index + 1}
+                                                            </div>
+                                                            <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+                                                                {step}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="px-6 py-3 bg-teal-100/30 dark:bg-teal-900/20 border-t border-teal-100 dark:border-teal-900/30 flex justify-between items-center">
-                                        <span className="text-[10px] bg-teal-200/50 dark:bg-teal-900/50 px-2 py-1 rounded text-teal-800 dark:text-teal-200 font-medium tracking-wide">AI GENERATED</span>
-                                        <button
-                                            onClick={() => setAiExplanation(null)}
-                                            className="text-xs font-medium text-teal-700 dark:text-teal-300 hover:text-teal-900 dark:hover:text-teal-100 transition-colors flex items-center gap-1 group"
-                                        >
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 group-hover:-rotate-180 transition-transform duration-500"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>
-                                            Reset Analysis
-                                        </button>
+
+                                        {/* Footer Actions */}
+                                        <div className="flex justify-between items-center pt-2">
+                                            <span className="text-[10px] uppercase font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-purple-500/80">
+                                                AI Generated Analysis
+                                            </span>
+                                            <button
+                                                onClick={() => setAiExplanation(null)}
+                                                className="text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>
+                                                Reset
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             )}

@@ -11,7 +11,7 @@ export const translations = {
             kurals: "Kurals",
         },
         home: {
-            title: "Thirukkural Explorer",
+            title: "Thirukkural",
             subtitle: "Ulaga Podhumarai",
             description: "Discover the timeless wisdom of Saint Thiruvalluvar. Explore 1330 couplets on virtue, wealth, and love.",
             browseBtn: "Browse All Kurals",
@@ -63,7 +63,8 @@ export const translations = {
             sp: "Solomon Pappaiah Urai",
             aiExplanation: "AI Explanation",
             askAI: "Ask AI for detailed explanation",
-            analyzing: "AI is analyzing..."
+            analyzing: "AI is analyzing...",
+            aiError: "Unable to generate explanation. Please try again."
         },
         about: {
             title: "About Thirukkural",
@@ -82,6 +83,7 @@ export const translations = {
             appDesc: "This explorer is built with Next.js, Tailwind CSS, and TypeScript."
         },
         footer: {
+            description: "Discover the timeless wisdom of Saint Thiruvalluvar. Explore 1330 couplets on virtue, wealth, and love.",
             text: "Inspired by Thiruvalluvar • Data stored locally in your browser",
             privacy: "Privacy",
             terms: "Terms"
@@ -127,8 +129,8 @@ export const translations = {
         },
         bookmarks: {
             title: "உங்கள் குறிப்புகள்",
-            emptyTitle: "க்குறிப்புகள் இல்லை",
-            emptyMsg: "நீங்கள் இன்னும் எந்த குறளையும் குறிக்கவில்லை.",
+            emptyTitle: "குறிப்புகள் இல்லை",
+            emptyMsg: "நீங்கள் இன்னும் எந்த ஒரு குறளையும் குறித்து வைக்கவில்லை.",
             startBrowsing: "தொடங்கவும்",
             savedCount: "சேமிக்கப்பட்ட குறள்கள்"
         },
@@ -149,7 +151,8 @@ export const translations = {
             sp: "சாலமன் பாப்பையா உரை",
             aiExplanation: "செயற்கை நுண்ணறிவு விளக்கம்",
             askAI: "AI விளக்கம் கேட்க",
-            analyzing: "AI ஆய்வு செய்கிறது..."
+            analyzing: "AI ஆய்வு செய்கிறது...",
+            aiError: "விளக்கம் பெற இயலவில்லை. மீண்டும் முயற்சிக்கவும்."
         },
         about: {
             title: "திருக்குறள் பற்றி",
@@ -168,6 +171,7 @@ export const translations = {
             appDesc: "இது Next.js மற்றும் Tailwind CSS கொண்டு உருவாக்கப்பட்டது."
         },
         footer: {
+            description: "உலகப் பொதுமறையாம் திருக்குறளின் 1330 குறள்களையும், அவற்றின் ஆழமான பொருட்களையும் இங்கே எளிதாகக் கற்றுணரலாம்.",
             text: "திருவள்ளுவரால் ஈர்க்கப்பட்டது • தரவு உங்கள் உலாவியில் சேமிக்கப்படுகிறது",
             privacy: "தனியுரிமை",
             terms: "விதிமுறைகள்"

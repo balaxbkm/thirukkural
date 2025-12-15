@@ -1,10 +1,11 @@
 "use client";
 
 import { useLanguage } from "@/lib/context/LanguageContext";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Kural } from "@/types/thirukkural";
 import kuralsData from "@/data/thirukkural.json";
+import { adhigaramTitles, adhigaramTransliterations } from "@/lib/adhigaram-titles";
 
 interface SearchBarProps {
     variant?: "header" | "large";
@@ -19,12 +20,27 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
     const [adhigaramResults, setAdhigaramResults] = useState<string[]>([]);
     const [selectedFilterAdhigaram, setSelectedFilterAdhigaram] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [adhigaramSearch, setAdhigaramSearch] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const router = useRouter();
     const wrapperRef = useRef<HTMLDivElement>(null);
+    const adhigaramSearchInputRef = useRef<HTMLInputElement>(null);
 
     // Get all unique adhigarams for the dropdown
-    const allAdhigarams = Array.from(new Set(kurals.map(k => k.adhigaram))).sort();
+    const allAdhigarams = useMemo(() => Array.from(new Set(kurals.map(k => k.adhigaram))).sort(), []);
+
+    const filteredDropdownAdhigarams = useMemo(() => {
+        if (!adhigaramSearch) return allAdhigarams;
+        const search = adhigaramSearch.toLowerCase();
+        return allAdhigarams.filter(adh => {
+            const keys = [
+                adh,
+                adhigaramTitles[adh] || "",
+                adhigaramTransliterations[adh] || ""
+            ].join(" ").toLowerCase();
+            return keys.includes(search);
+        });
+    }, [allAdhigarams, adhigaramSearch]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -36,6 +52,15 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+
+    useEffect(() => {
+        if (isDropdownOpen && adhigaramSearchInputRef.current) {
+            setTimeout(() => adhigaramSearchInputRef.current?.focus(), 100);
+        }
+        if (!isDropdownOpen) {
+            setAdhigaramSearch("");
+        }
+    }, [isDropdownOpen]);
 
     useEffect(() => {
         if (query.trim().length >= 2 || (selectedFilterAdhigaram && query.trim().length > 0)) {
@@ -93,11 +118,18 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
                     <div className="hidden sm:block border-r border-gray-200 dark:border-white/10 relative">
                         <button
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                            className="w-full bg-transparent border-none text-gray-700 dark:text-blue-100 text-lg font-medium py-4 px-4 flex items-center gap-2 hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus:outline-none min-w-[200px] justify-between rounded-l-2xl"
+                            className="w-full bg-transparent border-none text-gray-700 dark:text-blue-100 text-lg font-medium py-4 px-4 flex items-center gap-3 hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus:outline-none min-w-[350px] justify-between rounded-l-2xl"
                         >
-                            <span className="truncate max-w-[160px] text-left">
-                                {selectedFilterAdhigaram || "அதிகாரங்கள்"}
-                            </span>
+                            <div className="flex items-center gap-2 overflow-hidden">
+                                <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400`}>
+                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                </div>
+                                <span className="truncate max-w-[280px] text-left text-base">
+                                    {selectedFilterAdhigaram || "அதிகாரங்கள்"}
+                                </span>
+                            </div>
                             <svg
                                 className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isDropdownOpen ? "rotate-180" : ""}`}
                                 fill="none"
@@ -109,28 +141,46 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
                         </button>
 
                         {isDropdownOpen && (
-                            <div className="absolute top-full left-0 mt-2 w-64 max-h-[300px] overflow-y-auto bg-white/90 dark:bg-slate-900/95 backdrop-blur-xl rounded-xl border border-gray-200 dark:border-white/10 shadow-2xl z-50 animate-in fade-in slide-in-from-top-2 no-scrollbar">
-                                <div
-                                    className={`px-4 py-3 cursor-pointer hover:bg-blue-50 dark:hover:bg-white/5 transition-colors text-sm text-left ${!selectedFilterAdhigaram ? "text-blue-600 font-semibold bg-blue-50/50 dark:bg-blue-900/20" : "text-gray-700 dark:text-gray-200"}`}
-                                    onClick={() => {
-                                        setSelectedFilterAdhigaram("");
-                                        setIsDropdownOpen(false);
-                                    }}
-                                >
-                                    அதிகாரங்கள்
+                            <div className="absolute top-full left-0 mt-2 w-full max-h-[400px] overflow-hidden bg-white/90 dark:bg-slate-900/95 backdrop-blur-xl rounded-xl border border-gray-200 dark:border-white/10 shadow-2xl z-50 animate-in fade-in slide-in-from-top-2 flex flex-col">
+                                <div className="p-2 border-b border-gray-100 dark:border-white/5">
+                                    <input
+                                        ref={adhigaramSearchInputRef}
+                                        type="text"
+                                        placeholder="Search Adhigaram..."
+                                        className="w-full px-3 py-2 rounded-lg bg-gray-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-blue-500/50 text-sm"
+                                        value={adhigaramSearch}
+                                        onChange={(e) => setAdhigaramSearch(e.target.value)}
+                                        onClick={(e) => e.stopPropagation()}
+                                    />
                                 </div>
-                                {allAdhigarams.map(a => (
+                                <div className="overflow-y-auto no-scrollbar flex-1">
                                     <div
-                                        key={a}
-                                        className={`px-4 py-3 cursor-pointer hover:bg-blue-50 dark:hover:bg-white/5 transition-colors text-sm border-t border-gray-100 dark:border-white/5 text-left ${selectedFilterAdhigaram === a ? "text-blue-600 font-semibold bg-blue-50/50 dark:bg-blue-900/20" : "text-gray-700 dark:text-gray-200"}`}
+                                        className={`px-4 py-3 cursor-pointer hover:bg-blue-50 dark:hover:bg-white/5 transition-colors text-sm text-left ${!selectedFilterAdhigaram ? "text-blue-600 font-semibold bg-blue-50/50 dark:bg-blue-900/20" : "text-gray-700 dark:text-gray-200"}`}
                                         onClick={() => {
-                                            setSelectedFilterAdhigaram(a);
+                                            setSelectedFilterAdhigaram("");
                                             setIsDropdownOpen(false);
                                         }}
                                     >
-                                        {a}
+                                        அதிகாரங்கள்
                                     </div>
-                                ))}
+                                    {filteredDropdownAdhigarams.map(a => (
+                                        <div
+                                            key={a}
+                                            className={`px-4 py-3 cursor-pointer hover:bg-blue-50 dark:hover:bg-white/5 transition-colors text-sm border-t border-gray-100 dark:border-white/5 text-left ${selectedFilterAdhigaram === a ? "text-blue-600 font-semibold bg-blue-50/50 dark:bg-blue-900/20" : "text-gray-700 dark:text-gray-200"}`}
+                                            onClick={() => {
+                                                setSelectedFilterAdhigaram(a);
+                                                setIsDropdownOpen(false);
+                                            }}
+                                        >
+                                            {a}
+                                        </div>
+                                    ))}
+                                    {filteredDropdownAdhigarams.length === 0 && (
+                                        <div className="px-4 py-8 text-center text-sm text-gray-400">
+                                            No options found
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         )}
                     </div>
@@ -196,9 +246,11 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
                                         onClick={() => handleSelectKural(kural.number)}
                                         className="p-4 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl cursor-pointer transition-colors group flex gap-4 items-center border-b border-gray-100 dark:border-white/5 last:border-0"
                                     >
-                                        <span className="text-xl font-bold font-[family-name:var(--font-outfit)] text-gray-400 group-hover:text-blue-500 transition-colors min-w-[3rem]">
-                                            #{kural.number}
-                                        </span>
+                                        <div className="flex-shrink-0 w-12 h-12 aspect-square flex items-center justify-center rounded-lg bg-gray-100 dark:bg-white/10 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/40 transition-colors">
+                                            <span className="text-sm font-bold font-[family-name:var(--font-outfit)] text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-300">
+                                                #{kural.number}
+                                            </span>
+                                        </div>
                                         <div className="flex-1 min-w-0">
                                             <p className="font-bold text-gray-900 dark:text-gray-100 text-base group-hover:text-blue-600 dark:group-hover:text-blue-400 truncate">
                                                 {kural.line1_ta}
@@ -206,8 +258,10 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
                                             <p className="font-bold text-gray-900 dark:text-gray-100 text-base group-hover:text-blue-600 dark:group-hover:text-blue-400 truncate">
                                                 {kural.line2_ta}
                                             </p>
-
                                         </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-gray-300 group-hover:text-blue-500 transition-colors ml-2 flex-shrink-0">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                        </svg>
                                     </div>
                                 ))}
                             </div>

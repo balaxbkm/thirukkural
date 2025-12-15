@@ -16,7 +16,29 @@ export default function KuralCard({ kural }: KuralCardProps) {
     const bookmarked = isBookmarked(kural.number);
 
     const [showToast, setShowToast] = useState(false);
+    const [contentCopiedToast, setContentCopiedToast] = useState(false);
     const [bookmarkToast, setBookmarkToast] = useState(false);
+
+    const handleCopyContent = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const content = `திருக்குறள் ${kural.number}
+அதிகாரம்: ${kural.adhigaram}
+
+${kural.line1_ta}
+${kural.line2_ta}
+
+விளக்கம்:
+${kural.mv}
+
+English Explanation:
+${kural.meaning_en}`;
+
+        navigator.clipboard.writeText(content);
+        setContentCopiedToast(true);
+        setTimeout(() => setContentCopiedToast(false), 2000);
+    };
 
     const handleBookmark = () => {
         toggleBookmark(kural.number);
@@ -105,6 +127,16 @@ export default function KuralCard({ kural }: KuralCardProps) {
                         <span>{bookmarked ? t.kural.saved : t.kural.save}</span>
                     </button>
                     <button
+                        onClick={handleCopyContent}
+                        className="group/btn flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-900 dark:hover:text-white transition-all shadow-sm"
+                        title="Copy Content"
+                    >
+                        <svg className="w-3.5 h-3.5 group-hover/btn:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                        <span className="hidden sm:inline">நகல்</span>
+                    </button>
+                    <button
                         onClick={handleShare}
                         className="group/btn flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-900 dark:hover:text-white transition-all shadow-sm"
                         title={t.kural.share}
@@ -132,6 +164,13 @@ export default function KuralCard({ kural }: KuralCardProps) {
                 showToast && (
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/80 text-white text-xs py-2 px-4 rounded-full backdrop-blur-md animate-pulse z-50">
                         Link copied!
+                    </div>
+                )
+            }
+            {
+                contentCopiedToast && (
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/80 text-white text-xs py-2 px-4 rounded-full backdrop-blur-md animate-pulse z-50">
+                        Copied!
                     </div>
                 )
             }

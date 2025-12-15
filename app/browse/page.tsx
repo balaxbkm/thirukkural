@@ -2,14 +2,15 @@
 
 import { useState, useMemo } from "react";
 import KuralCard from "@/components/KuralCard";
+import CustomSelect from "@/components/CustomSelect";
 import kuralsData from "@/data/thirukkural.json";
 import { Kural } from "@/types/thirukkural";
 import { useLanguage } from "@/lib/context/LanguageContext";
-
 const ITEMS_PER_PAGE = 12;
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { Suspense, useCallback } from "react";
+import { adhigaramTitles, adhigaramTransliterations } from "@/lib/adhigaram-titles";
 
 export default function BrowsePage() {
     return (
@@ -66,7 +67,13 @@ function BrowseContent() {
         let filtered = kurals;
         if (selectedPaal) filtered = filtered.filter(k => k.paal === selectedPaal);
         if (selectedIyal) filtered = filtered.filter(k => k.iyal === selectedIyal);
-        return Array.from(new Set(filtered.map((k) => k.adhigaram)));
+        const unique = Array.from(new Set(filtered.map((k) => k.adhigaram)));
+
+        return unique.map(adh => ({
+            value: adh,
+            label: adh,
+            searchKey: (adhigaramTitles[adh] || "") + " " + (adhigaramTransliterations[adh] || "")
+        }));
     }, [kurals, selectedPaal, selectedIyal]);
 
     // Filter Logic
@@ -103,40 +110,47 @@ function BrowseContent() {
             </div>
 
             {/* Filters */}
-            <div className="glass-card p-4 sm:p-6 space-y-4">
+            <div className="glass-card p-4 sm:p-6 space-y-4 relative z-20">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <select
+                    <CustomSelect
+                        label={t.browse.paal}
                         value={selectedPaal}
-                        onChange={(e) => updateFilters({ paal: e.target.value, iyal: null, adhigaram: null })}
-                        className="glass-input w-full bg-light/50 dark:bg-slate-800/50 text-gray-900 dark:text-white"
-                    >
-                        <option value="">{t.browse.allPaal}</option>
-                        {paals.map((p) => (
-                            <option key={p} value={p}>{p}</option>
-                        ))}
-                    </select>
+                        options={paals}
+                        onChange={(val) => updateFilters({ paal: val, iyal: null, adhigaram: null })}
+                        placeholder={t.browse.allPaal}
+                        icon={
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                        }
+                    />
 
-                    <select
+                    <CustomSelect
+                        label={t.browse.iyal}
                         value={selectedIyal}
-                        onChange={(e) => updateFilters({ iyal: e.target.value, adhigaram: null })}
-                        className="glass-input w-full bg-light/50 dark:bg-slate-800/50 text-gray-900 dark:text-white"
-                    >
-                        <option value="">{t.browse.allIyal}</option>
-                        {iyals.map((i) => (
-                            <option key={i} value={i}>{i}</option>
-                        ))}
-                    </select>
+                        options={iyals}
+                        onChange={(val) => updateFilters({ iyal: val, adhigaram: null })}
+                        placeholder={t.browse.allIyal}
+                        icon={
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                        }
+                    />
 
-                    <select
+                    <CustomSelect
+                        label={t.browse.adhigaram}
                         value={selectedAdhigaram}
-                        onChange={(e) => updateFilters({ adhigaram: e.target.value })}
-                        className="glass-input w-full bg-light/50 dark:bg-slate-800/50 text-gray-900 dark:text-white"
-                    >
-                        <option value="">{t.browse.allAdhigaram}</option>
-                        {adhigarams.map((a) => (
-                            <option key={a} value={a}>{a}</option>
-                        ))}
-                    </select>
+                        options={adhigarams}
+                        onChange={(val) => updateFilters({ adhigaram: val })}
+                        placeholder={t.browse.allAdhigaram}
+                        icon={
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        }
+                        enableSearch={true}
+                    />
                 </div>
 
                 <div className="flex justify-end">
@@ -217,10 +231,10 @@ function BrowseContent() {
                                 onClick={() => typeof page === 'number' ? updateFilters({ page: String(page) }) : null}
                                 disabled={typeof page !== 'number'}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${page === currentPage
-                                        ? "bg-blue-600 text-white shadow-lg shadow-blue-500/30"
-                                        : typeof page === 'number'
-                                            ? "glass-btn text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
-                                            : "cursor-default text-gray-400"
+                                    ? "bg-blue-600 text-white shadow-lg shadow-blue-500/30"
+                                    : typeof page === 'number'
+                                        ? "glass-btn text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
+                                        : "cursor-default text-gray-400"
                                     }`}
                             >
                                 {page}

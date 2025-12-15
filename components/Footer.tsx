@@ -78,7 +78,7 @@ export default function Footer({ adhigaramData = {} }: FooterProps) {
                     {/* Column 1: Brand & Intro */}
                     <div className="flex flex-col items-center md:items-start space-y-6">
                         <div className="flex items-center gap-3">
-                            <div className="relative w-12 h-12 overflow-hidden rounded-xl shadow-lg ring-1 ring-white/10">
+                            <div className="relative w-12 h-12 overflow-hidden rounded-full shadow-lg ring-1 ring-white/10">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img src="/logo.png" alt="Logo" className="w-full h-full object-cover" />
                             </div>
@@ -87,7 +87,7 @@ export default function Footer({ adhigaramData = {} }: FooterProps) {
                             </span>
                         </div>
                         <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed text-center md:text-left">
-                            {t.home.description}
+                            {t.footer.description}
                         </p>
                     </div>
 

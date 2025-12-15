@@ -15,6 +15,7 @@ export default function Header() {
     const { bookmarkedKurals } = useUserKuralActions();
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
+    const [showShareToast, setShowShareToast] = useState(false);
 
     useEffect(() => {
         setMounted(true);
@@ -45,11 +46,11 @@ export default function Header() {
                             <img
                                 src="/logo.png"
                                 alt="Logo"
-                                className="w-full h-full object-contain drop-shadow-md rounded-lg"
+                                className="w-full h-full object-contain drop-shadow-md rounded-full"
                             />
                         </div>
                         <span className="hidden sm:block text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200 tracking-tight">
-                            {language === 'ta' ? 'திருக்குறள்' : 'Thirukkural Explorer'}
+                            {language === 'ta' ? 'திருக்குறள்' : 'Thirukkural'}
                         </span>
                         <span className="sm:hidden text-lg font-bold text-gray-900 dark:text-white">
                             {language === 'ta' ? 'குறள்' : 'Kural'}
@@ -82,6 +83,38 @@ export default function Header() {
                                     </Link>
                                 );
                             })}
+                            <button
+                                onClick={() => {
+                                    const url = window.location.href;
+                                    if (navigator.share) {
+                                        navigator.share({
+                                            title: 'Thirukkural',
+                                            text: 'Check out this amazing Thirukkural explorer!',
+                                            url: url,
+                                        }).catch(console.error);
+                                    } else {
+                                        navigator.clipboard.writeText(url);
+                                        setShowShareToast(true);
+                                        setTimeout(() => setShowShareToast(false), 2000);
+                                    }
+                                }}
+                                className="p-2.5 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10 hover:text-blue-600 dark:hover:text-blue-400 transition-all active:scale-95 shadow-none relative group"
+                                aria-label="Share"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                                    <circle cx="18" cy="5" r="3" />
+                                    <circle cx="6" cy="12" r="3" />
+                                    <circle cx="18" cy="19" r="3" />
+                                    <line x1="8.59" x2="15.42" y1="13.51" y2="17.49" />
+                                    <line x1="15.41" x2="8.59" y1="6.51" y2="10.49" />
+                                </svg>
+
+                                {showShareToast && (
+                                    <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-gray-800 text-white text-xs rounded shadow-lg whitespace-nowrap z-50 animate-in fade-in slide-in-from-top-1">
+                                        Copied!
+                                    </span>
+                                )}
+                            </button>
                         </nav>
 
                         {/* Divider */}
@@ -103,7 +136,6 @@ export default function Header() {
                                     </svg>
                                 )}
                             </button>
-
                         </div>
                     </div>
 
