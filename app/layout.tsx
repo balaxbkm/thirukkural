@@ -6,6 +6,7 @@ import { LanguageProvider } from "@/lib/context/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import ValluvarChatWidget from "@/components/ValluvarChatWidget";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -52,6 +53,7 @@ export default async function RootLayout({
                 {children}
               </main>
               <Footer adhigaramData={adhigaramData} />
+              <ValluvarChatWidget />
             </ThemeProvider>
           </UserKuralActionsProvider>
         </LanguageProvider>

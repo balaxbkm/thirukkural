@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useLayoutEffect } from "react";
+
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 interface CustomSelectProps {
     label: string;
@@ -31,6 +33,8 @@ export default function CustomSelect({
     const [searchTerm, setSearchTerm] = useState("");
     const containerRef = useRef<HTMLDivElement>(null);
     const searchInputRef = useRef<HTMLInputElement>(null);
+    const listRef = useRef<HTMLDivElement>(null);
+    const selectedOptionRef = useRef<HTMLButtonElement>(null);
 
     // Normalize options to SelectOption[]
     const normalizedOptions: SelectOption[] = options.map(opt =>
@@ -60,6 +64,13 @@ export default function CustomSelect({
             setSearchTerm("");
         }
     }, [isOpen, enableSearch]);
+
+    useIsomorphicLayoutEffect(() => {
+        if (isOpen && selectedOptionRef.current && listRef.current) {
+            const itemHeight = selectedOptionRef.current.offsetHeight;
+            listRef.current.scrollTop = selectedOptionRef.current.offsetTop - (itemHeight * 3);
+        }
+    }, [isOpen]);
 
     const handleSelect = (optionValue: string) => {
         onChange(optionValue);
@@ -135,7 +146,7 @@ export default function CustomSelect({
                         )}
                     </div>
 
-                    <div className="max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-white/10">
+                    <div className="max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-white/10" ref={listRef}>
                         {/* Option to clear */}
                         {!searchTerm && (
                             <button
@@ -149,6 +160,7 @@ export default function CustomSelect({
                         {filteredOptions.map((option) => (
                             <button
                                 key={option.value}
+                                ref={value === option.value ? selectedOptionRef : null}
                                 onClick={() => handleSelect(option.value)}
                                 className={`w-full text-left px-4 py-3 text-sm font-medium transition-colors border-b border-gray-50 dark:border-white/5 last:border-0
                                     ${value === option.value

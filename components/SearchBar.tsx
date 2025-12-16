@@ -1,11 +1,13 @@
 "use client";
 
 import { useLanguage } from "@/lib/context/LanguageContext";
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, useLayoutEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Kural } from "@/types/thirukkural";
 import kuralsData from "@/data/thirukkural.json";
 import { adhigaramTitles, adhigaramTransliterations } from "@/lib/adhigaram-titles";
+
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 interface SearchBarProps {
     variant?: "header" | "large";
@@ -25,6 +27,8 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
     const router = useRouter();
     const wrapperRef = useRef<HTMLDivElement>(null);
     const adhigaramSearchInputRef = useRef<HTMLInputElement>(null);
+    const selectedAdhigaramRef = useRef<HTMLDivElement>(null);
+    const listRef = useRef<HTMLDivElement>(null);
 
     // Get all unique adhigarams for the dropdown
     const allAdhigarams = useMemo(() => Array.from(new Set(kurals.map(k => k.adhigaram))).sort(), []);
@@ -62,6 +66,13 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
         }
     }, [isDropdownOpen]);
 
+    useIsomorphicLayoutEffect(() => {
+        if (isDropdownOpen && selectedAdhigaramRef.current && listRef.current) {
+            const itemHeight = selectedAdhigaramRef.current.offsetHeight;
+            listRef.current.scrollTop = selectedAdhigaramRef.current.offsetTop - (itemHeight * 2);
+        }
+    }, [isDropdownOpen]);
+
     useEffect(() => {
         if (query.trim().length >= 2 || (selectedFilterAdhigaram && query.trim().length > 0)) {
             const searchTerms = query.toLowerCase();
@@ -82,6 +93,7 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
             filtered = filtered.filter(k =>
                 k.number.toString().includes(searchTerms) ||
                 k.line1_ta.includes(searchTerms) ||
+                k.line2_ta.includes(searchTerms) ||
                 k.transliteration_en.toLowerCase().includes(searchTerms) ||
                 k.meaning_en.toLowerCase().includes(searchTerms) ||
                 k.adhigaram.toLowerCase().includes(searchTerms)
@@ -118,7 +130,7 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
                     <div className="hidden sm:block border-r border-gray-200 dark:border-white/10 relative">
                         <button
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                            className="w-full bg-transparent border-none text-gray-700 dark:text-blue-100 text-lg font-medium py-4 px-4 flex items-center gap-3 hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus:outline-none min-w-[350px] justify-between rounded-l-2xl"
+                            className="w-full bg-transparent border-none text-gray-700 dark:text-blue-100 text-lg font-medium py-4 px-4 flex items-center gap-3 hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus:outline-none min-w-[280px] justify-between rounded-l-2xl"
                         >
                             <div className="flex items-center gap-2 overflow-hidden">
                                 <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400`}>
@@ -126,7 +138,7 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
                                 </div>
-                                <span className="truncate max-w-[280px] text-left text-base">
+                                <span className="truncate max-w-[180px] text-left text-lg">
                                     {selectedFilterAdhigaram || "அதிகாரங்கள்"}
                                 </span>
                             </div>
@@ -153,9 +165,10 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
                                         onClick={(e) => e.stopPropagation()}
                                     />
                                 </div>
-                                <div className="overflow-y-auto no-scrollbar flex-1">
+                                <div className="overflow-y-auto no-scrollbar flex-1" ref={listRef}>
                                     <div
                                         className={`px-4 py-3 cursor-pointer hover:bg-blue-50 dark:hover:bg-white/5 transition-colors text-sm text-left ${!selectedFilterAdhigaram ? "text-blue-600 font-semibold bg-blue-50/50 dark:bg-blue-900/20" : "text-gray-700 dark:text-gray-200"}`}
+                                        ref={!selectedFilterAdhigaram ? selectedAdhigaramRef : null}
                                         onClick={() => {
                                             setSelectedFilterAdhigaram("");
                                             setIsDropdownOpen(false);
@@ -167,6 +180,7 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
                                         <div
                                             key={a}
                                             className={`px-4 py-3 cursor-pointer hover:bg-blue-50 dark:hover:bg-white/5 transition-colors text-sm border-t border-gray-100 dark:border-white/5 text-left ${selectedFilterAdhigaram === a ? "text-blue-600 font-semibold bg-blue-50/50 dark:bg-blue-900/20" : "text-gray-700 dark:text-gray-200"}`}
+                                            ref={selectedFilterAdhigaram === a ? selectedAdhigaramRef : null}
                                             onClick={() => {
                                                 setSelectedFilterAdhigaram(a);
                                                 setIsDropdownOpen(false);
@@ -187,10 +201,12 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
                 )}
 
                 <div className="flex-1 relative flex items-center">
-                    <div className="absolute left-4 text-gray-400 pointer-events-none">
-                        <svg className={`transition-all ${variant === "large" ? "w-6 h-6" : "w-5 h-5"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
+                    <div className="absolute right-4 pointer-events-none">
+                        <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400`}>
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
                     </div>
                     <input
                         type="text"
@@ -199,8 +215,8 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
                         onChange={(e) => setQuery(e.target.value)}
                         onFocus={() => (query.length >= 2 || selectedFilterAdhigaram) && setIsOpen(true)}
                         className={`w-full bg-transparent border-none text-gray-900 dark:text-blue-50 placeholder-gray-500 dark:placeholder-blue-200/50 focus:ring-0 transition-all ${variant === "large"
-                            ? "py-4 pl-12 pr-6 text-lg"
-                            : "py-2.5 pl-12 pr-4 text-sm"
+                            ? "py-4 pl-6 pr-16 text-lg"
+                            : "py-2.5 pl-4 pr-14 text-sm"
                             }`}
                     />
                 </div>

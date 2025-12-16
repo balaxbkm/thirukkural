@@ -316,7 +316,11 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                     </Link>
                 ) : <div></div>}
 
-                <Link href="/browse" className="text-blue-600 font-medium hover:underline">
+                <Link href="/browse" className="glass-btn px-6 py-3 flex items-center gap-2 text-blue-600 dark:text-blue-400 font-medium">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                        <circle cx="12" cy="12" r="10" />
+                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+                    </svg>
                     {t.nav.browse}
                 </Link>
 

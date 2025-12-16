@@ -153,7 +153,7 @@ function BrowseContent() {
                     />
                 </div>
 
-                <div className="flex justify-end">
+                <div className="flex justify-end mt-1.5">
                     <button
                         onClick={resetFilters}
                         className="text-sm text-blue-600 dark:text-blue-400 hover:underline"

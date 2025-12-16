@@ -2,7 +2,31 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const API_KEY = "AIzaSyDWYOxO2asw_asvJDUUlwwDtgUG5fQIeQY"; // In production, use process.env.GEMINI_API_KEY
+import fs from 'fs';
+import path from 'path';
+
+function getApiKey() {
+    let key = process.env.GEMINI_API_KEY;
+    if (key) return key;
+
+    try {
+        const envPath = path.resolve(process.cwd(), '.env.local');
+        if (fs.existsSync(envPath)) {
+            const content = fs.readFileSync(envPath, 'utf8');
+            const match = content.match(/GEMINI_API_KEY=(.*)/);
+            if (match && match[1]) {
+                key = match[1].trim();
+            }
+        }
+    } catch (e) {
+        // ignore
+    }
+
+
+    return key || "";
+}
+
+const API_KEY = getApiKey();
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });

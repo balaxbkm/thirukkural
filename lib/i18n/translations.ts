@@ -92,7 +92,7 @@ export const translations = {
     ta: {
         nav: {
             home: "முகப்பு",
-            browse: "உலாவு",
+            browse: "குறள் தேடல்",
             bookmarks: "குறிப்புகள்",
             about: "பற்றி",
             search: "திருக்குறளைத் தேடுக...",
@@ -110,7 +110,7 @@ export const translations = {
             dailyKural: "இன்றைய குறள்",
         },
         browse: {
-            title: "குறள்களை உலாவுக",
+            title: "குறள் தேடல்",
             subtitle: "பால், இயல் அல்லது அதிகாரம் வாரியாக திருக்குறளை ஆராயுங்கள்.",
             paal: "பால்",
             iyal: "இயல்",
@@ -118,7 +118,7 @@ export const translations = {
             allPaal: "அனைத்து பால்கள்",
             allIyal: "அனைத்து இயல்கள்",
             allAdhigaram: "அனைத்து அதிகாரங்கள்",
-            clearFilters: "வடிகட்டிகளை அழி",
+            clearFilters: "Reset Filter",
             showing: "காண்பிக்கப்படுவது",
             results: "முடிவுகள்",
             noResults: "உங்கள் தேடலுக்கு குறள்கள் இல்லை.",
