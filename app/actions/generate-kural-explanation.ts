@@ -42,14 +42,14 @@ export async function generateKuralExplanation(
 
                 const lines = content.split(/\r?\n/);
                 for (const line of lines) {
-                    const match = line.match(/^\s*(?:export\s+)?(?:NEXT_PUBLIC_)?GEMINI_API_KEY\s*=\s*(.*)$/i);
-                    if (match && match[1]) {
-                        key = match[1].trim();
+                    const match = line.match(/^\s*(?:export\s+)?(GEMINI_API_KEY|NEXT_PUBLIC_GEMINI_API_KEY)\s*=\s*(.*)$/i);
+                    if (match && match[2]) {
+                        key = match[2].trim();
                         if ((key.startsWith('"') && key.endsWith('"')) || (key.startsWith("'") && key.endsWith("'"))) {
                             key = key.slice(1, -1);
                         }
                         key = key.replace(/[^a-zA-Z0-9_\-]/g, '');
-                        log(`[DEBUG_EXP] Key sanitized from file (length: ${key.length})`);
+                        log(`[DEBUG_EXP] Key sanitized from file (length: ${key.length}, prefix: ${match[1].startsWith('NEXT') ? 'Yes' : 'No'})`);
                         break;
                     }
                 }
