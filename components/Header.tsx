@@ -82,7 +82,7 @@ export default function Header() {
                                         aria-label={link.name}
                                     >
                                         {link.icon}
-                                        {count > 0 && (
+                                        {link.href === '/bookmarks' && count > 0 && (
                                             <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 text-[9px] font-bold text-white shadow-sm ring-2 ring-white dark:ring-slate-900 group-hover:scale-110 transition-transform">
                                                 {count > 9 ? '9+' : count}
                                             </span>
