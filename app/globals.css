@@ -8,11 +8,23 @@
   --font-oi: var(--font-oi);
 }
 
+input:focus,
+button:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 :root {
-  --background: #f8fafc;
+  --background: #ffffff;
   --foreground: #0f172a;
-  --gradient-1: #c084fc;
-  --gradient-2: #38bdf8;
+  --gradient-1: rgba(56, 189, 248, 0.25);
+  /* Cyan Sparkle */
+  --gradient-2: rgba(249, 115, 22, 0.15);
+  /* Vibrant Orange */
+  --gradient-3: rgba(139, 92, 246, 0.2);
+  /* Pure Purple */
 }
 
 .dark {
@@ -25,8 +37,10 @@
 }
 
 body {
-  background: radial-gradient(at top left, var(--gradient-1), transparent 50%),
-    radial-gradient(at bottom right, var(--gradient-2), transparent 50%),
+  background:
+    radial-gradient(at 0% 0%, var(--gradient-1), transparent 40%),
+    radial-gradient(at 100% 0%, var(--gradient-2), transparent 40%),
+    radial-gradient(at 100% 100%, var(--gradient-3), transparent 40%),
     var(--background);
   background-attachment: fixed;
   background-size: cover;
@@ -40,10 +54,13 @@ body {
 .glass-card,
 .glass-input,
 .glass-btn {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px) saturate(250%);
+  -webkit-backdrop-filter: blur(20px) saturate(250%);
+  border: 1px solid rgba(255, 255, 255, 1);
+  box-shadow:
+    0 10px 40px -10px rgba(0, 0, 0, 0.05),
+    0 0 20px rgba(99, 102, 241, 0.03);
 }
 
 .dark .glass,
@@ -51,7 +68,9 @@ body {
 .dark .glass-input,
 .dark .glass-btn {
   background: rgba(15, 23, 42, 0.3);
+  backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none;
 }
 
 .glass-card {

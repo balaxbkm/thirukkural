@@ -6,7 +6,7 @@ import { LanguageProvider } from "@/lib/context/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import ValluvarChatWidget from "@/components/ValluvarChatWidget";
+
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -47,13 +47,13 @@ export default async function RootLayout({
       <body className="antialiased min-h-screen flex flex-col font-sans selection:bg-blue-500/30" suppressHydrationWarning>
         <LanguageProvider>
           <UserKuralActionsProvider>
-            <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
               <Header />
-              <main className="flex-grow pt-24 px-4 max-w-[1600px] mx-auto w-full">
+              <main className="flex-grow pt-28 px-4 max-w-[1600px] mx-auto w-full">
                 {children}
               </main>
               <Footer adhigaramData={adhigaramData} />
-              <ValluvarChatWidget />
+
             </ThemeProvider>
           </UserKuralActionsProvider>
         </LanguageProvider>

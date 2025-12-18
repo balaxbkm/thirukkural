@@ -106,7 +106,7 @@ export const translations = {
             randomBtn: "தோரய குறள்",
             bookmarksBtn: "என் குறிப்புகள்",
             featured: "சிறப்புக் குறள்கள்",
-            viewAll: "அனைத்தையும் பார்",
+            viewAll: "View all",
             dailyKural: "இன்றைய குறள்",
         },
         browse: {

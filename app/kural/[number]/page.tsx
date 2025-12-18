@@ -262,22 +262,38 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                                                 <div className="p-2 rounded-lg bg-amber-50 dark:bg-amber-900/30">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                                                 </div>
-                                                <h3 className="text-sm font-bold uppercase tracking-wider opacity-80">Modern Application</h3>
+                                                <h3 className="text-sm font-bold uppercase tracking-wider opacity-80">Take Away</h3>
                                             </div>
 
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                {(aiExplanation[language] ? aiExplanation[language].modern : aiExplanation['en']!.modern).map((step, index) => (
-                                                    <div key={index} className="group/card relative p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors border border-gray-100 dark:border-gray-800 hover:border-amber-200 dark:hover:border-amber-800/50">
-                                                        <div className="absolute top-4 right-4 text-6xl font-black text-gray-200 dark:text-gray-800 group-hover/card:text-amber-500/10 transition-colors select-none -z-10 font-sans">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-4">
+                                                {(aiExplanation[language] ? aiExplanation[language].modern : aiExplanation['en']!.modern).slice(0, 2).map((step, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className={`group/card relative p-6 rounded-2xl transition-all duration-700 hover:-translate-y-2 cursor-default border-2 ${index === 0
+                                                            ? 'bg-white/90 dark:bg-slate-900/60 border-blue-400/40 hover:border-blue-500'
+                                                            : 'bg-white/90 dark:bg-slate-900/60 border-orange-400/40 hover:border-orange-500'
+                                                            } backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] dark:shadow-[0_30px_60px_rgba(0,0,0,0.5)] overflow-hidden`}
+                                                    >
+                                                        {/* High-Impact Ambient Glow Orbits */}
+                                                        <div className={`absolute -top-1/2 -right-1/2 w-full h-full rounded-full blur-[100px] opacity-25 transition-all duration-1000 group-hover:opacity-50 ${index === 0 ? 'bg-cyan-400' : 'bg-orange-500'}`}></div>
+                                                        <div className={`absolute -bottom-1/2 -left-1/2 w-full h-full rounded-full blur-[80px] opacity-25 ${index === 0 ? 'bg-indigo-600' : 'bg-rose-500'}`}></div>
+
+                                                        {/* Digital Watermark */}
+                                                        <div className={`absolute top-4 right-10 text-[140px] font-black italic select-none opacity-[0.06] dark:opacity-[0.05] transition-all duration-1000 group-hover:scale-110 group-hover:opacity-[0.2] font-serif ${index === 0 ? 'text-blue-500' : 'text-orange-500'}`}>
                                                             {index + 1}
                                                         </div>
-                                                        <div className="flex flex-col gap-2 h-full">
-                                                            <div className="w-6 h-6 rounded-full bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-400 flex items-center justify-center text-xs font-bold mb-1">
-                                                                {index + 1}
+
+                                                        <div className="relative z-10 flex flex-col h-full gap-4">
+                                                            <div className="space-y-4">
+                                                                <div className={`flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.4em] ${index === 0 ? 'text-blue-600 dark:text-blue-400' : 'text-orange-600 dark:text-orange-400'}`}>
+                                                                    <span className={`w-10 h-[1.5px] rounded-full bg-current opacity-60 group-hover:w-14 transition-all duration-500`}></span>
+                                                                    {index === 0 ? 'WISDOM' : 'INSIGHT'}
+                                                                </div>
+
+                                                                <p className="text-sm md:text-base text-gray-950 dark:text-white/80 font-bold leading-relaxed pr-2 drop-shadow-sm">
+                                                                    {step}
+                                                                </p>
                                                             </div>
-                                                            <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
-                                                                {step}
-                                                            </p>
                                                         </div>
                                                     </div>
                                                 ))}

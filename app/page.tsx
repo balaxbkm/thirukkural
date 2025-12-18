@@ -28,10 +28,15 @@ export default function Home() {
         const all = data.default;
         setAllKurals(all);
 
-        // Random selection for grid
+        // Random selection for grid - Ensure 6 unique Kurals
         const random = [];
-        for (let i = 0; i < 6; i++) {
-          random.push(all[Math.floor(Math.random() * all.length)]);
+        const selectedIndices = new Set<number>();
+        while (selectedIndices.size < 6 && all.length >= 6) {
+          const randomIndex = Math.floor(Math.random() * all.length);
+          if (!selectedIndices.has(randomIndex)) {
+            selectedIndices.add(randomIndex);
+            random.push(all[randomIndex]);
+          }
         }
         setRandomKurals(random);
 

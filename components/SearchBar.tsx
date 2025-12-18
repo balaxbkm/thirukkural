@@ -123,7 +123,7 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
 
     return (
         <div ref={wrapperRef} className={`relative w-full ${variant === "large" ? "max-w-5xl" : "max-w-md"}`}>
-            <div className={`relative flex items-center w-full transition-all duration-300 bg-white/10 dark:bg-white/5 backdrop-blur-md border border-gray-200 dark:border-white/20 ${isOpen ? "ring-2 ring-blue-500/50" : ""} ${variant === "large" ? "rounded-2xl shadow-lg hover:shadow-xl dark:shadow-blue-900/10" : "rounded-xl hover:bg-white/20 dark:hover:bg-white/10"}`}>
+            <div className={`relative flex items-center w-full transition-all duration-300 bg-white/40 dark:bg-white/5 backdrop-blur-md border border-gray-200 dark:border-white/20 ${variant === "large" ? "rounded-2xl shadow-lg hover:shadow-xl dark:shadow-blue-900/10" : "rounded-xl hover:bg-white/60 dark:hover:bg-white/10"}`}>
 
                 {/* Custom Adhigaram Dropdown (Only for Large variant) */}
                 {variant === "large" && (
@@ -159,7 +159,7 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
                                         ref={adhigaramSearchInputRef}
                                         type="text"
                                         placeholder="Search Adhigaram..."
-                                        className="w-full px-3 py-2 rounded-lg bg-gray-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-blue-500/50 text-sm"
+                                        className="w-full px-3 py-2 rounded-lg bg-gray-50 dark:bg-slate-800 border-none focus:outline-none focus:ring-0 text-sm"
                                         value={adhigaramSearch}
                                         onChange={(e) => setAdhigaramSearch(e.target.value)}
                                         onClick={(e) => e.stopPropagation()}
@@ -214,7 +214,7 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         onFocus={() => (query.length >= 2 || selectedFilterAdhigaram) && setIsOpen(true)}
-                        className={`w-full bg-transparent border-none text-gray-900 dark:text-blue-50 placeholder-gray-500 dark:placeholder-blue-200/50 focus:ring-0 transition-all ${variant === "large"
+                        className={`w-full bg-transparent border-none text-gray-900 dark:text-blue-50 placeholder-gray-500 dark:placeholder-blue-200/50 focus:outline-none focus:ring-0 transition-all ${variant === "large"
                             ? "py-4 pl-6 pr-16 text-lg"
                             : "py-2.5 pl-4 pr-14 text-sm"
                             }`}
