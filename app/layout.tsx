@@ -47,7 +47,7 @@ export default async function RootLayout({
       <body className="antialiased min-h-screen flex flex-col font-sans selection:bg-blue-500/30" suppressHydrationWarning>
         <LanguageProvider>
           <UserKuralActionsProvider>
-            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+            <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
               <Header />
               <main className="flex-grow pt-24 md:pt-28 px-4 max-w-[1600px] mx-auto w-full">
                 {children}
