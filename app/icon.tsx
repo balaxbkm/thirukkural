@@ -15,9 +15,9 @@ export const contentType = "image/png";
 // Image generation
 export default async function Icon() {
     try {
-        const filePath = path.join(process.cwd(), "public/logo.png");
+        const filePath = path.join(process.cwd(), "public/valluvar-logo-v2.jpg");
         const file = await fs.readFile(filePath);
-        const base64 = `data:image/png;base64,${file.toString("base64")}`;
+        const base64 = `data:image/jpeg;base64,${file.toString("base64")}`;
 
         return new ImageResponse(
             (

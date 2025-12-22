@@ -82,9 +82,9 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col gap-16 py-10">
+    <div className="flex flex-col gap-16 pt-4 pb-10 md:py-10">
       {/* Hero Section */}
-      <section className="relative flex flex-col items-center justify-center text-center gap-8 py-16 md:py-24">
+      <section className="relative flex flex-col items-center justify-center text-center gap-8 pt-10 pb-16 md:py-24">
         <div className="space-y-4 max-w-3xl">
           <div className="inline-block px-4 py-1.5 rounded-full bg-blue-100/50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-200 font-medium text-sm mb-4 animate-in fade-in zoom-in duration-500">
             {t.home.subtitle}

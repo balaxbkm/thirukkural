@@ -49,7 +49,7 @@ export default async function RootLayout({
           <UserKuralActionsProvider>
             <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
               <Header />
-              <main className="flex-grow pt-28 px-4 max-w-[1600px] mx-auto w-full">
+              <main className="flex-grow pt-24 md:pt-28 px-4 max-w-[1600px] mx-auto w-full">
                 {children}
               </main>
               <Footer adhigaramData={adhigaramData} />
