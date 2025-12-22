@@ -29,7 +29,7 @@ const oi = Oi({
 });
 
 export const metadata: Metadata = {
-  title: "Thirukkural - timeless wisdom",
+  title: "Thirukkural - Timeless Wisdom",
   description: "Explore the timeless wisdom of Thirukkural with a modern glassmorphism design.",
 };
 
