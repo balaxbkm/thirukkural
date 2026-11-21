@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit, Mukta_Malar, Oi } from "next/font/google";
+import { Outfit, Mukta_Malar } from "next/font/google";
 import "./globals.css";
 import { UserKuralActionsProvider } from "@/lib/hooks/useUserKuralActions";
 import { LanguageProvider } from "@/lib/context/LanguageContext";
@@ -21,13 +21,6 @@ const muktaMalar = Mukta_Malar({
   display: "swap",
 });
 
-const oi = Oi({
-  subsets: ["tamil", "latin"],
-  weight: "400",
-  variable: "--font-oi",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   title: "Thirukkural - Timeless Wisdom",
   description: "Explore the timeless wisdom of Thirukkural with a modern glassmorphism design.",
@@ -43,7 +36,7 @@ export default async function RootLayout({
   const adhigaramData = await getPaalAdhigarams();
 
   return (
-    <html lang="ta" className={`${outfit.variable} ${muktaMalar.variable} ${oi.variable}`} suppressHydrationWarning>
+    <html lang="ta" className={`scroll-smooth ${outfit.variable} ${muktaMalar.variable}`} suppressHydrationWarning>
       <body className="antialiased min-h-screen flex flex-col font-sans selection:bg-blue-500/30" suppressHydrationWarning>
         <LanguageProvider>
           <UserKuralActionsProvider>

@@ -1,11 +1,29 @@
 @import "tailwindcss";
 @variant dark (&:where(.dark, .dark *));
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@font-face {
+  font-family: 'BAMINI-Tamil25';
+  src: url('/fonts/BAMINI-Tamil25.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --color-glass: rgba(255, 255, 255, 0.1);
   --color-glass-border: rgba(255, 255, 255, 0.2);
   --font-mukta: var(--font-mukta);
-  --font-oi: var(--font-oi);
+  --font-bamini: 'BAMINI-Tamil25', sans-serif;
 }
 
 input:focus,

@@ -1,0 +1,204 @@
+"use client";
+
+import { useUserKuralActions } from "@/lib/hooks/useUserKuralActions";
+import kuralsData from "@/data/thirukkural.json";
+import { useLanguage } from "@/lib/context/LanguageContext";
+import Link from "next/link";
+import { useMemo, useState, useEffect } from "react";
+import { Kural } from "@/types/thirukkural";
+import NoteModal from "@/components/NoteModal";
+
+export default function KuripugalPage() {
+    const { notedKurals, getNote, isFavorite, toggleFavorite, deleteNote } = useUserKuralActions();
+    const { t } = useLanguage();
+    const kurals = kuralsData as Kural[];
+
+    const [mounted, setMounted] = useState(false);
+    const [selectedKural, setSelectedKural] = useState<Kural | null>(null);
+    const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const notedItems = useMemo(() => {
+        const kuralMap = new Map(kurals.map((k) => [k.number, k]));
+        return notedKurals
+            .map((num) => kuralMap.get(num))
+            .filter((k): k is Kural => Boolean(k));
+    }, [notedKurals, kurals]);
+
+    if (!mounted) return null;
+
+    const handleEditNote = (kural: Kural) => {
+        setSelectedKural(kural);
+        setIsNoteModalOpen(true);
+    };
+
+    return (
+        <div className="max-w-7xl mx-auto space-y-10 animate-in fade-in duration-500 pb-16">
+            {/* Header */}
+            <div className="text-center space-y-4 pt-2">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 dark:bg-amber-400/15 border border-amber-500/20 dark:border-amber-400/30 text-amber-700 dark:text-amber-300 font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm">
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                    </svg>
+                    {t.nav.kuripugal}
+                </div>
+
+                <h1 className="text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700 dark:from-amber-200 dark:via-orange-200 dark:to-yellow-200 tracking-tight">
+                    {t.kuripugal.title}
+                </h1>
+
+                <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto text-sm sm:text-base">
+                    {t.kuripugal.subtitle}
+                </p>
+
+                <div className="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400">
+                    <span className="font-bold text-slate-900 dark:text-white px-2 py-0.5 rounded-md bg-amber-500/10 dark:bg-amber-400/15 border border-amber-500/20">
+                        {notedItems.length}
+                    </span>{" "}
+                    {t.kuripugal.savedCount}
+                </div>
+            </div>
+
+            {/* Content List */}
+            {notedItems.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {notedItems.map((kural) => {
+                        const noteText = getNote(kural.number);
+                        const isFav = isFavorite(kural.number);
+
+                        return (
+                            <div
+                                key={kural.number}
+                                className="glass-card p-6 sm:p-7 rounded-3xl border border-white/80 dark:border-white/10 flex flex-col justify-between space-y-5 hover:border-amber-400/40 transition-all duration-300 shadow-sm hover:shadow-xl relative overflow-hidden group"
+                            >
+                                {/* Digital Watermark */}
+                                <div className="absolute top-2 right-4 text-7xl font-serif font-black text-slate-900/5 dark:text-white/5 pointer-events-none select-none group-hover:scale-105 transition-transform">
+                                    {kural.number}
+                                </div>
+
+                                <div className="space-y-4 relative z-10">
+                                    {/* Card Header */}
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                            <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/20 font-mono">
+                                                {t.kural.number} {kural.number}
+                                            </span>
+                                            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                                                {kural.adhigaram}
+                                            </span>
+                                        </div>
+
+                                        <button
+                                            onClick={() => toggleFavorite(kural.number)}
+                                            className={`p-2 rounded-full transition-all border ${
+                                                isFav
+                                                    ? "text-rose-500 bg-rose-50 dark:bg-rose-950/30 border-rose-200 dark:border-rose-900/40 shadow-sm"
+                                                    : "text-slate-400 bg-white/70 dark:bg-white/5 border-slate-200 dark:border-white/10 hover:text-rose-500"
+                                            }`}
+                                            title={isFav ? t.kural.favorited : t.kural.favorite}
+                                        >
+                                            <svg className="w-4 h-4" fill={isFav ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    {/* Couplet */}
+                                    <Link href={`/kural/${kural.number}`} className="block space-y-1 group/link">
+                                        <p className="font-bold text-base sm:text-lg leading-snug text-slate-900 dark:text-slate-100 group-hover/link:text-amber-600 dark:group-hover/link:text-amber-300 transition-colors">
+                                            {kural.line1_ta}
+                                        </p>
+                                        <p className="font-bold text-base sm:text-lg leading-snug text-slate-900 dark:text-slate-100 group-hover/link:text-amber-600 dark:group-hover/link:text-amber-300 transition-colors">
+                                            {kural.line2_ta}
+                                        </p>
+                                    </Link>
+
+                                    {/* User Custom Note Block */}
+                                    <div className="p-4 rounded-2xl bg-amber-500/10 dark:bg-amber-400/10 border border-amber-500/25 dark:border-amber-400/25 space-y-2 backdrop-blur-md">
+                                        <div className="flex items-center justify-between text-xs font-bold text-amber-800 dark:text-amber-300 uppercase tracking-wider">
+                                            <span className="flex items-center gap-1.5">
+                                                <span>📝</span> {t.note.title}
+                                            </span>
+                                            <div className="flex items-center gap-2">
+                                                <button
+                                                    onClick={() => handleEditNote(kural)}
+                                                    className="hover:underline font-semibold text-amber-700 dark:text-amber-300 capitalize"
+                                                >
+                                                    {t.note.editNote}
+                                                </button>
+                                                <span>•</span>
+                                                <button
+                                                    onClick={() => deleteNote(kural.number)}
+                                                    className="hover:underline font-semibold text-rose-600 dark:text-rose-400 capitalize"
+                                                >
+                                                    {t.note.deleteNote}
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <p className="text-sm text-slate-800 dark:text-slate-200 leading-relaxed italic whitespace-pre-wrap">
+                                            "{noteText}"
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Card Footer Link */}
+                                <div className="pt-2 border-t border-slate-200/50 dark:border-white/5 flex items-center justify-between text-xs">
+                                    <span className="text-slate-500 dark:text-slate-400 italic line-clamp-1 max-w-[70%]">
+                                        {kural.meaning_en}
+                                    </span>
+
+                                    <Link
+                                        href={`/kural/${kural.number}`}
+                                        className="font-bold text-indigo-600 dark:text-cyan-300 hover:underline flex items-center gap-1 shrink-0"
+                                    >
+                                        <span>முழு குறள்</span>
+                                        <span>→</span>
+                                    </Link>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            ) : (
+                <div className="flex flex-col items-center justify-center py-20 text-center space-y-6 bg-white/40 dark:bg-slate-900/40 rounded-3xl border border-dashed border-slate-300 dark:border-white/10 p-8 backdrop-blur-md max-w-xl mx-auto">
+                    <div className="w-20 h-20 bg-amber-500/10 dark:bg-amber-400/10 rounded-full flex items-center justify-center text-4xl border border-amber-500/20">
+                        📝
+                    </div>
+                    <div className="space-y-2">
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                            {t.kuripugal.emptyTitle}
+                        </h3>
+                        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                            {t.kuripugal.emptyMsg}
+                        </p>
+                    </div>
+                    <Link
+                        href="/browse"
+                        className="px-6 py-2.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold text-sm shadow-lg shadow-amber-500/25 transition-all active:scale-95"
+                    >
+                        {t.kuripugal.startBrowsing}
+                    </Link>
+                </div>
+            )}
+
+            {/* Note Modal */}
+            {selectedKural && (
+                <NoteModal
+                    isOpen={isNoteModalOpen}
+                    onClose={() => {
+                        setIsNoteModalOpen(false);
+                        setSelectedKural(null);
+                    }}
+                    kuralNumber={selectedKural.number}
+                    adhigaram={selectedKural.adhigaram}
+                    line1={selectedKural.line1_ta}
+                    line2={selectedKural.line2_ta}
+                />
+            )}
+        </div>
+    );
+}

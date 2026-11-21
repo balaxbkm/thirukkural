@@ -4,32 +4,31 @@ import Link from "next/link";
 import SearchBar from "@/components/SearchBar";
 import { useLanguage } from "@/lib/context/LanguageContext";
 import { useUserKuralActions } from "@/lib/hooks/useUserKuralActions";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import KuralCard from "@/components/KuralCard";
-
-// Since this is a client component for translations, 
-// we'll fetch random kurals here or assume they are passed.
-// For now, let's just make it a client component since useLanguage requires it.
-// To keep SEO, we might want to pass initial props, but for this demo purely dynamic is fine.
+import NoteModal from "@/components/NoteModal";
+import { Kural } from "@/types/thirukkural";
+import { unicodeToBamini } from "@/lib/utils/bamini";
 
 export default function Home() {
   const { t } = useLanguage();
-  const { isBookmarked, toggleBookmark } = useUserKuralActions();
-  const [bookmarkToast, setBookmarkToast] = useState(false);
-  const [randomKurals, setRandomKurals] = useState<any[]>([]);
-  const [dailyKural, setDailyKural] = useState<any>(null);
-  const [allKurals, setAllKurals] = useState<any[]>([]);
+  const { isFavorite, toggleFavorite, hasNote, recentKuralNumbers, clearHistory, isReady } = useUserKuralActions();
+  const [favoriteToast, setFavoriteToast] = useState(false);
+  const [isNoteOpen, setIsNoteOpen] = useState(false);
+  const [randomKurals, setRandomKurals] = useState<Kural[]>([]);
+  const [dailyKural, setDailyKural] = useState<Kural | null>(null);
+  const [allKurals, setAllKurals] = useState<Kural[]>([]);
   const [isRotating, setIsRotating] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await import("@/data/thirukkural.json");
-        const all = data.default;
+        const all = data.default as Kural[];
         setAllKurals(all);
 
         // Random selection for grid - Ensure 6 unique Kurals
-        const random = [];
+        const random: Kural[] = [];
         const selectedIndices = new Set<number>();
         while (selectedIndices.size < 6 && all.length >= 6) {
           const randomIndex = Math.floor(Math.random() * all.length);
@@ -62,103 +61,138 @@ export default function Home() {
     fetchData();
   }, []);
 
-  const handleRefresh = () => {
-    if (allKurals.length === 0) return;
+  const handleRefresh = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (allKurals.length === 0 || isRotating) return;
     setIsRotating(true);
-    // Brief delay for animation feel
     setTimeout(() => {
-      const randomIndex = Math.floor(Math.random() * allKurals.length);
-      setDailyKural(allKurals[randomIndex]);
+      let nextIndex: number;
+      do {
+        nextIndex = Math.floor(Math.random() * allKurals.length);
+      } while (allKurals.length > 1 && dailyKural && allKurals[nextIndex].number === dailyKural.number);
+
+      setDailyKural(allKurals[nextIndex]);
       setIsRotating(false);
-    }, 500);
+    }, 450);
   };
 
-  const handleBookmark = (num: number) => {
-    toggleBookmark(num);
-    if (!isBookmarked(num)) {
-      setBookmarkToast(true);
-      setTimeout(() => setBookmarkToast(false), 2000);
+  const handleFavorite = (num: number) => {
+    toggleFavorite(num);
+    if (!isFavorite(num)) {
+      setFavoriteToast(true);
+      setTimeout(() => setFavoriteToast(false), 2000);
     }
   };
 
+  const isDailyFav = dailyKural ? isFavorite(dailyKural.number) : false;
+  const hasDailyNote = dailyKural ? hasNote(dailyKural.number) : false;
+
+  const recentKurals = useMemo(() => {
+    if (!allKurals.length || !recentKuralNumbers.length) return [];
+    const map = new Map<number, Kural>();
+    for (const k of allKurals) {
+      map.set(k.number, k);
+    }
+    return recentKuralNumbers
+      .slice(0, 3)
+      .map((num) => map.get(num))
+      .filter((k): k is Kural => Boolean(k));
+  }, [allKurals, recentKuralNumbers]);
+
   return (
-    <div className="flex flex-col gap-16 pt-4 pb-10 md:py-10">
+    <div className="flex flex-col gap-16 pt-4 pb-14 md:py-10">
       {/* Hero Section */}
-      <section className="relative flex flex-col items-center justify-center text-center gap-8 pt-10 pb-16 md:py-24">
-        <div className="space-y-4 max-w-3xl">
-          <div className="inline-block px-4 py-1.5 rounded-full bg-blue-100/50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-200 font-medium text-sm mb-4 animate-in fade-in zoom-in duration-500">
-            {t.home.subtitle}
-          </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 dark:from-blue-100 dark:via-white dark:to-blue-100 pb-2 leading-tight drop-shadow-sm">
-            {t.home.title}
-          </h1>
-          <p className="text-lg text-gray-600 dark:text-blue-100/90 max-w-2xl mx-auto leading-relaxed">
-            {t.home.description}
-          </p>
+      <section className="relative flex flex-col items-center justify-center text-center gap-8 pt-6 pb-12 md:py-16">
+        {/* Subtitle Badge */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 dark:bg-indigo-400/15 border border-indigo-500/20 dark:border-indigo-400/30 text-indigo-700 dark:text-cyan-300 font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm animate-in fade-in zoom-in duration-500">
+          <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-ping" />
+          {t.home.subtitle}
         </div>
 
-        <div className="w-full max-w-5xl mx-auto relative z-20">
-          <SearchBar variant="large" />
-        </div>
-
+        {/* Today's Kural (Daily Kural) - Positioned ABOVE the Search Bar */}
         {dailyKural && (
-          <div className="w-full max-w-6xl mx-auto mt-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-
-
-            <div className="flex flex-col items-center gap-4 text-center px-4 mt-6 relative">
-              <Link href={`/kural/${dailyKural.number}`} className="flex items-start justify-center gap-4 relative z-10 transition-transform hover:scale-[1.02] duration-500 ease-out cursor-pointer">
-                <span className="font-serif text-8xl text-violet-400/40 dark:text-violet-500/40 -mt-4 select-none">
+          <div className="w-full max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <div className="flex flex-col items-center gap-4 text-center px-1 sm:px-4 relative">
+              <Link
+                href={`/kural/${dailyKural.number}`}
+                className="flex items-center justify-center gap-2 sm:gap-6 relative z-10 transition-transform hover:scale-[1.01] duration-300 ease-out cursor-pointer w-full"
+              >
+                <span className="font-serif text-6xl sm:text-8xl md:text-9xl lg:text-[110px] xl:text-[130px] leading-none text-indigo-400/40 dark:text-indigo-400/35 select-none flex-shrink-0 self-center">
                   &ldquo;
                 </span>
-                <div className="space-y-0 text-center">
-                  <p className="font-oi text-[22px] leading-[1.3] bg-gradient-to-r from-violet-900 via-fuchsia-800 to-pink-700 dark:from-violet-300 dark:via-fuchsia-300 dark:to-pink-200 bg-clip-text text-transparent drop-shadow-sm py-1">
-                    {dailyKural.line1_ta}
+                <div key={dailyKural.number} className="space-y-0 text-center animate-in fade-in duration-300">
+                  <p
+                    className="font-bamini whitespace-nowrap text-[20px] sm:text-[30px] md:text-[40px] lg:text-[48px] xl:text-[52px] leading-tight bg-gradient-to-r from-indigo-950 via-purple-900 to-slate-900 dark:from-violet-300 dark:via-fuchsia-300 dark:to-pink-200 bg-clip-text text-transparent drop-shadow-sm"
+                    aria-label={dailyKural.line1_ta}
+                  >
+                    {unicodeToBamini(dailyKural.line1_ta)}
                   </p>
-                  <p className="font-oi text-[22px] leading-[1.3] bg-gradient-to-r from-violet-900 via-fuchsia-800 to-pink-700 dark:from-violet-300 dark:via-fuchsia-300 dark:to-pink-200 bg-clip-text text-transparent drop-shadow-sm py-1">
-                    {dailyKural.line2_ta}
+                  <p
+                    className="font-bamini whitespace-nowrap text-[20px] sm:text-[30px] md:text-[40px] lg:text-[48px] xl:text-[52px] leading-tight bg-gradient-to-r from-indigo-950 via-purple-900 to-slate-900 dark:from-violet-300 dark:via-fuchsia-300 dark:to-pink-200 bg-clip-text text-transparent drop-shadow-sm"
+                    aria-label={dailyKural.line2_ta}
+                  >
+                    {unicodeToBamini(dailyKural.line2_ta)}
                   </p>
                 </div>
-                <span className="font-serif text-8xl text-violet-400/40 dark:text-violet-500/40 mt-auto select-none">
+                <span className="font-serif text-6xl sm:text-8xl md:text-9xl lg:text-[110px] xl:text-[130px] leading-none text-indigo-400/40 dark:text-indigo-400/35 select-none flex-shrink-0 self-center">
                   &rdquo;
                 </span>
               </Link>
 
               {/* Action Buttons & Badge Container */}
-              <div className="relative z-10 flex items-center justify-center gap-6 mt-0">
-
-                {/* Like Button */}
-
-
-                {/* Bookmark Button */}
+              <div className="relative z-10 flex items-center justify-center gap-3 sm:gap-4 mt-1">
+                {/* Favorite Button */}
                 <button
-                  onClick={() => handleBookmark(dailyKural.number)}
-                  className="group p-3 rounded-full bg-white/40 dark:bg-slate-900/40 backdrop-blur-md border border-white/50 dark:border-white/10 shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 hover:border-blue-200 dark:hover:border-blue-900/50"
-                  aria-label="Bookmark Kural"
+                  onClick={() => handleFavorite(dailyKural.number)}
+                  className={`group p-3 rounded-full backdrop-blur-md border shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 ${isDailyFav
+                    ? 'bg-rose-500/15 border-rose-400/40 text-rose-500'
+                    : 'bg-white/70 dark:bg-slate-900/50 border-white/80 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:border-rose-300 dark:hover:border-rose-500/40 hover:text-rose-500'
+                  }`}
+                  aria-label={isDailyFav ? t.kural.favorited : t.kural.favorite}
+                  title={isDailyFav ? t.kural.favorited : t.kural.favorite}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    fill={isBookmarked(dailyKural.number) ? "currentColor" : "none"}
+                    fill={isDailyFav ? "currentColor" : "none"}
                     stroke="currentColor"
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className={`w-5 h-5 transition-colors duration-300 ${isBookmarked(dailyKural.number)
-                      ? "text-blue-500"
-                      : "text-gray-500 dark:text-gray-400 group-hover:text-blue-500"
-                      }`}
+                    className={`w-5 h-5 transition-colors duration-300 ${isDailyFav ? "text-rose-500" : "group-hover:text-rose-500"}`}
                   >
-                    <path d="M5 5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16l-7-3.5L5 21V5Z" />
+                    <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
+                </button>
+
+                {/* Note Button */}
+                <button
+                  onClick={() => setIsNoteOpen(true)}
+                  className={`group relative p-3 rounded-full backdrop-blur-md border shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 ${hasDailyNote
+                    ? 'bg-amber-100/80 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-700/60'
+                    : 'bg-white/70 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 border-white/80 dark:border-white/10 hover:border-amber-300 dark:hover:border-amber-500/40 hover:text-amber-500'
+                  }`}
+                  aria-label={hasDailyNote ? t.note.editNote : t.note.addNote}
+                  title={hasDailyNote ? t.note.editNote : t.note.addNote}
+                >
+                  <svg className="w-5 h-5" fill={hasDailyNote ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                  </svg>
+                  {hasDailyNote && (
+                    <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+                  )}
                 </button>
 
                 {/* Badge Link */}
                 <Link href={`/kural/${dailyKural.number}`} className="group cursor-pointer hover:scale-105 transition-all duration-300">
-                  <div className="flex items-center gap-2 px-5 py-2 rounded-full bg-white/40 dark:bg-slate-900/40 backdrop-blur-md border border-white/50 dark:border-white/10 shadow-sm hover:shadow-md hover:border-violet-200 dark:hover:border-violet-800 transition-all">
-                    <span className="text-base font-bold text-violet-600/80 dark:text-violet-300/80 pr-3 mr-1 border-r border-gray-300 dark:border-gray-700">
-                      {t.kural?.number || "Kural"}
+                  <div className="flex items-center gap-2 px-5 py-2 rounded-full bg-white/70 dark:bg-slate-900/50 backdrop-blur-md border border-white/80 dark:border-white/10 shadow-sm hover:shadow-md hover:border-indigo-300 dark:hover:border-indigo-500/40 transition-all">
+                    <span className="text-sm sm:text-base font-bold text-slate-700 dark:text-slate-300 pr-3 mr-1 border-r border-slate-300 dark:border-white/10">
+                      {t.kural?.number || "குறள்"}
                     </span>
-                    <span className="text-base font-black bg-gradient-to-br from-violet-600 to-fuchsia-600 dark:from-violet-400 dark:to-fuchsia-400 bg-clip-text text-transparent font-mono">
+                    <span className="text-sm sm:text-base font-black bg-gradient-to-r from-indigo-600 to-cyan-600 dark:from-indigo-400 dark:to-cyan-300 bg-clip-text text-transparent font-mono">
                       {dailyKural.number}
                     </span>
                   </div>
@@ -166,9 +200,12 @@ export default function Home() {
 
                 {/* Refresh Button */}
                 <button
+                  type="button"
                   onClick={handleRefresh}
-                  className="group p-3 rounded-full bg-white/40 dark:bg-slate-900/40 backdrop-blur-md border border-white/50 dark:border-white/10 shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 hover:border-blue-200 dark:hover:border-blue-900/50"
-                  aria-label="New Random Kural"
+                  disabled={isRotating}
+                  className="group p-3 rounded-full bg-white/70 dark:bg-slate-900/50 backdrop-blur-md border border-white/80 dark:border-white/10 shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 hover:border-indigo-300 dark:hover:border-indigo-500/40 cursor-pointer disabled:opacity-50"
+                  aria-label={t.home.randomBtn || "New Random Kural"}
+                  title={t.home.randomBtn || "New Random Kural"}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -176,7 +213,7 @@ export default function Home() {
                     viewBox="0 0 24 24"
                     strokeWidth="2"
                     stroke="currentColor"
-                    className={`w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-blue-500 transition-all duration-700 ${isRotating ? "animate-spin" : ""}`}
+                    className={`w-5 h-5 text-slate-500 dark:text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-cyan-300 transition-transform duration-500 ease-in-out ${isRotating ? "rotate-180" : "rotate-0"}`}
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
                   </svg>
@@ -184,30 +221,94 @@ export default function Home() {
               </div>
 
               {/* Toast Notification */}
-              {bookmarkToast && (
-                <div className="absolute top-full mt-4 left-1/2 transform -translate-x-1/2 bg-blue-600/90 text-white text-sm font-bold py-2 px-5 rounded-full backdrop-blur-md animate-in fade-in slide-in-from-top-2 zoom-in duration-300 z-50 flex items-center gap-2 shadow-xl">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              {favoriteToast && (
+                <div className="absolute top-full mt-4 left-1/2 transform -translate-x-1/2 bg-rose-600/95 text-white text-xs sm:text-sm font-bold py-2 px-5 rounded-full backdrop-blur-xl border border-rose-400/30 animate-in fade-in slide-in-from-top-2 zoom-in duration-300 z-50 flex items-center gap-2 shadow-xl">
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                   </svg>
-                  Saved to Bookmarks
+                  {t.kural.favorited}
                 </div>
               )}
 
-              {/* Optional: Add a subtle link wrapper if they want to click through, but clean for now */}
+              {/* Note Modal for Daily Kural */}
+              <NoteModal
+                isOpen={isNoteOpen}
+                onClose={() => setIsNoteOpen(false)}
+                kuralNumber={dailyKural.number}
+                adhigaram={dailyKural.adhigaram}
+                line1={dailyKural.line1_ta}
+                line2={dailyKural.line2_ta}
+              />
             </div>
           </div>
         )}
+
+        {/* Search Bar - Positioned BELOW Today's Kural */}
+        <div className="w-full max-w-5xl mx-auto relative z-20 mt-2">
+          <SearchBar variant="large" />
+        </div>
       </section>
+
+      {/* Recently Viewed Kurals - Only shown when history exists */}
+      {isReady && recentKurals.length > 0 && (
+        <section className="space-y-6 animate-in fade-in slide-in-from-bottom-3 duration-500">
+          <div className="flex justify-between items-end px-2">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="p-1.5 rounded-lg bg-indigo-500/10 dark:bg-indigo-400/15 text-indigo-600 dark:text-cyan-400">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="w-4 h-4"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                </span>
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+                  {t.home.recentTitle}
+                </h2>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+                {t.home.recentSubtitle}
+              </p>
+            </div>
+            <button
+              onClick={clearHistory}
+              className="text-xs font-medium text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 transition-colors px-2.5 py-1 rounded-md hover:bg-rose-500/10 active:scale-95"
+              title={t.home.clearRecent}
+            >
+              {t.home.clearRecent}
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {recentKurals.map((kural) => (
+              <KuralCard key={`recent-${kural.number}`} kural={kural} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Featured Kurals */}
       <section className="space-y-8">
         <div className="flex justify-between items-end px-2">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{t.home.featured}</h2>
-            <div className="h-1 w-20 bg-blue-500 rounded-full mt-2"></div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+              {t.home.featured}
+            </h2>
+            <div className="h-1 w-20 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-full mt-2" />
           </div>
-          <Link href="/browse" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">
-            {t.home.viewAll} →
+          <Link
+            href="/browse"
+            className="text-sm font-semibold text-indigo-600 dark:text-cyan-400 hover:text-indigo-800 dark:hover:text-cyan-300 transition-colors flex items-center gap-1 group"
+          >
+            {t.home.viewAll} <span className="group-hover:translate-x-1 transition-transform">→</span>
           </Link>
         </div>
 
@@ -217,9 +318,8 @@ export default function Home() {
               <KuralCard key={kural.number} kural={kural} />
             ))
           ) : (
-            // Skeletons
             [1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="h-48 rounded-2xl glass-card animate-pulse bg-gray-200 dark:bg-gray-800/50"></div>
+              <div key={i} className="h-48 rounded-2xl glass-card animate-pulse bg-white/30 dark:bg-slate-800/30" />
             ))
           )}
         </div>
