@@ -26,6 +26,15 @@ export const translations = {
             recentSubtitle: "Kurals you explored recently",
             clearRecent: "Clear all",
         },
+        theme: {
+            title: "Color Themes",
+            subtitle: "Choose from 6 color themes",
+            mode: "Display Mode",
+            light: "Light",
+            dark: "Dark",
+            system: "System",
+            selectTheme: "Select Palette",
+        },
         browse: {
             title: "Browse Kurals",
             subtitle: "Explore the Thirukkural by section, chapter, or topic.",
@@ -50,6 +59,15 @@ export const translations = {
             emptyMsg: "You haven't added any Kurals to your favorites yet. Click the heart icon on any Kural to save it.",
             startBrowsing: "Start Browsing",
             savedCount: "favorite Kurals"
+        },
+        history: {
+            title: "Recently Viewed",
+            subtitle: "Kurals you explored recently",
+            emptyTitle: "No Reading History",
+            emptyMsg: "You haven't viewed any Kurals yet. Explore Kurals and they will appear here.",
+            startBrowsing: "Start Browsing",
+            clearAll: "Clear all",
+            viewedCount: "Kurals viewed"
         },
         kuripugal: {
             title: "My Notes (Kuripugal)",
@@ -155,6 +173,15 @@ export const translations = {
             recentSubtitle: "நீங்கள் கடைசியாகப் பார்வையிட்ட குறள்கள்",
             clearRecent: "Clear all",
         },
+        theme: {
+            title: "வண்ணத் தீம்கள்",
+            subtitle: "6 வண்ணத் தீம்களில் ஒன்றைத் தேர்ந்தெடுக்கவும்",
+            mode: "பயன்முறை",
+            light: "பகல்",
+            dark: "இரவு",
+            system: "இயல்பு",
+            selectTheme: "வண்ணத்தைத் தேர்ந்தெடுக்கவும்",
+        },
         browse: {
             title: "குறள் தேடல்",
             subtitle: "பால், இயல் அல்லது அதிகாரம் வாரியாக திருக்குறளை ஆராயுங்கள்.",
@@ -179,6 +206,15 @@ export const translations = {
             emptyMsg: "நீங்கள் இன்னும் எந்தக் குறளையும் விருப்பப் பட்டியலில் சேர்க்கவில்லை. விருப்பமான குறள்களைச் சேர்க்க இதயக் குறியீட்டை அழுத்தவும்.",
             startBrowsing: "குறள்களை ஆராய்க",
             savedCount: "விருப்பமான குறள்கள்"
+        },
+        history: {
+            title: "சமீபத்தில் பார்த்தவை",
+            subtitle: "நீங்கள் கடைசியாகப் பார்வையிட்ட குறள்கள்",
+            emptyTitle: "பார்வையிட்ட வரலாறு இல்லை",
+            emptyMsg: "நீங்கள் இதுவரை எந்தக் குறளையும் பார்க்கவில்லை. குறள்களை ஆராயுங்கள், அவை இங்கே தோன்றும்.",
+            startBrowsing: "குறள்களை ஆராய்க",
+            clearAll: "Clear all",
+            viewedCount: "பார்வையிட்ட குறள்கள்"
         },
         kuripugal: {
             title: "என் குறிப்புகள்",

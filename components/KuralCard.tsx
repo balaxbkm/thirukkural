@@ -83,7 +83,7 @@ ${kural.meaning_en}`;
 
             <Link href={`/kural/${kural.number}`} className="flex-grow p-5 flex flex-col gap-3">
                 <div className="flex justify-between items-start">
-                    <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300">
+                    <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)]">
                         {kural.number}
                     </span>
                     <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">
@@ -112,8 +112,8 @@ ${kural.meaning_en}`;
                     {/* Custom Note Preview if present */}
                     {hasCustomNote && (
                         <div className="pt-1">
-                            <div className="p-2.5 rounded-xl bg-amber-500/10 dark:bg-amber-400/10 border border-amber-500/25 dark:border-amber-400/20 text-xs text-amber-900 dark:text-amber-200 flex items-start gap-2 backdrop-blur-sm">
-                                <span className="text-amber-500 text-xs shrink-0 mt-0.5">📝</span>
+                            <div className="p-2.5 rounded-xl bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-xs text-[var(--theme-badge-text)] flex items-start gap-2 backdrop-blur-sm">
+                                <span className="text-[var(--theme-primary)] text-xs shrink-0 mt-0.5">📝</span>
                                 <p className="line-clamp-2 italic font-medium">{getNote(kural.number)}</p>
                             </div>
                         </div>
@@ -122,7 +122,7 @@ ${kural.meaning_en}`;
             </Link>
 
             {/* Action Bar */}
-            <div className="px-4 py-3 bg-gray-50/80 dark:bg-white/5 border-t border-gray-100 dark:border-white/5 flex justify-between items-center group-hover:bg-blue-50/30 dark:group-hover:bg-blue-900/10 transition-colors duration-300">
+            <div className="px-4 py-3 bg-gray-50/80 dark:bg-white/5 border-t border-gray-100 dark:border-white/5 flex justify-between items-center group-hover:bg-[var(--theme-badge-bg)] transition-colors duration-300">
                 <div className="flex gap-2 items-center">
                     {/* Favorite Button */}
                     <button
@@ -166,7 +166,7 @@ ${kural.meaning_en}`;
 
                 <Link
                     href={`/kural/${kural.number}`}
-                    className="flex items-center gap-1 text-xs font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors group/read"
+                    className="flex items-center gap-1 text-xs font-bold text-gray-900 dark:text-white hover:text-[var(--theme-primary)] transition-colors group/read"
                 >
                     Read
                     <svg className="w-3.5 h-3.5 group-hover/read:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">

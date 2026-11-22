@@ -67,7 +67,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
         <div className="glass-card p-6 md:p-12 relative overflow-hidden">
             {/* Background Decorative */}
             <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none md:opacity-10" style={{ top: '58px' }}>
-                <span className="text-9xl font-serif font-black text-gray-900 dark:text-white">
+                <span className="text-9xl font-serif font-black text-[var(--theme-primary)]">
                     {kural.number}
                 </span>
             </div>
@@ -78,19 +78,19 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                 <div className="flex flex-col gap-6 pb-2">
                     <div className="flex flex-wrap justify-between items-center gap-4">
                         <div className="flex flex-wrap gap-2 items-center">
-                            <span className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-bold text-sm tracking-wide">
+                            <span className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-bold text-sm tracking-wide shadow-sm">
                                 {t.kural.number} {kural.number}
                             </span>
                             <div className="hidden sm:flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 ml-2">
-                                <Link href={`/browse?paal=${encodeURIComponent(kural.paal)}`} className="hover:text-blue-500 hover:underline transition-colors">
+                                <Link href={`/browse?paal=${encodeURIComponent(kural.paal)}`} className="hover:text-[var(--theme-primary)] hover:underline transition-colors">
                                     {kural.paal}
                                 </Link>
                                 <span>/</span>
-                                <Link href={`/browse?paal=${encodeURIComponent(kural.paal)}&iyal=${encodeURIComponent(kural.iyal)}`} className="hover:text-blue-500 hover:underline transition-colors">
+                                <Link href={`/browse?paal=${encodeURIComponent(kural.paal)}&iyal=${encodeURIComponent(kural.iyal)}`} className="hover:text-[var(--theme-primary)] hover:underline transition-colors">
                                     {kural.iyal}
                                 </Link>
                                 <span>/</span>
-                                <Link href={`/browse?paal=${encodeURIComponent(kural.paal)}&iyal=${encodeURIComponent(kural.iyal)}&adhigaram=${encodeURIComponent(kural.adhigaram)}`} className="hover:text-blue-500 hover:underline transition-colors">
+                                <Link href={`/browse?paal=${encodeURIComponent(kural.paal)}&iyal=${encodeURIComponent(kural.iyal)}&adhigaram=${encodeURIComponent(kural.adhigaram)}`} className="hover:text-[var(--theme-primary)] hover:underline transition-colors">
                                     {kural.adhigaram}
                                 </Link>
                             </div>
@@ -100,15 +100,15 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
 
                     {/* Mobile Breadcrumbs */}
                     <div className="sm:hidden text-xs text-gray-500 dark:text-gray-400 flex flex-wrap gap-1">
-                        <Link href={`/browse?paal=${encodeURIComponent(kural.paal)}`} className="hover:text-blue-500 hover:underline transition-colors">
+                        <Link href={`/browse?paal=${encodeURIComponent(kural.paal)}`} className="hover:text-[var(--theme-primary)] hover:underline transition-colors">
                             {kural.paal}
                         </Link>
                         <span>/</span>
-                        <Link href={`/browse?paal=${encodeURIComponent(kural.paal)}&iyal=${encodeURIComponent(kural.iyal)}`} className="hover:text-blue-500 hover:underline transition-colors">
+                        <Link href={`/browse?paal=${encodeURIComponent(kural.paal)}&iyal=${encodeURIComponent(kural.iyal)}`} className="hover:text-[var(--theme-primary)] hover:underline transition-colors">
                             {kural.iyal}
                         </Link>
                         <span>/</span>
-                        <Link href={`/browse?paal=${encodeURIComponent(kural.paal)}&iyal=${encodeURIComponent(kural.iyal)}&adhigaram=${encodeURIComponent(kural.adhigaram)}`} className="hover:text-blue-500 hover:underline transition-colors">
+                        <Link href={`/browse?paal=${encodeURIComponent(kural.paal)}&iyal=${encodeURIComponent(kural.iyal)}&adhigaram=${encodeURIComponent(kural.adhigaram)}`} className="hover:text-[var(--theme-primary)] hover:underline transition-colors">
                             {kural.adhigaram}
                         </Link>
                     </div>
@@ -141,7 +141,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                             {/* Mu. Varadarajan */}
                             {kural.mv && (
                                 <div className="space-y-2">
-                                    <h3 className="text-md font-semibold text-blue-600 dark:text-blue-400">
+                                    <h3 className="text-md font-semibold text-[var(--theme-primary)]">
                                         {t.kural.mv}
                                     </h3>
                                     <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
@@ -153,7 +153,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                             {/* Solomon Pappaiah */}
                             {kural.sp && (
                                 <div className="space-y-2">
-                                    <h3 className="text-md font-semibold text-blue-600 dark:text-blue-400">
+                                    <h3 className="text-md font-semibold text-[var(--theme-primary)]">
                                         {t.kural.sp}
                                     </h3>
                                     <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
@@ -165,7 +165,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                             {/* Kalaignar */}
                             {kural.mk && (
                                 <div className="space-y-2">
-                                    <h3 className="text-md font-semibold text-blue-600 dark:text-blue-400">
+                                    <h3 className="text-md font-semibold text-[var(--theme-primary)]">
                                         {t.kural.mk}
                                     </h3>
                                     <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
@@ -178,7 +178,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
 
                     {/* English Meaning */}
                     <div className="space-y-4 pt-6 border-t border-gray-200 dark:border-white/10">
-                        <h2 className="text-lg font-semibold text-purple-600 dark:text-purple-400 flex items-center gap-2">
+                        <h2 className="text-lg font-semibold text-[var(--theme-primary)] flex items-center gap-2">
                             {t.kural.englishMeaning}
                         </h2>
                         <p className="text-lg text-gray-700 dark:text-gray-200 leading-loose italic">
@@ -189,7 +189,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
 
                     {/* AI Explanation Section */}
                     <div className="space-y-4 pt-6 border-t border-gray-200 dark:border-white/10">
-                        <h2 className="text-lg font-semibold text-teal-600 dark:text-teal-400 flex items-center gap-2">
+                        <h2 className="text-lg font-semibold text-[var(--theme-primary)] flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
                                 <path d="M12 2a10 10 0 1 0 10 10H12V2z" />
                                 <path d="M12 12 2.1 12a10.1 10.1 0 0 0 16.9 3" />
@@ -201,7 +201,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                         {!aiExplanation && !isAnalyzing && (
                             <button
                                 onClick={handleAskAI}
-                                className="px-6 py-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white rounded-xl font-medium shadow-lg shadow-teal-500/20 hover:shadow-teal-500/40 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2"
+                                className="px-6 py-3 bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] text-white rounded-xl font-medium shadow-lg shadow-[var(--theme-glow)] hover:opacity-95 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
                                     <path d="M21 12a9 9 0 1 1-6.219-8.56" />
@@ -211,7 +211,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                         )}
 
                         {isAnalyzing && (
-                            <div className="flex items-center gap-3 text-teal-600 dark:text-teal-400 animate-pulse">
+                            <div className="flex items-center gap-3 text-[var(--theme-primary)] animate-pulse">
                                 <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
                                 <span className="font-medium">{t.kural.analyzing}</span>
                             </div>
@@ -224,22 +224,22 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                         )}
 
                         {aiExplanation && (
-                            <div className="relative group rounded-2xl p-[1px] bg-gradient-to-br from-teal-500 via-purple-500 to-amber-500 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                            <div className="relative group rounded-2xl p-[1px] bg-gradient-to-br from-[var(--theme-primary)] via-[var(--theme-secondary)] to-[var(--theme-primary)] animate-in fade-in slide-in-from-bottom-4 duration-700">
                                 <div className="rounded-2xl bg-white dark:bg-gray-900/95 p-6 md:p-8 space-y-8 relative overflow-hidden backdrop-blur-xl">
 
                                     {/* Background Glow */}
-                                    <div className="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                                    <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                                    <div className="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-[var(--theme-glow)] rounded-full blur-3xl pointer-events-none"></div>
+                                    <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-[var(--theme-glow)] rounded-full blur-3xl pointer-events-none"></div>
 
                                     {/* Top Section: Context & Insight */}
                                     <div className="flex flex-col gap-6">
                                         {/* Context Section */}
                                         <div className="space-y-3">
-                                            <div className="flex items-center gap-2 text-teal-600 dark:text-teal-400">
-                                                <div className="p-2 rounded-lg bg-teal-50 dark:bg-teal-900/30">
+                                            <div className="flex items-center gap-2 text-[var(--theme-primary)]">
+                                                <div className="p-2 rounded-lg bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>
                                                 </div>
-                                                <h3 className="text-sm font-bold uppercase tracking-wider opacity-80">Context</h3>
+                                                <h3 className="text-sm font-bold uppercase tracking-wider opacity-90">Context</h3>
                                             </div>
                                             <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm md:text-base">
                                                 {aiExplanation[language] ? aiExplanation[language].context : aiExplanation['en']!.context}
@@ -248,14 +248,14 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
 
                                         {/* Insight Section */}
                                         <div className="space-y-3">
-                                            <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400">
-                                                <div className="p-2 rounded-lg bg-violet-50 dark:bg-violet-900/30">
+                                            <div className="flex items-center gap-2 text-[var(--theme-primary)]">
+                                                <div className="p-2 rounded-lg bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M12 2a10 10 0 1 0 10 10H12V2z" /><path d="M12 12 2.1 12a10.1 10.1 0 0 0 16.9 3" /><path d="M22 12h-10" /></svg>
                                                 </div>
-                                                <h3 className="text-sm font-bold uppercase tracking-wider opacity-80">Core Insight</h3>
+                                                <h3 className="text-sm font-bold uppercase tracking-wider opacity-90">Core Insight</h3>
                                             </div>
                                             <div className="relative">
-                                                <p className="text-lg md:text-xl text-gray-800 dark:text-gray-100 font-medium leading-relaxed italic border-l-4 border-violet-500/30 pl-4 py-1">
+                                                <p className="text-lg md:text-xl text-gray-800 dark:text-gray-100 font-medium leading-relaxed italic border-l-4 border-[var(--theme-primary)]/40 pl-4 py-1">
                                                     "{aiExplanation[language] ? aiExplanation[language].insight : aiExplanation['en']!.insight}"
                                                 </p>
                                             </div>
@@ -267,35 +267,32 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
 
                                     {/* Bottom Section: Modern Relevance */}
                                     <div className="space-y-4">
-                                        <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 mb-2">
-                                            <div className="p-2 rounded-lg bg-amber-50 dark:bg-amber-900/30">
+                                        <div className="flex items-center gap-2 text-[var(--theme-primary)] mb-2">
+                                            <div className="p-2 rounded-lg bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                                             </div>
-                                            <h3 className="text-sm font-bold uppercase tracking-wider opacity-80">Take Away</h3>
+                                            <h3 className="text-sm font-bold uppercase tracking-wider opacity-90">Take Away</h3>
                                         </div>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-4">
                                             {(aiExplanation[language] ? aiExplanation[language].modern : aiExplanation['en']!.modern).slice(0, 2).map((step, index) => (
                                                 <div
                                                     key={index}
-                                                    className={`group/card relative p-6 rounded-2xl transition-all duration-700 hover:-translate-y-2 cursor-default border-2 ${index === 0
-                                                        ? 'bg-white/90 dark:bg-slate-900/60 border-blue-400/40 hover:border-blue-500'
-                                                        : 'bg-white/90 dark:bg-slate-900/60 border-orange-400/40 hover:border-orange-500'
-                                                        } backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] dark:shadow-[0_30px_60px_rgba(0,0,0,0.5)] overflow-hidden`}
+                                                    className="group/card relative p-6 rounded-2xl transition-all duration-700 hover:-translate-y-2 cursor-default border-2 bg-white/90 dark:bg-slate-900/60 border-[var(--theme-badge-border)] hover:border-[var(--theme-primary)] backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] dark:shadow-[0_30px_60px_rgba(0,0,0,0.5)] overflow-hidden"
                                                 >
                                                     {/* High-Impact Ambient Glow Orbits */}
-                                                    <div className={`absolute -top-1/2 -right-1/2 w-full h-full rounded-full blur-[100px] opacity-25 transition-all duration-1000 group-hover:opacity-50 ${index === 0 ? 'bg-cyan-400' : 'bg-orange-500'}`}></div>
-                                                    <div className={`absolute -bottom-1/2 -left-1/2 w-full h-full rounded-full blur-[80px] opacity-25 ${index === 0 ? 'bg-indigo-600' : 'bg-rose-500'}`}></div>
+                                                    <div className="absolute -top-1/2 -right-1/2 w-full h-full rounded-full blur-[100px] opacity-25 transition-all duration-1000 group-hover:opacity-50 bg-[var(--theme-glow)]"></div>
+                                                    <div className="absolute -bottom-1/2 -left-1/2 w-full h-full rounded-full blur-[80px] opacity-25 bg-[var(--theme-glow)]"></div>
 
                                                     {/* Digital Watermark */}
-                                                    <div className={`absolute top-4 right-10 text-[140px] font-black italic select-none opacity-[0.06] dark:opacity-[0.05] transition-all duration-1000 group-hover:scale-110 group-hover:opacity-[0.2] font-serif ${index === 0 ? 'text-blue-500' : 'text-orange-500'}`}>
+                                                    <div className="absolute top-4 right-10 text-[140px] font-black italic select-none opacity-[0.08] dark:opacity-[0.06] transition-all duration-1000 group-hover:scale-110 group-hover:opacity-[0.2] font-serif text-[var(--theme-primary)]">
                                                         {index + 1}
                                                     </div>
 
                                                     <div className="relative z-10 flex flex-col h-full gap-4">
                                                         <div className="space-y-4">
-                                                            <div className={`flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.4em] ${index === 0 ? 'text-blue-600 dark:text-blue-400' : 'text-orange-600 dark:text-orange-400'}`}>
-                                                                <span className={`w-10 h-[1.5px] rounded-full bg-current opacity-60 group-hover:w-14 transition-all duration-500`}></span>
+                                                            <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.4em] text-[var(--theme-primary)]">
+                                                                <span className="w-10 h-[1.5px] rounded-full bg-current opacity-60 group-hover:w-14 transition-all duration-500"></span>
                                                                 {index === 0 ? 'WISDOM' : 'INSIGHT'}
                                                             </div>
 
@@ -311,7 +308,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
 
                                     {/* Footer Actions */}
                                     <div className="flex justify-between items-center pt-2">
-                                        <span className="text-[10px] uppercase font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-purple-500/80">
+                                        <span className="text-[10px] uppercase font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)]">
                                             AI Generated Analysis
                                         </span>
                                         <button
@@ -346,17 +343,17 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
 
                     {/* Right Column: Custom Notes Section (Desktop) */}
                     <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-6">
-                        <div className="glass-card p-6 sm:p-7 rounded-3xl border border-amber-400/30 dark:border-amber-400/20 bg-amber-500/10 dark:bg-amber-400/10 space-y-4 backdrop-blur-md shadow-sm">
+                        <div className="glass-card p-6 sm:p-7 rounded-3xl border border-[var(--theme-badge-border)] bg-[var(--theme-badge-bg)] space-y-4 backdrop-blur-md shadow-sm">
                             <div className="flex items-center justify-between">
-                                <span className="text-xs font-bold text-amber-800 dark:text-amber-300 uppercase tracking-wider flex items-center gap-1.5">
-                                    <svg className="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <span className="text-xs font-bold text-[var(--theme-badge-text)] uppercase tracking-wider flex items-center gap-1.5">
+                                    <svg className="w-4 h-4 text-[var(--theme-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                                     </svg>
                                     {t.note.title}
                                 </span>
                                 <button
                                     onClick={() => setIsNoteModalOpen(true)}
-                                    className="text-xs font-semibold text-amber-700 dark:text-amber-300 hover:underline px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/20 hover:bg-amber-500/25 transition-colors"
+                                    className="text-xs font-semibold text-[var(--theme-badge-text)] hover:underline px-3 py-1 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] hover:bg-[var(--theme-badge-border)]/20 transition-colors"
                                 >
                                     {t.note.editNote}
                                 </button>
@@ -385,12 +382,12 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
             {/* Navigation Footer */}
             <div className="flex justify-between items-center pt-8">
                 {kural.number > 1 ? (
-                    <Link href={`/kural/${kuralNumber - 1}`} className="glass-btn px-6 py-3 flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                    <Link href={`/kural/${kuralNumber - 1}`} className="glass-btn px-6 py-3 flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-[var(--theme-primary)]">
                         &larr; {t.browse.previous}
                     </Link>
                 ) : <div></div>}
 
-                <Link href="/browse" className="glass-btn px-6 py-3 flex items-center gap-2 text-blue-600 dark:text-blue-400 font-medium">
+                <Link href="/browse" className="glass-btn px-6 py-3 flex items-center gap-2 text-[var(--theme-primary)] font-medium">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
                         <circle cx="12" cy="12" r="10" />
                         <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
@@ -399,7 +396,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                 </Link>
 
                 {kural.number < 1330 ? (
-                    <Link href={`/kural/${kuralNumber + 1}`} className="glass-btn px-6 py-3 flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                    <Link href={`/kural/${kuralNumber + 1}`} className="glass-btn px-6 py-3 flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-[var(--theme-primary)]">
                         {t.browse.next} &rarr;
                     </Link>
                 ) : <div></div>}

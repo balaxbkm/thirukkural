@@ -80,7 +80,7 @@ export default function NoteModal({
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-slate-200/60 dark:border-white/10 pb-4">
                     <div className="flex items-center gap-2.5">
-                        <span className="p-2 rounded-xl bg-amber-500/15 text-amber-600 dark:text-amber-400 text-lg flex items-center justify-center">
+                        <span className="p-2 rounded-xl bg-[var(--theme-badge-bg)] text-[var(--theme-primary)] text-lg flex items-center justify-center">
                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M5 5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16l-7-3.5L5 21V5Z" />
                             </svg>
@@ -88,7 +88,7 @@ export default function NoteModal({
                         <div>
                             <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
                                 <span>{t.note.title}</span>
-                                <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-cyan-300 font-semibold border border-indigo-500/20">
+                                <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] font-semibold border border-[var(--theme-badge-border)]">
                                     {t.kural.number} {kuralNumber}
                                 </span>
                             </h3>
@@ -133,7 +133,7 @@ export default function NoteModal({
                         onChange={(e) => setText(e.target.value)}
                         placeholder={t.note.placeholder}
                         rows={5}
-                        className="w-full p-4 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/15 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/40 text-sm leading-relaxed transition-all resize-none shadow-inner"
+                        className="w-full p-4 rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/15 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[var(--theme-primary)]/40 text-sm leading-relaxed transition-all resize-none shadow-inner"
                         autoFocus
                     />
                 </div>
@@ -162,7 +162,7 @@ export default function NoteModal({
                         <button
                             onClick={handleSave}
                             disabled={isSaving}
-                            className="px-5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold text-xs shadow-md shadow-amber-500/20 active:scale-95 transition-all flex items-center gap-1.5 disabled:opacity-50"
+                            className="px-5 py-2 rounded-xl bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] text-white font-semibold text-xs shadow-md shadow-[var(--theme-glow)] hover:opacity-95 active:scale-95 transition-all flex items-center gap-1.5 disabled:opacity-50"
                         >
                             {savedNotice ? (
                                 <>

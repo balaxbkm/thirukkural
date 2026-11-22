@@ -20,7 +20,7 @@ export function unicodeToBamini(text: string): string {
     // Long UU (ூ)
     ['கூ', '$'], ['சூ', '#'], ['டூ', '^'], ['மூ', '%'],
     ['தூ', 'J}'], ['நூ', 'E}'], ['பூ', 'G}'], ['யூ', 'A}'],
-    ['ரூ', 'U}'], ['லூ', 'Y}'], ['வூ', 'T}'], ['ழூ', 'O}'],
+    ['ரூ', 'U}'], ['லூ', 'Y}'], ['வூ', 'Th'], ['ழூ', 'O}'],
     ['ளூ', 'S}'], ['றூ', 'W}'], ['னூ', 'D}'], ['ணூ', 'Z}'],
     ['ஞூ', '*'], ['ஙூ', 'Q}'],
     // Short U (ு)
@@ -86,4 +86,18 @@ export function unicodeToBamini(text: string): string {
   }
 
   return s;
+}
+
+/**
+ * Splits Tamil text into syllables (grapheme clusters) and converts each into its
+ * Bamini font ASCII equivalent. This allows layout spacing (e.g. gap) between full letters
+ * without detaching intra-syllable vowel signs or pulli dots.
+ */
+export function unicodeToBaminiSyllables(text: string): string[] {
+  if (!text) return [];
+  if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+    const segmenter = new Intl.Segmenter('ta', { granularity: 'grapheme' });
+    return Array.from(segmenter.segment(text), s => unicodeToBamini(s.segment));
+  }
+  return [unicodeToBamini(text)];
 }

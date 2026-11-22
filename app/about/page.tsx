@@ -11,11 +11,11 @@ export default function AboutPage() {
         <div className="max-w-7xl 2xl:max-w-[1400px] mx-auto space-y-12 pb-24 animate-in fade-in slide-in-from-bottom-5 duration-700">
             {/* Header */}
             <div className="text-center space-y-4 pt-4">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 dark:bg-indigo-400/15 border border-indigo-500/20 dark:border-indigo-400/30 text-indigo-700 dark:text-cyan-300 font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm">
                     {data.hero.badge}
                 </div>
 
-                <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-indigo-900 to-blue-900 dark:from-white dark:via-blue-100 dark:to-cyan-200 tracking-tight leading-tight">
+                <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight leading-tight">
                     {data.hero.title}
                 </h1>
 
@@ -29,9 +29,9 @@ export default function AboutPage() {
                 {data.intro.stats.map((stat, idx) => (
                     <div
                         key={idx}
-                        className="glass-card p-5 sm:p-6 text-center space-y-1.5 border border-white/80 dark:border-white/10 hover:border-indigo-400/40 transition-all duration-300"
+                        className="glass-card p-5 sm:p-6 text-center space-y-1.5 border border-white/80 dark:border-white/10 hover:border-[var(--theme-badge-border)] transition-all duration-300"
                     >
-                        <div className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-cyan-600 dark:from-indigo-400 dark:to-cyan-300 bg-clip-text text-transparent font-mono">
+                        <div className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] bg-clip-text text-transparent font-mono">
                             {stat.value}
                         </div>
                         <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
@@ -47,7 +47,7 @@ export default function AboutPage() {
             {/* Introduction & Significance */}
             <section className="glass-card p-6 sm:p-10 space-y-5 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                 <div className="flex items-center gap-3 border-b border-slate-200/60 dark:border-white/10 pb-4">
-                    <span className="w-2.5 h-2.5 rounded-full bg-indigo-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[var(--theme-primary)]" />
                     <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
                         {data.intro.title}
                     </h2>
@@ -63,12 +63,12 @@ export default function AboutPage() {
             <section className="glass-card p-6 sm:p-10 space-y-6 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                 <div className="flex items-center justify-between border-b border-slate-200/60 dark:border-white/10 pb-4 flex-wrap gap-2">
                     <div className="flex items-center gap-3">
-                        <span className="w-2.5 h-2.5 rounded-full bg-cyan-500" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-[var(--theme-primary)]" />
                         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
                             {data.author.title} — {data.author.name}
                         </h2>
                     </div>
-                    <span className="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-500/10 dark:bg-indigo-400/20 text-indigo-700 dark:text-cyan-300 border border-indigo-500/20">
+                    <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] border border-[var(--theme-badge-border)]">
                         {language === 'ta' ? 'கிமு 31 • சங்க காலம்' : 'c. 31 BCE • Sangam Era'}
                     </span>
                 </div>
@@ -90,7 +90,7 @@ export default function AboutPage() {
                                 key={idx}
                                 className="p-3.5 rounded-xl bg-white/50 dark:bg-slate-900/40 border border-white/70 dark:border-white/10 backdrop-blur-md space-y-1"
                             >
-                                <div className="font-bold text-sm text-indigo-700 dark:text-cyan-300">
+                                <div className="font-bold text-sm text-[var(--theme-primary)]">
                                     {item.title}
                                 </div>
                                 <div className="text-xs text-slate-600 dark:text-slate-400">
@@ -110,11 +110,11 @@ export default function AboutPage() {
                         {data.author.monuments.map((mon, idx) => (
                             <div
                                 key={idx}
-                                className="p-4 rounded-2xl bg-indigo-50/40 dark:bg-indigo-950/20 border border-indigo-200/50 dark:border-indigo-800/30 backdrop-blur-md space-y-2"
+                                className="p-4 rounded-2xl bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] backdrop-blur-md space-y-2"
                             >
                                 <div className="flex items-center justify-between">
                                     <span className="font-bold text-slate-900 dark:text-white text-base">{mon.name}</span>
-                                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-white/80 dark:bg-white/10 text-indigo-600 dark:text-cyan-300">
+                                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-white/80 dark:bg-white/10 text-[var(--theme-badge-text)]">
                                         📍 {mon.location}
                                     </span>
                                 </div>
@@ -231,7 +231,7 @@ export default function AboutPage() {
             {/* Linguistic & Mathematical Marvels */}
             <section className="glass-card p-6 sm:p-10 space-y-6 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                 <div className="flex items-center gap-3 border-b border-slate-200/60 dark:border-white/10 pb-4">
-                    <span className="w-2.5 h-2.5 rounded-full bg-violet-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[var(--theme-primary)]" />
                     <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
                         {data.marvels.title}
                     </h2>
@@ -241,7 +241,7 @@ export default function AboutPage() {
                     {data.marvels.items.map((item, idx) => (
                         <div
                             key={idx}
-                            className="p-5 rounded-2xl bg-white/45 dark:bg-slate-900/40 border border-white/70 dark:border-white/10 backdrop-blur-md space-y-2 hover:border-indigo-400/30 transition-colors"
+                            className="p-5 rounded-2xl bg-white/45 dark:bg-slate-900/40 border border-white/70 dark:border-white/10 backdrop-blur-md space-y-2 hover:border-[var(--theme-badge-border)] transition-colors"
                         >
                             <div className="flex items-center gap-2.5">
                                 <span className="text-2xl">{item.icon}</span>
@@ -261,7 +261,7 @@ export default function AboutPage() {
             <section className="glass-card p-6 sm:p-10 space-y-6 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                 <div className="space-y-1 border-b border-slate-200/60 dark:border-white/10 pb-4">
                     <div className="flex items-center gap-3">
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-[var(--theme-primary)]" />
                         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
                             {data.commentators.title}
                         </h2>
@@ -281,11 +281,11 @@ export default function AboutPage() {
                                 <h3 className="font-bold text-slate-900 dark:text-white text-base">
                                     {c.name}
                                 </h3>
-                                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] border border-[var(--theme-badge-border)]">
                                     {c.badge}
                                 </span>
                             </div>
-                            <div className="text-xs text-indigo-600 dark:text-cyan-300 font-semibold">
+                            <div className="text-xs text-[var(--theme-primary)] font-semibold">
                                 {c.era}
                             </div>
                             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -300,7 +300,7 @@ export default function AboutPage() {
             <section className="glass-card p-6 sm:p-10 space-y-6 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                 <div className="space-y-1 border-b border-slate-200/60 dark:border-white/10 pb-4">
                     <div className="flex items-center gap-3">
-                        <span className="w-2.5 h-2.5 rounded-full bg-cyan-500" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-[var(--theme-primary)]" />
                         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
                             {data.app.title}
                         </h2>
@@ -314,7 +314,7 @@ export default function AboutPage() {
                     {data.app.features.map((feat, idx) => (
                         <div
                             key={idx}
-                            className="p-5 rounded-2xl bg-white/45 dark:bg-slate-900/40 border border-white/70 dark:border-white/10 backdrop-blur-md space-y-2 hover:border-indigo-400/30 transition-colors"
+                            className="p-5 rounded-2xl bg-white/45 dark:bg-slate-900/40 border border-white/70 dark:border-white/10 backdrop-blur-md space-y-2 hover:border-[var(--theme-badge-border)] transition-colors"
                         >
                             <div className="flex items-center gap-3">
                                 <span className="text-2xl">{feat.icon}</span>

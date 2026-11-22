@@ -74,7 +74,7 @@ ${kural.meaning_en}`;
             {/* Note Button (Bookmark Ribbon - Opens Modal Dialog) */}
             <button
                 onClick={() => onOpenNote ? onOpenNote() : setIsNoteModalOpen(true)}
-                className={`p-2.5 rounded-full transition-all border ${hasCustomNote ? 'text-amber-500 bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-800' : 'text-gray-400 bg-white dark:bg-black/20 border-gray-200 dark:border-white/10 hover:text-amber-500 hover:border-amber-200'}`}
+                className={`p-2.5 rounded-full transition-all border ${hasCustomNote ? 'text-[var(--theme-primary)] bg-[var(--theme-badge-bg)] border-[var(--theme-badge-border)] shadow-sm' : 'text-gray-400 bg-white dark:bg-black/20 border-gray-200 dark:border-white/10 hover:text-[var(--theme-primary)] hover:border-[var(--theme-badge-border)]'}`}
                 title={hasCustomNote ? t.note.editNote : t.note.addNote}
             >
                 <svg className="w-5 h-5" fill={hasCustomNote ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
@@ -96,7 +96,7 @@ ${kural.meaning_en}`;
             {/* Copy Button */}
             <button
                 onClick={handleCopyContent}
-                className="p-2.5 rounded-full bg-white dark:bg-black/20 text-gray-400 border border-gray-200 dark:border-white/10 hover:text-blue-500 hover:border-blue-200 transition-all"
+                className="p-2.5 rounded-full bg-white dark:bg-black/20 text-gray-400 border border-gray-200 dark:border-white/10 hover:text-[var(--theme-primary)] hover:border-[var(--theme-badge-border)] transition-all"
                 title="நகல்"
             >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -107,7 +107,7 @@ ${kural.meaning_en}`;
             {/* Share Button */}
             <button
                 onClick={handleShare}
-                className="p-2.5 rounded-full bg-white dark:bg-black/20 text-gray-400 border border-gray-200 dark:border-white/10 hover:text-blue-500 hover:border-blue-200 transition-all"
+                className="p-2.5 rounded-full bg-white dark:bg-black/20 text-gray-400 border border-gray-200 dark:border-white/10 hover:text-[var(--theme-primary)] hover:border-[var(--theme-badge-border)] transition-all"
                 title={t.kural.share}
             >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

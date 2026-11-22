@@ -34,37 +34,282 @@ select:focus {
   box-shadow: none !important;
 }
 
-:root {
+/* ------------------------------------------------------------- */
+/* Color Themes Configuration (6 Themes x Light & Dark Modes)   */
+/* ------------------------------------------------------------- */
+
+/* 1. INDIGO / CELESTIAL */
+:root[data-theme="indigo"] {
   --background: #ffffff;
   --foreground: #0f172a;
-  --gradient-1: rgba(56, 189, 248, 0.25);
-  /* Cyan Sparkle */
-  --gradient-2: rgba(249, 115, 22, 0.15);
-  /* Vibrant Orange */
-  --gradient-3: rgba(139, 92, 246, 0.2);
-  /* Pure Purple */
+  --gradient-1: rgba(99, 102, 241, 0.22);
+  --gradient-2: rgba(56, 189, 248, 0.20);
+  --gradient-3: rgba(168, 85, 247, 0.16);
+  --theme-primary: #4f46e5;
+  --theme-primary-hover: #4338ca;
+  --theme-secondary: #06b6d4;
+  --theme-quote: rgba(129, 140, 248, 0.45);
+  --theme-badge-bg: rgba(99, 102, 241, 0.10);
+  --theme-badge-border: rgba(99, 102, 241, 0.25);
+  --theme-badge-text: #4338ca;
+  --theme-hero-from: #1e1b4b;
+  --theme-hero-via: #581c87;
+  --theme-hero-to: #0f172a;
+  --theme-dot: #6366f1;
+  --theme-glow: rgba(99, 102, 241, 0.15);
+  --theme-footer-bg: #eef2ff;
 }
 
-.dark {
+.dark[data-theme="indigo"] {
   --background: #020617;
   --foreground: #f8fafc;
-  --gradient-1: rgba(88, 28, 135, 0.3);
-  /* dark violet with low opacity */
-  --gradient-2: rgba(12, 74, 110, 0.3);
-  /* dark sky with low opacity */
+  --gradient-1: rgba(67, 56, 202, 0.35);
+  --gradient-2: rgba(14, 116, 144, 0.32);
+  --gradient-3: rgba(126, 34, 206, 0.28);
+  --theme-primary: #818cf8;
+  --theme-primary-hover: #a5b4fc;
+  --theme-secondary: #22d3ee;
+  --theme-quote: rgba(129, 140, 248, 0.35);
+  --theme-badge-bg: rgba(99, 102, 241, 0.15);
+  --theme-badge-border: rgba(99, 102, 241, 0.35);
+  --theme-badge-text: #67e8f9;
+  --theme-hero-from: #c4b5fd;
+  --theme-hero-via: #f0abfc;
+  --theme-hero-to: #fbcfe8;
+  --theme-dot: #818cf8;
+  --theme-glow: rgba(99, 102, 241, 0.25);
+  --theme-footer-bg: #030712;
+}
+
+/* 2. EMERALD / NATURE (Forest & Serene) */
+:root[data-theme="emerald"] {
+  --background: #f7fee7;
+  --foreground: #064e3b;
+  --gradient-1: rgba(16, 185, 129, 0.24);
+  --gradient-2: rgba(20, 184, 166, 0.20);
+  --gradient-3: rgba(132, 204, 22, 0.16);
+  --theme-primary: #059669;
+  --theme-primary-hover: #047857;
+  --theme-secondary: #14b8a6;
+  --theme-quote: rgba(16, 185, 129, 0.45);
+  --theme-badge-bg: rgba(16, 185, 129, 0.12);
+  --theme-badge-border: rgba(16, 185, 129, 0.30);
+  --theme-badge-text: #065f46;
+  --theme-hero-from: #064e3b;
+  --theme-hero-via: #115e59;
+  --theme-hero-to: #1e3a1f;
+  --theme-dot: #10b981;
+  --theme-glow: rgba(16, 185, 129, 0.15);
+  --theme-footer-bg: #ecfccb;
+}
+
+.dark[data-theme="emerald"] {
+  --background: #022017;
+  --foreground: #ecfdf5;
+  --gradient-1: rgba(6, 95, 70, 0.40);
+  --gradient-2: rgba(19, 78, 74, 0.38);
+  --gradient-3: rgba(49, 72, 20, 0.30);
+  --theme-primary: #34d399;
+  --theme-primary-hover: #6ee7b7;
+  --theme-secondary: #2dd4bf;
+  --theme-quote: rgba(52, 211, 153, 0.35);
+  --theme-badge-bg: rgba(16, 185, 129, 0.16);
+  --theme-badge-border: rgba(52, 211, 153, 0.35);
+  --theme-badge-text: #a7f3d0;
+  --theme-hero-from: #a7f3d0;
+  --theme-hero-via: #99f6e4;
+  --theme-hero-to: #d9f99d;
+  --theme-dot: #34d399;
+  --theme-glow: rgba(52, 211, 153, 0.25);
+  --theme-footer-bg: #01140e;
+}
+
+/* 3. AMBER / GOLDEN SANDAL (Default) */
+:root,
+:root[data-theme="amber"] {
+  --background: #fffbeb;
+  --foreground: #451a03;
+  --gradient-1: rgba(245, 158, 11, 0.25);
+  --gradient-2: rgba(234, 179, 8, 0.22);
+  --gradient-3: rgba(249, 115, 22, 0.18);
+  --theme-primary: #d97706;
+  --theme-primary-hover: #b45309;
+  --theme-secondary: #f59e0b;
+  --theme-quote: rgba(245, 158, 11, 0.45);
+  --theme-badge-bg: rgba(245, 158, 11, 0.12);
+  --theme-badge-border: rgba(245, 158, 11, 0.30);
+  --theme-badge-text: #92400e;
+  --theme-hero-from: #451a03;
+  --theme-hero-via: #78350f;
+  --theme-hero-to: #7c2d12;
+  --theme-dot: #f59e0b;
+  --theme-glow: rgba(245, 158, 11, 0.15);
+  --theme-footer-bg: #f8e5b9;
+}
+
+.dark,
+.dark[data-theme="amber"] {
+  --background: #1c1004;
+  --foreground: #fffbeb;
+  --gradient-1: rgba(180, 83, 9, 0.40);
+  --gradient-2: rgba(161, 98, 7, 0.35);
+  --gradient-3: rgba(154, 52, 18, 0.30);
+  --theme-primary: #fbbf24;
+  --theme-primary-hover: #fde68a;
+  --theme-secondary: #fb923c;
+  --theme-quote: rgba(251, 191, 36, 0.35);
+  --theme-badge-bg: rgba(245, 158, 11, 0.16);
+  --theme-badge-border: rgba(251, 191, 36, 0.35);
+  --theme-badge-text: #fef08a;
+  --theme-hero-from: #fde68a;
+  --theme-hero-via: #fed7aa;
+  --theme-hero-to: #fef3c7;
+  --theme-dot: #fbbf24;
+  --theme-glow: rgba(251, 191, 36, 0.25);
+  --theme-footer-bg: #120a02;
+}
+
+/* 4. ROSE / RUBY LOTUS (Divine & Bloom) */
+:root[data-theme="rose"] {
+  --background: #fff1f2;
+  --foreground: #4c0519;
+  --gradient-1: rgba(244, 63, 94, 0.24);
+  --gradient-2: rgba(236, 72, 153, 0.20);
+  --gradient-3: rgba(251, 113, 133, 0.16);
+  --theme-primary: #e11d48;
+  --theme-primary-hover: #be123c;
+  --theme-secondary: #db2777;
+  --theme-quote: rgba(244, 63, 94, 0.45);
+  --theme-badge-bg: rgba(244, 63, 94, 0.12);
+  --theme-badge-border: rgba(244, 63, 94, 0.30);
+  --theme-badge-text: #9f1239;
+  --theme-hero-from: #4c0519;
+  --theme-hero-via: #831843;
+  --theme-hero-to: #3f0713;
+  --theme-dot: #f43f5e;
+  --theme-glow: rgba(244, 63, 94, 0.15);
+  --theme-footer-bg: #ffe4e6;
+}
+
+.dark[data-theme="rose"] {
+  --background: #1e030a;
+  --foreground: #fff1f2;
+  --gradient-1: rgba(190, 18, 60, 0.40);
+  --gradient-2: rgba(157, 23, 77, 0.36);
+  --gradient-3: rgba(136, 19, 55, 0.30);
+  --theme-primary: #fb7185;
+  --theme-primary-hover: #fda4af;
+  --theme-secondary: #f472b6;
+  --theme-quote: rgba(251, 113, 133, 0.35);
+  --theme-badge-bg: rgba(244, 63, 94, 0.16);
+  --theme-badge-border: rgba(251, 113, 133, 0.35);
+  --theme-badge-text: #fbcfe8;
+  --theme-hero-from: #fecdd3;
+  --theme-hero-via: #fbcfe8;
+  --theme-hero-to: #fed7aa;
+  --theme-dot: #fb7185;
+  --theme-glow: rgba(251, 113, 133, 0.25);
+  --theme-footer-bg: #120206;
+}
+
+/* 5. BLACK & WHITE / MONOCHROME (Classic & Minimal) */
+:root[data-theme="monochrome"] {
+  --background: #fafafa;
+  --foreground: #09090b;
+  --gradient-1: rgba(0, 0, 0, 0.08);
+  --gradient-2: rgba(39, 39, 42, 0.06);
+  --gradient-3: rgba(82, 82, 91, 0.05);
+  --theme-primary: #18181b;
+  --theme-primary-hover: #000000;
+  --theme-secondary: #52525b;
+  --theme-quote: rgba(24, 24, 27, 0.40);
+  --theme-badge-bg: rgba(0, 0, 0, 0.07);
+  --theme-badge-border: rgba(0, 0, 0, 0.20);
+  --theme-badge-text: #09090b;
+  --theme-hero-from: #09090b;
+  --theme-hero-via: #27272a;
+  --theme-hero-to: #3f3f46;
+  --theme-dot: #18181b;
+  --theme-glow: rgba(0, 0, 0, 0.15);
+  --theme-footer-bg: #ebebeb;
+}
+
+.dark[data-theme="monochrome"] {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --gradient-1: rgba(255, 255, 255, 0.08);
+  --gradient-2: rgba(212, 212, 216, 0.06);
+  --gradient-3: rgba(161, 161, 170, 0.04);
+  --theme-primary: #f4f4f5;
+  --theme-primary-hover: #ffffff;
+  --theme-secondary: #a1a1aa;
+  --theme-quote: rgba(244, 244, 245, 0.35);
+  --theme-badge-bg: rgba(255, 255, 255, 0.10);
+  --theme-badge-border: rgba(255, 255, 255, 0.25);
+  --theme-badge-text: #ffffff;
+  --theme-hero-from: #ffffff;
+  --theme-hero-via: #e4e4e7;
+  --theme-hero-to: #a1a1aa;
+  --theme-dot: #f4f4f5;
+  --theme-glow: rgba(255, 255, 255, 0.20);
+  --theme-footer-bg: #030304;
+}
+
+/* 6. AMETHYST / ROYAL PURPLE (Majestic Imperial) */
+:root[data-theme="amethyst"] {
+  --background: #faf5ff;
+  --foreground: #3b0764;
+  --gradient-1: rgba(147, 51, 234, 0.24);
+  --gradient-2: rgba(192, 38, 211, 0.20);
+  --gradient-3: rgba(109, 40, 217, 0.18);
+  --theme-primary: #9333ea;
+  --theme-primary-hover: #7e22ce;
+  --theme-secondary: #c026d3;
+  --theme-quote: rgba(147, 51, 234, 0.45);
+  --theme-badge-bg: rgba(147, 51, 234, 0.12);
+  --theme-badge-border: rgba(147, 51, 234, 0.30);
+  --theme-badge-text: #6b21a8;
+  --theme-hero-from: #3b0764;
+  --theme-hero-via: #581c87;
+  --theme-hero-to: #701a75;
+  --theme-dot: #9333ea;
+  --theme-glow: rgba(147, 51, 234, 0.15);
+  --theme-footer-bg: #f3e8ff;
+}
+
+.dark[data-theme="amethyst"] {
+  --background: #140224;
+  --foreground: #faf5ff;
+  --gradient-1: rgba(107, 33, 168, 0.42);
+  --gradient-2: rgba(134, 25, 143, 0.38);
+  --gradient-3: rgba(88, 28, 135, 0.34);
+  --theme-primary: #c084fc;
+  --theme-primary-hover: #d8b4fe;
+  --theme-secondary: #e879f9;
+  --theme-quote: rgba(192, 132, 252, 0.35);
+  --theme-badge-bg: rgba(147, 51, 234, 0.16);
+  --theme-badge-border: rgba(192, 132, 252, 0.35);
+  --theme-badge-text: #e9d5ff;
+  --theme-hero-from: #e9d5ff;
+  --theme-hero-via: #f5d0fe;
+  --theme-hero-to: #ddd6fe;
+  --theme-dot: #c084fc;
+  --theme-glow: rgba(192, 132, 252, 0.28);
+  --theme-footer-bg: #0a0112;
 }
 
 body {
   background:
-    radial-gradient(at 0% 0%, var(--gradient-1), transparent 40%),
-    radial-gradient(at 100% 0%, var(--gradient-2), transparent 40%),
-    radial-gradient(at 100% 100%, var(--gradient-3), transparent 40%),
+    radial-gradient(at 0% 0%, var(--gradient-1), transparent 45%),
+    radial-gradient(at 100% 0%, var(--gradient-2), transparent 45%),
+    radial-gradient(at 100% 100%, var(--gradient-3), transparent 45%),
     var(--background);
   background-attachment: fixed;
   background-size: cover;
   color: var(--foreground);
   min-height: 100vh;
   font-family: var(--font-mukta), var(--font-outfit), sans-serif;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
 /* Glassmorphism Classes */
@@ -72,23 +317,23 @@ body {
 .glass-card,
 .glass-input,
 .glass-btn {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(20px) saturate(250%);
   -webkit-backdrop-filter: blur(20px) saturate(250%);
   border: 1px solid rgba(255, 255, 255, 1);
   box-shadow:
     0 10px 40px -10px rgba(0, 0, 0, 0.05),
-    0 0 20px rgba(99, 102, 241, 0.03);
+    0 0 25px var(--theme-glow);
 }
 
 .dark .glass,
 .dark .glass-card,
 .dark .glass-input,
 .dark .glass-btn {
-  background: rgba(15, 23, 42, 0.3);
+  background: rgba(15, 23, 42, 0.35);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: none;
+  box-shadow: 0 4px 30px -10px var(--theme-glow);
 }
 
 .glass-card {

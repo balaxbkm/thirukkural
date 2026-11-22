@@ -94,20 +94,20 @@ export default function CustomSelect({
                 onClick={() => setIsOpen(!isOpen)}
                 className={`w-full text-left px-4 py-3 rounded-xl border transition-all duration-200 flex items-center justify-between
                     ${isOpen
-                        ? 'border-blue-500 ring-2 ring-blue-500/20 bg-white dark:bg-slate-900 shadow-lg'
+                        ? 'border-[var(--theme-primary)] ring-2 ring-[var(--theme-primary)]/20 bg-white dark:bg-slate-900 shadow-lg'
                         : 'border-gray-200 dark:border-white/10 bg-white/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-900'
                     }
                 `}
             >
                 <div className="flex items-center gap-3 overflow-hidden">
                     {icon && (
-                        <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isOpen ? 'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400' : 'bg-gray-100 text-gray-500 dark:bg-slate-800 dark:text-gray-400'
+                        <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isOpen ? 'bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]' : 'bg-gray-100 text-gray-500 dark:bg-slate-800 dark:text-gray-400'
                             }`}>
                             {icon}
                         </div>
                     )}
                     <div className="min-w-0">
-                        <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider block mb-0.5">
+                        <span className="text-xs font-semibold text-[var(--theme-primary)] uppercase tracking-wider block mb-0.5">
                             {label}
                         </span>
                         <span className={`block font-medium truncate ${value ? 'text-gray-900 dark:text-white' : 'text-gray-400'}`}>
@@ -117,7 +117,7 @@ export default function CustomSelect({
                 </div>
 
                 <svg
-                    className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180 text-blue-500' : ''}`}
+                    className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180 text-[var(--theme-primary)]' : ''}`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -128,9 +128,9 @@ export default function CustomSelect({
 
             {/* Dropdown Menu */}
             {isOpen && (
-                <div className="absolute z-50 w-full mt-2 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-gray-100 dark:border-white/10 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
-                    <div className="px-4 py-3 bg-blue-50/50 dark:bg-blue-900/10 border-b border-blue-100 dark:border-blue-800/30">
-                        <h3 className="font-bold text-blue-600 dark:text-blue-400 mb-1">
+                <div className="absolute z-50 w-full mt-2 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-[var(--theme-badge-border)] overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="px-4 py-3 bg-[var(--theme-badge-bg)] border-b border-[var(--theme-badge-border)]">
+                        <h3 className="font-bold text-[var(--theme-primary)] mb-1">
                             {label}
                         </h3>
                         {enableSearch && (
@@ -164,8 +164,8 @@ export default function CustomSelect({
                                 onClick={() => handleSelect(option.value)}
                                 className={`w-full text-left px-4 py-3 text-sm font-medium transition-colors border-b border-gray-50 dark:border-white/5 last:border-0
                                     ${value === option.value
-                                        ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
-                                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-blue-600 dark:hover:text-blue-400'
+                                        ? 'bg-[var(--theme-badge-bg)] text-[var(--theme-primary)] font-semibold'
+                                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-[var(--theme-primary)]'
                                     }
                                 `}
                             >

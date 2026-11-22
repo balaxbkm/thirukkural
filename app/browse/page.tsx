@@ -101,7 +101,7 @@ function BrowseContent() {
         <div className="space-y-8 pb-12 animate-in fade-in duration-500">
             {/* Header */}
             <div className="text-center space-y-4">
-                <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+                <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)]">
                     {t.browse.title}
                 </h1>
                 <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -156,7 +156,7 @@ function BrowseContent() {
                 <div className="flex justify-end mt-1.5">
                     <button
                         onClick={resetFilters}
-                        className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                        className="text-sm text-[var(--theme-primary)] hover:underline"
                     >
                         {t.browse.clearFilters}
                     </button>
@@ -178,7 +178,7 @@ function BrowseContent() {
             ) : (
                 <div className="text-center py-20 text-gray-500">
                     <p className="text-xl">{t.browse.noResults}</p>
-                    <button onClick={resetFilters} className="mt-4 text-blue-500 hover:underline">
+                    <button onClick={resetFilters} className="mt-4 text-[var(--theme-primary)] hover:underline">
                         {t.browse.clearFilters}
                     </button>
                 </div>
@@ -231,7 +231,7 @@ function BrowseContent() {
                                 onClick={() => typeof page === 'number' ? updateFilters({ page: String(page) }) : null}
                                 disabled={typeof page !== 'number'}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${page === currentPage
-                                    ? "bg-blue-600 text-white shadow-lg shadow-blue-500/30"
+                                    ? "bg-[var(--theme-primary)] text-white shadow-lg shadow-[var(--theme-glow)]"
                                     : typeof page === 'number'
                                         ? "glass-btn text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
                                         : "cursor-default text-gray-400"

@@ -12,7 +12,7 @@ import { unicodeToBamini } from "@/lib/utils/bamini";
 
 export default function Home() {
   const { t } = useLanguage();
-  const { isFavorite, toggleFavorite, hasNote, recentKuralNumbers, clearHistory, isReady } = useUserKuralActions();
+  const { isFavorite, toggleFavorite, hasNote, recentKuralNumbers, isReady } = useUserKuralActions();
   const [favoriteToast, setFavoriteToast] = useState(false);
   const [isNoteOpen, setIsNoteOpen] = useState(false);
   const [randomKurals, setRandomKurals] = useState<Kural[]>([]);
@@ -39,21 +39,40 @@ export default function Home() {
         }
         setRandomKurals(random);
 
-        // Random Kural Logic (Seeded by 8-hour interval)
-        const now = Date.now();
-        const intervalMs = 8 * 60 * 60 * 1000;
-        const timeBucket = Math.floor(now / intervalMs);
-
-        // Use bucket as seed for randomness
-        const seedStr = timeBucket.toString();
-        let hash = 0;
-        for (let i = 0; i < seedStr.length; i++) {
-          hash = ((hash << 5) - hash) + seedStr.charCodeAt(i);
-          hash |= 0;
+        // Check if user previously changed the hero kural using the reload button
+        let savedKural: Kural | null = null;
+        try {
+          const savedHeroNum = localStorage.getItem("thirukkural_hero_kural");
+          if (savedHeroNum) {
+            const num = parseInt(savedHeroNum, 10);
+            const found = all.find((k) => k.number === num);
+            if (found) {
+              savedKural = found;
+            }
+          }
+        } catch (e) {
+          console.error("Failed to read hero kural from localStorage:", e);
         }
-        const positiveHash = Math.abs(hash);
-        const index = positiveHash % all.length;
-        setDailyKural(all[index]);
+
+        if (savedKural) {
+          setDailyKural(savedKural);
+        } else {
+          // Fallback: Seeded Kural Logic (8-hour interval)
+          const now = Date.now();
+          const intervalMs = 8 * 60 * 60 * 1000;
+          const timeBucket = Math.floor(now / intervalMs);
+
+          // Use bucket as seed for randomness
+          const seedStr = timeBucket.toString();
+          let hash = 0;
+          for (let i = 0; i < seedStr.length; i++) {
+            hash = ((hash << 5) - hash) + seedStr.charCodeAt(i);
+            hash |= 0;
+          }
+          const positiveHash = Math.abs(hash);
+          const index = positiveHash % all.length;
+          setDailyKural(all[index]);
+        }
       } catch (e) {
         console.error(e);
       }
@@ -74,7 +93,13 @@ export default function Home() {
         nextIndex = Math.floor(Math.random() * allKurals.length);
       } while (allKurals.length > 1 && dailyKural && allKurals[nextIndex].number === dailyKural.number);
 
-      setDailyKural(allKurals[nextIndex]);
+      const nextKural = allKurals[nextIndex];
+      setDailyKural(nextKural);
+      try {
+        localStorage.setItem("thirukkural_hero_kural", nextKural.number.toString());
+      } catch (err) {
+        console.error("Failed to save hero kural to localStorage:", err);
+      }
       setIsRotating(false);
     }, 450);
   };
@@ -106,11 +131,23 @@ export default function Home() {
     <div className="flex flex-col gap-16 pt-4 pb-14 md:py-10">
       {/* Hero Section */}
       <section className="relative flex flex-col items-center justify-center text-center gap-8 pt-6 pb-12 md:py-16">
-        {/* Subtitle Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 dark:bg-indigo-400/15 border border-indigo-500/20 dark:border-indigo-400/30 text-indigo-700 dark:text-cyan-300 font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm animate-in fade-in zoom-in duration-500">
-          <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-ping" />
-          {t.home.subtitle}
-        </div>
+        {/* Chapter Badge of the Current Kural */}
+        {dailyKural ? (
+          <Link
+            key={dailyKural.number}
+            href={`/browse?paal=${encodeURIComponent(dailyKural.paal)}&iyal=${encodeURIComponent(dailyKural.iyal)}&adhigaram=${encodeURIComponent(dailyKural.adhigaram)}`}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider backdrop-blur-md shadow-sm hover:scale-105 transition-all duration-300 hover:border-[var(--theme-primary)] animate-in fade-in zoom-in duration-500"
+            title={dailyKural.adhigaram}
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--theme-dot)] animate-ping" />
+            {dailyKural.adhigaram}
+          </Link>
+        ) : (
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider backdrop-blur-md shadow-sm animate-in fade-in zoom-in duration-500">
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--theme-dot)] animate-ping" />
+            {t.home.subtitle}
+          </div>
+        )}
 
         {/* Today's Kural (Daily Kural) - Positioned ABOVE the Search Bar */}
         {dailyKural && (
@@ -120,24 +157,24 @@ export default function Home() {
                 href={`/kural/${dailyKural.number}`}
                 className="flex items-center justify-center gap-2 sm:gap-6 relative z-10 transition-transform hover:scale-[1.01] duration-300 ease-out cursor-pointer w-full"
               >
-                <span className="font-serif text-6xl sm:text-8xl md:text-9xl lg:text-[110px] xl:text-[130px] leading-none text-indigo-400/40 dark:text-indigo-400/35 select-none flex-shrink-0 self-center">
+                <span className="font-serif text-6xl sm:text-8xl md:text-9xl lg:text-[110px] xl:text-[130px] leading-none text-[var(--theme-quote)] select-none flex-shrink-0 self-center">
                   &ldquo;
                 </span>
                 <div key={dailyKural.number} className="space-y-0 text-center animate-in fade-in duration-300">
                   <p
-                    className="font-bamini whitespace-nowrap text-[20px] sm:text-[30px] md:text-[40px] lg:text-[48px] xl:text-[52px] leading-tight bg-gradient-to-r from-indigo-950 via-purple-900 to-slate-900 dark:from-violet-300 dark:via-fuchsia-300 dark:to-pink-200 bg-clip-text text-transparent drop-shadow-sm"
+                    className="font-bamini whitespace-nowrap text-[20px] sm:text-[30px] md:text-[40px] lg:text-[48px] xl:text-[52px] leading-tight bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm"
                     aria-label={dailyKural.line1_ta}
                   >
                     {unicodeToBamini(dailyKural.line1_ta)}
                   </p>
                   <p
-                    className="font-bamini whitespace-nowrap text-[20px] sm:text-[30px] md:text-[40px] lg:text-[48px] xl:text-[52px] leading-tight bg-gradient-to-r from-indigo-950 via-purple-900 to-slate-900 dark:from-violet-300 dark:via-fuchsia-300 dark:to-pink-200 bg-clip-text text-transparent drop-shadow-sm"
+                    className="font-bamini whitespace-nowrap text-[20px] sm:text-[30px] md:text-[40px] lg:text-[48px] xl:text-[52px] leading-tight bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm"
                     aria-label={dailyKural.line2_ta}
                   >
                     {unicodeToBamini(dailyKural.line2_ta)}
                   </p>
                 </div>
-                <span className="font-serif text-6xl sm:text-8xl md:text-9xl lg:text-[110px] xl:text-[130px] leading-none text-indigo-400/40 dark:text-indigo-400/35 select-none flex-shrink-0 self-center">
+                <span className="font-serif text-6xl sm:text-8xl md:text-9xl lg:text-[110px] xl:text-[130px] leading-none text-[var(--theme-quote)] select-none flex-shrink-0 self-center">
                   &rdquo;
                 </span>
               </Link>
@@ -188,11 +225,11 @@ export default function Home() {
 
                 {/* Badge Link */}
                 <Link href={`/kural/${dailyKural.number}`} className="group cursor-pointer hover:scale-105 transition-all duration-300">
-                  <div className="flex items-center gap-2 px-5 py-2 rounded-full bg-white/70 dark:bg-slate-900/50 backdrop-blur-md border border-white/80 dark:border-white/10 shadow-sm hover:shadow-md hover:border-indigo-300 dark:hover:border-indigo-500/40 transition-all">
+                  <div className="flex items-center gap-2 px-5 py-2 rounded-full bg-white/70 dark:bg-slate-900/50 backdrop-blur-md border border-white/80 dark:border-white/10 shadow-sm hover:shadow-md hover:border-[var(--theme-primary)] transition-all">
                     <span className="text-sm sm:text-base font-bold text-slate-700 dark:text-slate-300 pr-3 mr-1 border-r border-slate-300 dark:border-white/10">
                       {t.kural?.number || "குறள்"}
                     </span>
-                    <span className="text-sm sm:text-base font-black bg-gradient-to-r from-indigo-600 to-cyan-600 dark:from-indigo-400 dark:to-cyan-300 bg-clip-text text-transparent font-mono">
+                    <span className="text-sm sm:text-base font-black bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] bg-clip-text text-transparent font-mono">
                       {dailyKural.number}
                     </span>
                   </div>
@@ -203,7 +240,7 @@ export default function Home() {
                   type="button"
                   onClick={handleRefresh}
                   disabled={isRotating}
-                  className="group p-3 rounded-full bg-white/70 dark:bg-slate-900/50 backdrop-blur-md border border-white/80 dark:border-white/10 shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 hover:border-indigo-300 dark:hover:border-indigo-500/40 cursor-pointer disabled:opacity-50"
+                  className="group p-3 rounded-full bg-white/70 dark:bg-slate-900/50 backdrop-blur-md border border-white/80 dark:border-white/10 shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 hover:border-[var(--theme-primary)] cursor-pointer disabled:opacity-50"
                   aria-label={t.home.randomBtn || "New Random Kural"}
                   title={t.home.randomBtn || "New Random Kural"}
                 >
@@ -213,7 +250,7 @@ export default function Home() {
                     viewBox="0 0 24 24"
                     strokeWidth="2"
                     stroke="currentColor"
-                    className={`w-5 h-5 text-slate-500 dark:text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-cyan-300 transition-transform duration-500 ease-in-out ${isRotating ? "rotate-180" : "rotate-0"}`}
+                    className={`w-5 h-5 text-slate-500 dark:text-slate-400 group-hover:text-[var(--theme-primary)] transition-transform duration-500 ease-in-out ${isRotating ? "rotate-180" : "rotate-0"}`}
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
                   </svg>
@@ -255,7 +292,7 @@ export default function Home() {
           <div className="flex justify-between items-end px-2">
             <div>
               <div className="flex items-center gap-2">
-                <span className="p-1.5 rounded-lg bg-indigo-500/10 dark:bg-indigo-400/15 text-indigo-600 dark:text-cyan-400">
+                <span className="p-1.5 rounded-lg bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -278,13 +315,12 @@ export default function Home() {
                 {t.home.recentSubtitle}
               </p>
             </div>
-            <button
-              onClick={clearHistory}
-              className="text-xs font-medium text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 transition-colors px-2.5 py-1 rounded-md hover:bg-rose-500/10 active:scale-95"
-              title={t.home.clearRecent}
+            <Link
+              href="/history"
+              className="text-sm font-semibold text-[var(--theme-primary)] hover:text-[var(--theme-primary-hover)] transition-colors flex items-center gap-1 group"
             >
-              {t.home.clearRecent}
-            </button>
+              {t.home.viewAll} <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -302,11 +338,11 @@ export default function Home() {
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               {t.home.featured}
             </h2>
-            <div className="h-1 w-20 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-full mt-2" />
+            <div className="h-1 w-20 bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] rounded-full mt-2" />
           </div>
           <Link
             href="/browse"
-            className="text-sm font-semibold text-indigo-600 dark:text-cyan-400 hover:text-indigo-800 dark:hover:text-cyan-300 transition-colors flex items-center gap-1 group"
+            className="text-sm font-semibold text-[var(--theme-primary)] hover:text-[var(--theme-primary-hover)] transition-colors flex items-center gap-1 group"
           >
             {t.home.viewAll} <span className="group-hover:translate-x-1 transition-transform">→</span>
           </Link>

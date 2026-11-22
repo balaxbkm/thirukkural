@@ -30,16 +30,16 @@ export default function FavoritesPage() {
     return (
         <div className="max-w-7xl mx-auto space-y-10 animate-in fade-in duration-500 pb-16">
             <div className="text-center space-y-4 pt-2">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/10 dark:bg-rose-400/15 border border-rose-500/20 dark:border-rose-400/30 text-rose-700 dark:text-rose-300 font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm">
                     ❤️ {t.nav.favorites}
                 </div>
 
-                <h1 className="text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-rose-600 via-pink-600 to-rose-700 dark:from-rose-200 dark:via-pink-200 dark:to-purple-200 tracking-tight">
+                <h1 className="text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight">
                     {t.favorites.title}
                 </h1>
 
                 <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base">
-                    <span className="font-bold text-slate-900 dark:text-white px-2 py-0.5 rounded-md bg-rose-500/10 dark:bg-rose-400/15 border border-rose-500/20 font-mono">
+                    <span className="font-bold text-[var(--theme-badge-text)] px-2 py-0.5 rounded-md bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] font-mono">
                         {favoriteList.length}
                     </span>{" "}
                     {t.favorites.savedCount}
@@ -54,7 +54,7 @@ export default function FavoritesPage() {
                 </div>
             ) : (
                 <div className="flex flex-col items-center justify-center py-20 text-center space-y-6 bg-white/40 dark:bg-slate-900/40 rounded-3xl border border-dashed border-slate-300 dark:border-white/10 p-8 backdrop-blur-md max-w-xl mx-auto">
-                    <div className="w-20 h-20 bg-rose-500/10 dark:bg-rose-400/10 rounded-full flex items-center justify-center text-4xl border border-rose-500/20">
+                    <div className="w-20 h-20 bg-[var(--theme-badge-bg)] rounded-full flex items-center justify-center text-4xl border border-[var(--theme-badge-border)]">
                         ❤️
                     </div>
                     <div className="space-y-2">
@@ -67,7 +67,7 @@ export default function FavoritesPage() {
                     </div>
                     <Link
                         href="/browse"
-                        className="px-6 py-2.5 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-semibold text-sm shadow-lg shadow-rose-500/25 transition-all active:scale-95"
+                        className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] hover:opacity-90 text-white font-semibold text-sm shadow-lg shadow-[var(--theme-glow)] transition-all active:scale-95"
                     >
                         {t.favorites.startBrowsing}
                     </Link>

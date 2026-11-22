@@ -6,6 +6,7 @@ import { LanguageProvider } from "@/lib/context/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { ThemeColorProvider } from "@/lib/context/ThemeColorContext";
 
 
 const outfit = Outfit({
@@ -37,17 +38,31 @@ export default async function RootLayout({
 
   return (
     <html lang="ta" className={`scroll-smooth ${outfit.variable} ${muktaMalar.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const raw = localStorage.getItem('thirukkural_color_theme') || 'amber';
+                const t = raw === 'sapphire' ? 'monochrome' : raw;
+                document.documentElement.setAttribute('data-theme', t);
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
       <body className="antialiased min-h-screen flex flex-col font-sans selection:bg-blue-500/30" suppressHydrationWarning>
         <LanguageProvider>
           <UserKuralActionsProvider>
-            <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-              <Header />
-              <main className="flex-grow pt-24 md:pt-28 px-4 max-w-[1600px] mx-auto w-full">
-                {children}
-              </main>
-              <Footer adhigaramData={adhigaramData} />
-
-            </ThemeProvider>
+            <ThemeColorProvider>
+              <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+                <Header />
+                <main className="flex-grow pt-24 md:pt-28 px-4 max-w-[1600px] mx-auto w-full">
+                  {children}
+                </main>
+                <Footer adhigaramData={adhigaramData} />
+              </ThemeProvider>
+            </ThemeColorProvider>
           </UserKuralActionsProvider>
         </LanguageProvider>
       </body>
