@@ -101,7 +101,7 @@ function BrowseContent() {
         <div className="space-y-8 pb-12 animate-in fade-in duration-500">
             {/* Header */}
             <div className="text-center space-y-4">
-                <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)]">
+                <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] pb-2 leading-normal">
                     {t.browse.title}
                 </h1>
                 <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">

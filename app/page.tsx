@@ -162,13 +162,13 @@ export default function Home() {
                 </span>
                 <div key={dailyKural.number} className="space-y-0 text-center animate-in fade-in duration-300">
                   <p
-                    className="font-bamini whitespace-nowrap text-[20px] sm:text-[30px] md:text-[40px] lg:text-[48px] xl:text-[52px] leading-tight bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm"
+                    className="font-bamini whitespace-nowrap text-[20px] sm:text-[30px] md:text-[40px] lg:text-[48px] xl:text-[52px] leading-snug pb-1 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm"
                     aria-label={dailyKural.line1_ta}
                   >
                     {unicodeToBamini(dailyKural.line1_ta)}
                   </p>
                   <p
-                    className="font-bamini whitespace-nowrap text-[20px] sm:text-[30px] md:text-[40px] lg:text-[48px] xl:text-[52px] leading-tight bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm"
+                    className="font-bamini whitespace-nowrap text-[20px] sm:text-[30px] md:text-[40px] lg:text-[48px] xl:text-[52px] leading-snug pb-1 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm"
                     aria-label={dailyKural.line2_ta}
                   >
                     {unicodeToBamini(dailyKural.line2_ta)}

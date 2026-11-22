@@ -8,9 +8,10 @@ import { useLanguage } from "@/lib/context/LanguageContext";
 
 interface KuralCardProps {
     kural: Kural;
+    showNote?: boolean;
 }
 
-export default function KuralCard({ kural }: KuralCardProps) {
+export default function KuralCard({ kural, showNote = true }: KuralCardProps) {
     const { t } = useLanguage();
     const { isFavorite, toggleFavorite, hasNote, getNote } = useUserKuralActions();
     const isFav = isFavorite(kural.number);
@@ -110,7 +111,7 @@ ${kural.meaning_en}`;
                     </div>
 
                     {/* Custom Note Preview if present */}
-                    {hasCustomNote && (
+                    {showNote && hasCustomNote && (
                         <div className="pt-1">
                             <div className="p-2.5 rounded-xl bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-xs text-[var(--theme-badge-text)] flex items-start gap-2 backdrop-blur-sm">
                                 <span className="text-[var(--theme-primary)] text-xs shrink-0 mt-0.5">📝</span>

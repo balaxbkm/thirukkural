@@ -34,7 +34,7 @@ export default function FavoritesPage() {
                     ❤️ {t.nav.favorites}
                 </div>
 
-                <h1 className="text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight">
+                <h1 className="text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight pb-2 leading-normal">
                     {t.favorites.title}
                 </h1>
 
@@ -49,7 +49,7 @@ export default function FavoritesPage() {
             {favoriteList.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {favoriteList.map((kural) => (
-                        <KuralCard key={kural.number} kural={kural} />
+                        <KuralCard key={kural.number} kural={kural} showNote={false} />
                     ))}
                 </div>
             ) : (

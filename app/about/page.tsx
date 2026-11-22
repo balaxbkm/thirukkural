@@ -8,14 +8,14 @@ export default function AboutPage() {
     const data = aboutData[language] || aboutData.en;
 
     return (
-        <div className="max-w-7xl 2xl:max-w-[1400px] mx-auto space-y-12 pb-24 animate-in fade-in slide-in-from-bottom-5 duration-700">
+        <div className="max-w-6xl mx-auto space-y-12 pb-24 animate-in fade-in slide-in-from-bottom-5 duration-700">
             {/* Header */}
             <div className="text-center space-y-4 pt-4">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm whitespace-nowrap">
                     {data.hero.badge}
                 </div>
 
-                <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight leading-tight">
+                <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight pb-2 leading-normal">
                     {data.hero.title}
                 </h1>
 
@@ -34,7 +34,7 @@ export default function AboutPage() {
                         <div className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] bg-clip-text text-transparent font-mono">
                             {stat.value}
                         </div>
-                        <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
+                        <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white whitespace-nowrap">
                             {stat.label}
                         </div>
                         <div className="text-[11px] text-slate-500 dark:text-slate-400">
@@ -68,7 +68,7 @@ export default function AboutPage() {
                             {data.author.title} — {data.author.name}
                         </h2>
                     </div>
-                    <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] border border-[var(--theme-badge-border)]">
+                    <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] border border-[var(--theme-badge-border)] whitespace-nowrap shrink-0">
                         {language === 'ta' ? 'கிமு 31 • சங்க காலம்' : 'c. 31 BCE • Sangam Era'}
                     </span>
                 </div>
@@ -112,9 +112,9 @@ export default function AboutPage() {
                                 key={idx}
                                 className="p-4 rounded-2xl bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] backdrop-blur-md space-y-2"
                             >
-                                <div className="flex items-center justify-between">
+                                <div className="flex items-center justify-between gap-2">
                                     <span className="font-bold text-slate-900 dark:text-white text-base">{mon.name}</span>
-                                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-white/80 dark:bg-white/10 text-[var(--theme-badge-text)]">
+                                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-white/80 dark:bg-white/10 text-[var(--theme-badge-text)] whitespace-nowrap shrink-0">
                                         📍 {mon.location}
                                     </span>
                                 </div>
@@ -175,14 +175,14 @@ export default function AboutPage() {
                                 <div className="space-y-4">
                                     <div className="flex justify-between items-start gap-2">
                                         <div>
-                                            <h3 className={`text-2xl font-black ${colorClasses.text}`}>
+                                            <h3 className={`text-2xl font-black whitespace-nowrap ${colorClasses.text}`}>
                                                 {paal.title}
                                             </h3>
-                                            <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                                            <div className="text-xs text-slate-500 dark:text-slate-400 font-medium whitespace-nowrap">
                                                 {paal.englishTitle}
                                             </div>
                                         </div>
-                                        <div className={`text-xs font-bold px-3 py-1 rounded-full border ${colorClasses.badge}`}>
+                                        <div className={`text-xs font-bold px-3 py-1 rounded-full border whitespace-nowrap shrink-0 ${colorClasses.badge}`}>
                                             {paal.chapters} {language === 'ta' ? 'அதிகாரங்கள்' : 'Chapters'}
                                         </div>
                                     </div>
@@ -199,9 +199,9 @@ export default function AboutPage() {
                                         <div className="space-y-2">
                                             {paal.iyals.map((iyal, iIdx) => (
                                                 <div key={iIdx} className="text-xs bg-white/60 dark:bg-slate-900/40 p-2.5 rounded-xl border border-white/60 dark:border-white/5 space-y-0.5">
-                                                    <div className="flex justify-between font-bold text-slate-900 dark:text-white">
+                                                    <div className="flex justify-between items-center gap-2 font-bold text-slate-900 dark:text-white">
                                                         <span>{iyal.name}</span>
-                                                        <span className={colorClasses.text}>{iyal.count} {language === 'ta' ? 'அதிகாரம்' : 'Ch'}</span>
+                                                        <span className={`${colorClasses.text} whitespace-nowrap shrink-0`}>{iyal.count} {language === 'ta' ? 'அதிகாரம்' : 'Ch'}</span>
                                                     </div>
                                                     <div className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1">
                                                         {iyal.desc}
@@ -216,7 +216,7 @@ export default function AboutPage() {
                                 <div className="pt-2">
                                     <div className="flex flex-wrap gap-1.5">
                                         {paal.coreValues.map((val, vIdx) => (
-                                            <span key={vIdx} className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full border ${colorClasses.pill}`}>
+                                            <span key={vIdx} className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full border whitespace-nowrap ${colorClasses.pill}`}>
                                                 {val}
                                             </span>
                                         ))}
@@ -281,7 +281,7 @@ export default function AboutPage() {
                                 <h3 className="font-bold text-slate-900 dark:text-white text-base">
                                     {c.name}
                                 </h3>
-                                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] border border-[var(--theme-badge-border)]">
+                                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] border border-[var(--theme-badge-border)] whitespace-nowrap shrink-0">
                                     {c.badge}
                                 </span>
                             </div>

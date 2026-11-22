@@ -47,7 +47,7 @@ export default function HistoryPage() {
                     {t.history?.title || t.home.recentTitle}
                 </div>
 
-                <h1 className="text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight">
+                <h1 className="text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight pb-2 leading-normal">
                     {t.history?.title || t.home.recentTitle}
                 </h1>
 

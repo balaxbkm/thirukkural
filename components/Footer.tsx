@@ -67,9 +67,12 @@ export default function Footer({ adhigaramData = {} }: FooterProps) {
     };
 
     return (
-        <footer className="relative w-full mt-auto pt-10 lg:pt-16 pb-12 overflow-hidden bg-[var(--theme-footer-bg)] border-t border-[var(--theme-badge-border)] transition-colors duration-300">
+        <footer
+            style={{ background: 'var(--theme-footer-bg)' }}
+            className="relative w-full mt-auto pt-10 lg:pt-16 pb-12 overflow-hidden backdrop-blur-md border-t border-[var(--theme-badge-border)] transition-colors duration-300"
+        >
             {/* Subtle ambient gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/[0.015] dark:from-white/[0.02] to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b dark:from-white/[0.02] to-transparent pointer-events-none" />
 
             <div className="max-w-7xl mx-auto px-4 relative z-10">
                 {/* Main Footer Grid: 4 Columns on Desktop, Scrollable Row on Mobile */}

@@ -144,7 +144,7 @@ select:focus {
   --theme-hero-to: #7c2d12;
   --theme-dot: #f59e0b;
   --theme-glow: rgba(245, 158, 11, 0.15);
-  --theme-footer-bg: #f8e5b9;
+  --theme-footer-bg: linear-gradient(to bottom, #fffae9 0%, #fbbe544a 100%);
 }
 
 .dark,

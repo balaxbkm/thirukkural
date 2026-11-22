@@ -185,164 +185,156 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                             &ldquo;{kural.meaning_en}&rdquo;
                         </p>
                     </div>
-
-
-                    {/* AI Explanation Section */}
-                    <div className="space-y-4 pt-6 border-t border-gray-200 dark:border-white/10">
-                        <h2 className="text-lg font-semibold text-[var(--theme-primary)] flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                                <path d="M12 2a10 10 0 1 0 10 10H12V2z" />
-                                <path d="M12 12 2.1 12a10.1 10.1 0 0 0 16.9 3" />
-                                <path d="M22 12h-10" />
-                            </svg>
-                            {t.kural.aiExplanation}
-                        </h2>
-
-                        {!aiExplanation && !isAnalyzing && (
-                            <button
-                                onClick={handleAskAI}
-                                className="px-6 py-3 bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] text-white rounded-xl font-medium shadow-lg shadow-[var(--theme-glow)] hover:opacity-95 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                                    <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-                                </svg>
-                                {t.kural.askAI}
-                            </button>
-                        )}
-
-                        {isAnalyzing && (
-                            <div className="flex items-center gap-3 text-[var(--theme-primary)] animate-pulse">
-                                <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
-                                <span className="font-medium">{t.kural.analyzing}</span>
-                            </div>
-                        )}
-
-                        {error && (
-                            <div className="text-red-500 text-sm font-medium animate-in fade-in">
-                                {error}
-                            </div>
-                        )}
-
-                        {aiExplanation && (
-                            <div className="relative group rounded-2xl p-[1px] bg-gradient-to-br from-[var(--theme-primary)] via-[var(--theme-secondary)] to-[var(--theme-primary)] animate-in fade-in slide-in-from-bottom-4 duration-700">
-                                <div className="rounded-2xl bg-white dark:bg-gray-900/95 p-6 md:p-8 space-y-8 relative overflow-hidden backdrop-blur-xl">
-
-                                    {/* Background Glow */}
-                                    <div className="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-[var(--theme-glow)] rounded-full blur-3xl pointer-events-none"></div>
-                                    <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-[var(--theme-glow)] rounded-full blur-3xl pointer-events-none"></div>
-
-                                    {/* Top Section: Context & Insight */}
-                                    <div className="flex flex-col gap-6">
-                                        {/* Context Section */}
-                                        <div className="space-y-3">
-                                            <div className="flex items-center gap-2 text-[var(--theme-primary)]">
-                                                <div className="p-2 rounded-lg bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>
-                                                </div>
-                                                <h3 className="text-sm font-bold uppercase tracking-wider opacity-90">Context</h3>
-                                            </div>
-                                            <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm md:text-base">
-                                                {aiExplanation[language] ? aiExplanation[language].context : aiExplanation['en']!.context}
-                                            </p>
-                                        </div>
-
-                                        {/* Insight Section */}
-                                        <div className="space-y-3">
-                                            <div className="flex items-center gap-2 text-[var(--theme-primary)]">
-                                                <div className="p-2 rounded-lg bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M12 2a10 10 0 1 0 10 10H12V2z" /><path d="M12 12 2.1 12a10.1 10.1 0 0 0 16.9 3" /><path d="M22 12h-10" /></svg>
-                                                </div>
-                                                <h3 className="text-sm font-bold uppercase tracking-wider opacity-90">Core Insight</h3>
-                                            </div>
-                                            <div className="relative">
-                                                <p className="text-lg md:text-xl text-gray-800 dark:text-gray-100 font-medium leading-relaxed italic border-l-4 border-[var(--theme-primary)]/40 pl-4 py-1">
-                                                    "{aiExplanation[language] ? aiExplanation[language].insight : aiExplanation['en']!.insight}"
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Divider */}
-                                    <div className="h-px w-full bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-700 to-transparent"></div>
-
-                                    {/* Bottom Section: Modern Relevance */}
-                                    <div className="space-y-4">
-                                        <div className="flex items-center gap-2 text-[var(--theme-primary)] mb-2">
-                                            <div className="p-2 rounded-lg bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
-                                            </div>
-                                            <h3 className="text-sm font-bold uppercase tracking-wider opacity-90">Take Away</h3>
-                                        </div>
-
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-4">
-                                            {(aiExplanation[language] ? aiExplanation[language].modern : aiExplanation['en']!.modern).slice(0, 2).map((step, index) => (
-                                                <div
-                                                    key={index}
-                                                    className="group/card relative p-6 rounded-2xl transition-all duration-700 hover:-translate-y-2 cursor-default border-2 bg-white/90 dark:bg-slate-900/60 border-[var(--theme-badge-border)] hover:border-[var(--theme-primary)] backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] dark:shadow-[0_30px_60px_rgba(0,0,0,0.5)] overflow-hidden"
-                                                >
-                                                    {/* High-Impact Ambient Glow Orbits */}
-                                                    <div className="absolute -top-1/2 -right-1/2 w-full h-full rounded-full blur-[100px] opacity-25 transition-all duration-1000 group-hover:opacity-50 bg-[var(--theme-glow)]"></div>
-                                                    <div className="absolute -bottom-1/2 -left-1/2 w-full h-full rounded-full blur-[80px] opacity-25 bg-[var(--theme-glow)]"></div>
-
-                                                    {/* Digital Watermark */}
-                                                    <div className="absolute top-4 right-10 text-[140px] font-black italic select-none opacity-[0.08] dark:opacity-[0.06] transition-all duration-1000 group-hover:scale-110 group-hover:opacity-[0.2] font-serif text-[var(--theme-primary)]">
-                                                        {index + 1}
-                                                    </div>
-
-                                                    <div className="relative z-10 flex flex-col h-full gap-4">
-                                                        <div className="space-y-4">
-                                                            <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.4em] text-[var(--theme-primary)]">
-                                                                <span className="w-10 h-[1.5px] rounded-full bg-current opacity-60 group-hover:w-14 transition-all duration-500"></span>
-                                                                {index === 0 ? 'WISDOM' : 'INSIGHT'}
-                                                            </div>
-
-                                                            <p className="text-sm md:text-base text-gray-950 dark:text-white/80 font-bold leading-relaxed pr-2 drop-shadow-sm">
-                                                                {step}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* Footer Actions */}
-                                    <div className="flex justify-between items-center pt-2">
-                                        <span className="text-[10px] uppercase font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)]">
-                                            AI Generated Analysis
-                                        </span>
-                                        <button
-                                            onClick={() => setAiExplanation(null)}
-                                            className="text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-                                        >
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>
-                                            Reset
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-
                 </div>
-
-                {/* Transliteration removed from here */}
             </div>
         </div>
     );
 
-    return (
-        <div className={`${hasCustomNote ? "max-w-7xl 2xl:max-w-[1440px]" : "max-w-5xl"} mx-auto space-y-8 pb-20 animate-in fade-in duration-500`}>
-            {hasCustomNote ? (
-                /* Two Column Layout on Desktop when note exists */
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    {/* Left Column: Main Kural Content */}
-                    <div className="lg:col-span-8 space-y-8">
-                        {mainCard}
+    const aiCard = (
+        <div className="glass-card p-6 sm:p-7 rounded-3xl border border-[var(--theme-badge-border)] bg-white/70 dark:bg-slate-900/60 backdrop-blur-md space-y-5 shadow-sm">
+            <div className="flex items-center justify-between border-b border-gray-200/60 dark:border-white/10 pb-3">
+                <h2 className="text-sm font-bold uppercase tracking-wider text-[var(--theme-primary)] flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                        <path d="M12 2a10 10 0 1 0 10 10H12V2z" />
+                        <path d="M12 12 2.1 12a10.1 10.1 0 0 0 16.9 3" />
+                        <path d="M22 12h-10" />
+                    </svg>
+                    {t.kural.aiExplanation}
+                </h2>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] border border-[var(--theme-badge-border)] whitespace-nowrap">
+                    Gemini AI
+                </span>
+            </div>
+
+            {!aiExplanation && !isAnalyzing && (
+                <div className="space-y-4">
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                        {language === 'ta'
+                            ? 'இக்குறளுக்கான வரலாற்றுச் சூழல், ஆழ்ந்த நோக்கு மற்றும் நவீன வாழ்க்கைக்கான வழிகாட்டலை செயற்கை நுண்ணறிவு மூலம் பெற்றிடுங்கள்.'
+                            : 'Get contextual background, deep philosophical insights, and modern practical takeaways powered by AI.'}
+                    </p>
+                    <button
+                        onClick={handleAskAI}
+                        className="w-full justify-center px-5 py-3 bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] text-white rounded-xl font-semibold shadow-md shadow-[var(--theme-glow)] hover:opacity-95 hover:scale-[1.01] active:scale-95 transition-all flex items-center gap-2 text-sm"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                        </svg>
+                        {t.kural.askAI}
+                    </button>
+                </div>
+            )}
+
+            {isAnalyzing && (
+                <div className="py-8 flex flex-col items-center justify-center gap-3 text-[var(--theme-primary)] animate-pulse text-center">
+                    <div className="w-7 h-7 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                    <span className="text-sm font-medium">{t.kural.analyzing}</span>
+                </div>
+            )}
+
+            {error && (
+                <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-xs sm:text-sm font-medium animate-in fade-in space-y-2">
+                    <p>{error}</p>
+                    <button
+                        onClick={handleAskAI}
+                        className="text-xs font-semibold underline hover:no-underline text-[var(--theme-primary)]"
+                    >
+                        {t.kural.askAI}
+                    </button>
+                </div>
+            )}
+
+            {aiExplanation && (
+                <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    {/* Context Section */}
+                    <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-[var(--theme-primary)]">
+                            <div className="p-1.5 rounded-lg bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>
+                            </div>
+                            <h3 className="text-xs font-bold uppercase tracking-wider">Context</h3>
+                        </div>
+                        <p className="text-gray-700 dark:text-gray-200 leading-relaxed text-xs sm:text-sm">
+                            {aiExplanation[language] ? aiExplanation[language].context : aiExplanation['en']!.context}
+                        </p>
                     </div>
 
-                    {/* Right Column: Custom Notes Section (Desktop) */}
-                    <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-6">
+                    {/* Core Insight Section */}
+                    <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-[var(--theme-primary)]">
+                            <div className="p-1.5 rounded-lg bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M12 2a10 10 0 1 0 10 10H12V2z" /><path d="M12 12 2.1 12a10.1 10.1 0 0 0 16.9 3" /><path d="M22 12h-10" /></svg>
+                            </div>
+                            <h3 className="text-xs font-bold uppercase tracking-wider">Core Insight</h3>
+                        </div>
+                        <div className="relative">
+                            <p className="text-sm sm:text-base text-gray-800 dark:text-gray-100 font-medium leading-relaxed italic border-l-4 border-[var(--theme-primary)]/50 pl-3 py-1 bg-[var(--theme-badge-bg)]/30 rounded-r-xl">
+                                &ldquo;{aiExplanation[language] ? aiExplanation[language].insight : aiExplanation['en']!.insight}&rdquo;
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="h-px w-full bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-700 to-transparent"></div>
+
+                    {/* Modern Relevance / Take Away */}
+                    <div className="space-y-3">
+                        <div className="flex items-center gap-2 text-[var(--theme-primary)]">
+                            <div className="p-1.5 rounded-lg bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                            </div>
+                            <h3 className="text-xs font-bold uppercase tracking-wider">Take Away</h3>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-3">
+                            {(aiExplanation[language] ? aiExplanation[language].modern : aiExplanation['en']!.modern).slice(0, 2).map((step, index) => (
+                                <div
+                                    key={index}
+                                    className="group/card relative p-4 rounded-xl transition-all duration-300 border bg-white/80 dark:bg-slate-900/50 border-[var(--theme-badge-border)] hover:border-[var(--theme-primary)] backdrop-blur-md shadow-sm overflow-hidden"
+                                >
+                                    <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--theme-primary)] mb-1.5">
+                                        <span className="w-6 h-[1.5px] rounded-full bg-current opacity-60"></span>
+                                        {index === 0 ? 'WISDOM' : 'INSIGHT'}
+                                    </div>
+                                    <p className="text-xs sm:text-sm text-gray-900 dark:text-white/90 font-medium leading-relaxed">
+                                        {step}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Footer Actions */}
+                    <div className="flex justify-between items-center pt-2 border-t border-gray-200/60 dark:border-white/10">
+                        <span className="text-[10px] uppercase font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)]">
+                            AI Generated Analysis
+                        </span>
+                        <button
+                            onClick={() => setAiExplanation(null)}
+                            className="text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors flex items-center gap-1.5 px-2.5 py-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+
+    return (
+        <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto space-y-8 pb-20 animate-in fade-in duration-500">
+            {/* Two Column Layout on Desktop */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                {/* Left Column: Main Kural Content */}
+                <div className="lg:col-span-7 xl:col-span-7 2xl:col-span-7 space-y-8">
+                    {mainCard}
+                </div>
+
+                {/* Right Column: Custom Notes & AI Feature */}
+                <div className="lg:col-span-5 xl:col-span-5 2xl:col-span-5 space-y-6 lg:sticky lg:top-24">
+                    {/* Custom Notes Section */}
+                    {hasCustomNote ? (
                         <div className="glass-card p-6 sm:p-7 rounded-3xl border border-[var(--theme-badge-border)] bg-[var(--theme-badge-bg)] space-y-4 backdrop-blur-md shadow-sm">
                             <div className="flex items-center justify-between">
                                 <span className="text-xs font-bold text-[var(--theme-badge-text)] uppercase tracking-wider flex items-center gap-1.5">
@@ -362,12 +354,35 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                                 &ldquo;{getNote(kuralNumber)}&rdquo;
                             </p>
                         </div>
-                    </div>
+                    ) : (
+                        <div className="glass-card p-6 rounded-3xl border border-dashed border-gray-300 dark:border-white/20 bg-white/40 dark:bg-slate-900/40 space-y-3 backdrop-blur-md text-center transition-all hover:border-[var(--theme-primary)]/50">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+                                    <svg className="w-4 h-4 text-[var(--theme-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                                    </svg>
+                                    {t.note.title}
+                                </span>
+                            </div>
+                            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                                {t.note.empty}
+                            </p>
+                            <button
+                                onClick={() => setIsNoteModalOpen(true)}
+                                className="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-xl bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] hover:scale-[1.02] active:scale-95 transition-all shadow-sm"
+                            >
+                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                </svg>
+                                {t.note.addNote}
+                            </button>
+                        </div>
+                    )}
+
+                    {/* AI Feature Section */}
+                    {aiCard}
                 </div>
-            ) : (
-                /* Single Column Centered Layout when no note exists */
-                mainCard
-            )}
+            </div>
 
             {/* Note Modal Dialog */}
             <NoteModal

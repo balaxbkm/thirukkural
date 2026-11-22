@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "argent-test-ui-flow": {
+      "source": "software-mansion/argent",
+      "sourceType": "github",
+      "skillPath": "packages/skills/skills/argent-test-ui-flow/SKILL.md",
+      "computedHash": "458f4cae1053d3034fb9f66a567cb6c3d5b5c21c3a97c0b37dc439bb18e08baf"
+    }
+  }
+}
