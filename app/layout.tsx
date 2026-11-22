@@ -57,7 +57,7 @@ export default async function RootLayout({
             <ThemeColorProvider>
               <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
                 <Header />
-                <main className="flex-grow pt-24 md:pt-28 px-4 max-w-[1600px] mx-auto w-full">
+                <main className="flex-grow pt-24 md:pt-28 pb-10 sm:pb-12 md:pb-14 px-4 max-w-[1600px] mx-auto w-full">
                   {children}
                 </main>
                 <Footer adhigaramData={adhigaramData} />

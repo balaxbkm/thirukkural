@@ -128,7 +128,7 @@ export default function Home() {
   }, [allKurals, recentKuralNumbers]);
 
   return (
-    <div className="flex flex-col gap-16 pt-4 pb-14 md:py-10">
+    <div className="flex flex-col gap-16 pt-4 md:pt-8 pb-4">
       {/* Hero Section */}
       <section className="relative flex flex-col items-center justify-center text-center gap-8 pt-6 pb-12 md:py-16">
         {/* Chapter Badge of the Current Kural */}

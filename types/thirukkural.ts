@@ -11,5 +11,6 @@ export interface Kural {
     mk: string; // Karunanidhi
     mv: string; // Mu. Varadarajan
     sp: string; // Solomon Pappaiah
+    pm?: string; // Parimelazhagar
     tags?: string[];
 }

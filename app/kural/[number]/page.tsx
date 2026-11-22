@@ -173,6 +173,23 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                                     </p>
                                 </div>
                             )}
+
+                            {/* Parimelazhagar */}
+                            {kural.pm && (
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-2">
+                                        <h3 className="text-md font-semibold text-[var(--theme-primary)]">
+                                            {t.kural.pm}
+                                        </h3>
+                                        <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] border border-[var(--theme-badge-border)] whitespace-nowrap shrink-0">
+                                            {language === 'ta' ? 'செவ்வியல் உரை' : 'Classical Urai'}
+                                        </span>
+                                    </div>
+                                    <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
+                                        {kural.pm}
+                                    </p>
+                                </div>
+                            )}
                         </div>
                     </div>
 
@@ -355,7 +372,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                             </p>
                         </div>
                     ) : (
-                        <div className="glass-card p-6 rounded-3xl border border-dashed border-gray-300 dark:border-white/20 bg-white/40 dark:bg-slate-900/40 space-y-3 backdrop-blur-md text-center transition-all hover:border-[var(--theme-primary)]/50">
+                        <div className="glass-card p-6 sm:p-7 rounded-3xl border border-dashed border-gray-300 dark:border-white/20 bg-white/40 dark:bg-slate-900/40 space-y-4 backdrop-blur-md text-left transition-all hover:border-[var(--theme-primary)]/50">
                             <div className="flex items-center justify-between">
                                 <span className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
                                     <svg className="w-4 h-4 text-[var(--theme-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -364,18 +381,20 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                                     {t.note.title}
                                 </span>
                             </div>
-                            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed text-left">
                                 {t.note.empty}
                             </p>
-                            <button
-                                onClick={() => setIsNoteModalOpen(true)}
-                                className="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-xl bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] hover:scale-[1.02] active:scale-95 transition-all shadow-sm"
-                            >
-                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                                </svg>
-                                {t.note.addNote}
-                            </button>
+                            <div>
+                                <button
+                                    onClick={() => setIsNoteModalOpen(true)}
+                                    className="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-xl bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] hover:scale-[1.02] active:scale-95 transition-all shadow-sm"
+                                >
+                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    {t.note.addNote}
+                                </button>
+                            </div>
                         </div>
                     )}
 
