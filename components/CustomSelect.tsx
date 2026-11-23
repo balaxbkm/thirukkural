@@ -92,32 +92,32 @@ export default function CustomSelect({
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className={`w-full text-left px-4 py-3 rounded-xl border transition-all duration-200 flex items-center justify-between
+                className={`w-full text-left px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border transition-all duration-200 flex items-center justify-between min-h-[50px]
                     ${isOpen
                         ? 'border-[var(--theme-primary)] ring-2 ring-[var(--theme-primary)]/20 bg-white dark:bg-slate-900 shadow-lg'
                         : 'border-gray-200 dark:border-white/10 bg-white/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-900'
                     }
                 `}
             >
-                <div className="flex items-center gap-3 overflow-hidden">
+                <div className="flex items-center gap-2.5 sm:gap-3 overflow-hidden min-w-0">
                     {icon && (
-                        <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isOpen ? 'bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]' : 'bg-gray-100 text-gray-500 dark:bg-slate-800 dark:text-gray-400'
+                        <div className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center transition-colors ${isOpen ? 'bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]' : 'bg-gray-100 text-gray-500 dark:bg-slate-800 dark:text-gray-400'
                             }`}>
                             {icon}
                         </div>
                     )}
-                    <div className="min-w-0">
-                        <span className="text-xs font-semibold text-[var(--theme-primary)] uppercase tracking-wider block mb-0.5">
+                    <div className="min-w-0 flex-1">
+                        <span className="text-[10px] sm:text-xs font-semibold text-[var(--theme-primary)] uppercase tracking-wider block leading-tight">
                             {label}
                         </span>
-                        <span className={`block font-medium truncate ${value ? 'text-gray-900 dark:text-white' : 'text-gray-400'}`}>
+                        <span className={`block font-medium truncate text-sm sm:text-base ${value ? 'text-gray-900 dark:text-white' : 'text-gray-400'}`}>
                             {currentLabel || placeholder}
                         </span>
                     </div>
                 </div>
 
                 <svg
-                    className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180 text-[var(--theme-primary)]' : ''}`}
+                    className={`w-4 h-4 sm:w-5 sm:h-5 text-gray-400 shrink-0 ml-2 transition-transform duration-200 ${isOpen ? 'rotate-180 text-[var(--theme-primary)]' : ''}`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"

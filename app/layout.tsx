@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Outfit, Mukta_Malar } from "next/font/google";
 import "./globals.css";
 import { UserKuralActionsProvider } from "@/lib/hooks/useUserKuralActions";
@@ -25,6 +25,12 @@ const muktaMalar = Mukta_Malar({
 export const metadata: Metadata = {
   title: "Thirukkural - Timeless Wisdom",
   description: "Explore the timeless wisdom of Thirukkural with a modern glassmorphism design.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 import { getPaalAdhigarams } from "@/lib/kural-data";
@@ -57,7 +63,7 @@ export default async function RootLayout({
             <ThemeColorProvider>
               <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
                 <Header />
-                <main className="flex-grow pt-24 md:pt-28 pb-10 sm:pb-12 md:pb-14 px-4 max-w-[1600px] mx-auto w-full">
+                <main className="flex-grow pt-16 sm:pt-24 md:pt-28 pb-8 sm:pb-12 md:pb-14 px-3 sm:px-6 lg:px-8 max-w-[1600px] mx-auto w-full">
                   {children}
                 </main>
                 <Footer adhigaramData={adhigaramData} />

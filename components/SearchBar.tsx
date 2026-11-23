@@ -123,7 +123,7 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
 
     return (
         <div ref={wrapperRef} className={`relative w-full ${variant === "large" ? "max-w-5xl" : "max-w-md"}`}>
-            <div className={`relative flex items-center w-full transition-all duration-300 bg-white/50 dark:bg-slate-900/40 backdrop-blur-md border border-[var(--theme-badge-border)] ${variant === "large" ? "rounded-2xl shadow-lg hover:shadow-xl dark:shadow-[var(--theme-glow)]" : "rounded-xl hover:bg-white/70 dark:hover:bg-white/10"}`}>
+            <div className={`relative flex items-center w-full transition-all duration-300 bg-white/50 dark:bg-slate-900/40 backdrop-blur-md border border-[var(--theme-badge-border)] ${variant === "large" ? "rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl dark:shadow-[var(--theme-glow)]" : "rounded-xl hover:bg-white/70 dark:hover:bg-white/10"}`}>
 
                 {/* Custom Adhigaram Dropdown (Only for Large variant) */}
                 {variant === "large" && (
@@ -201,9 +201,9 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
                 )}
 
                 <div className="flex-1 relative flex items-center">
-                    <div className="absolute right-4 pointer-events-none">
-                        <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors bg-[var(--theme-badge-bg)] text-[var(--theme-primary)] border border-[var(--theme-badge-border)]`}>
-                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="absolute right-3 sm:right-4 pointer-events-none">
+                        <div className={`flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg flex items-center justify-center transition-colors bg-[var(--theme-badge-bg)] text-[var(--theme-primary)] border border-[var(--theme-badge-border)]`}>
+                            <svg className="w-3.5 h-3.5 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
                         </div>
@@ -215,15 +215,15 @@ export default function SearchBar({ variant = "header" }: SearchBarProps) {
                         onChange={(e) => setQuery(e.target.value)}
                         onFocus={() => (query.length >= 2 || selectedFilterAdhigaram) && setIsOpen(true)}
                         className={`w-full bg-transparent border-none text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-400 focus:outline-none focus:ring-0 transition-all ${variant === "large"
-                            ? "py-4 pl-6 pr-16 text-lg"
-                            : "py-2.5 pl-4 pr-14 text-sm"
+                            ? "py-2.5 sm:py-3.5 pl-3.5 sm:pl-6 pr-11 sm:pr-16 text-sm sm:text-lg"
+                            : "py-2 sm:py-2.5 pl-3 sm:pl-4 pr-10 sm:pr-14 text-sm"
                             }`}
                     />
                 </div>
             </div>
 
             {isOpen && (adhigaramResults.length > 0 || results.length > 0) && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-xl border border-[var(--theme-badge-border)] shadow-2xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 text-left max-h-[60vh] overflow-y-auto">
+                <div className="absolute top-full left-0 right-0 mt-2 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-xl border border-[var(--theme-badge-border)] shadow-2xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 text-left max-h-[50vh] sm:max-h-[60vh] overflow-y-auto">
                     <div className="p-2 space-y-2">
                         {adhigaramResults.length > 0 && (
                             <div className="mb-2">

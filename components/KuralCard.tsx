@@ -82,30 +82,30 @@ ${kural.meaning_en}`;
                 </span>
             </div>
 
-            <Link href={`/kural/${kural.number}`} className="flex-grow p-5 flex flex-col gap-3">
+            <Link href={`/kural/${kural.number}`} className="flex-grow p-3.5 sm:p-5 flex flex-col gap-2.5 sm:gap-3">
                 <div className="flex justify-between items-start">
-                    <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)]">
+                    <span className="inline-block px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] font-mono">
                         {kural.number}
                     </span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+                    <span className="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 font-medium">
                         {kural.adhigaram}
                     </span>
                 </div>
 
-                <div className="space-y-3 flex-grow">
+                <div className="space-y-2 sm:space-y-3 flex-grow">
                     {/* Tamil Lines */}
-                    <div className="space-y-0.5">
-                        <p className="font-bold text-lg leading-snug text-gray-800 dark:text-gray-100">
+                    <div className="space-y-0.5 sm:space-y-1">
+                        <p className="font-bold text-[15px] sm:text-lg leading-snug text-gray-800 dark:text-gray-100">
                             {kural.line1_ta}
                         </p>
-                        <p className="font-bold text-lg leading-snug text-gray-800 dark:text-gray-100">
+                        <p className="font-bold text-[15px] sm:text-lg leading-snug text-gray-800 dark:text-gray-100">
                             {kural.line2_ta}
                         </p>
                     </div>
 
-                    {/* Meaning Preview */}
-                    <div className="pt-2 border-t border-gray-200 dark:border-white/10">
-                        <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 italic">
+                    {/* Meaning Preview - Hidden on mobile view, shown on desktop */}
+                    <div className="hidden sm:block pt-2 border-t border-gray-200 dark:border-white/10">
+                        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 line-clamp-2 italic leading-relaxed">
                             {kural.meaning_en}
                         </p>
                     </div>
@@ -123,19 +123,19 @@ ${kural.meaning_en}`;
             </Link>
 
             {/* Action Bar */}
-            <div className="px-4 py-3 bg-gray-50/80 dark:bg-white/5 border-t border-gray-100 dark:border-white/5 flex justify-between items-center group-hover:bg-[var(--theme-badge-bg)] transition-colors duration-300">
-                <div className="flex gap-2 items-center">
+            <div className="px-3 sm:px-4 py-2 sm:py-3 bg-gray-50/80 dark:bg-white/5 border-t border-gray-100 dark:border-white/5 flex justify-between items-center group-hover:bg-[var(--theme-badge-bg)] transition-colors duration-300">
+                <div className="flex gap-1.5 sm:gap-2 items-center">
                     {/* Favorite Button */}
                     <button
                         onClick={handleFavorite}
-                        className={`group/btn w-8 h-8 flex items-center justify-center rounded-full border transition-all duration-300 ${isFav
+                        className={`group/btn w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full border transition-all duration-300 active:scale-90 ${isFav
                             ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-400/30'
                             : 'bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-white/10 hover:border-rose-300 dark:hover:border-rose-700 hover:text-rose-600 dark:hover:text-rose-400 shadow-sm'
                             }`}
                         title={isFav ? t.kural.favorited : t.kural.favorite}
                         aria-label={isFav ? t.kural.favorited : t.kural.favorite}
                     >
-                        <svg className={`w-4 h-4 ${isFav ? 'fill-current text-rose-500' : 'group-hover/btn:scale-110 transition-transform'}`} fill={isFav ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isFav ? 'fill-current text-rose-500' : 'group-hover/btn:scale-110 transition-transform'}`} fill={isFav ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
                     </button>
@@ -143,11 +143,11 @@ ${kural.meaning_en}`;
                     {/* Copy Button */}
                     <button
                         onClick={handleCopyContent}
-                        className="group/btn w-8 h-8 flex items-center justify-center rounded-full bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-900 dark:hover:text-white transition-all shadow-sm"
+                        className="group/btn w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-900 dark:hover:text-white transition-all shadow-sm active:scale-90"
                         title="Copy Content"
                         aria-label="Copy Content"
                     >
-                        <svg className="w-4 h-4 group-hover/btn:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/btn:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                         </svg>
                     </button>
@@ -155,11 +155,11 @@ ${kural.meaning_en}`;
                     {/* Share Button */}
                     <button
                         onClick={handleShare}
-                        className="group/btn w-8 h-8 flex items-center justify-center rounded-full bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-900 dark:hover:text-white transition-all shadow-sm"
+                        className="group/btn w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-900 dark:hover:text-white transition-all shadow-sm active:scale-90"
                         title={t.kural.share}
                         aria-label={t.kural.share}
                     >
-                        <svg className="w-4 h-4 group-hover/btn:rotate-12 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/btn:rotate-12 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                         </svg>
                     </button>
@@ -167,10 +167,10 @@ ${kural.meaning_en}`;
 
                 <Link
                     href={`/kural/${kural.number}`}
-                    className="flex items-center gap-1 text-xs font-bold text-gray-900 dark:text-white hover:text-[var(--theme-primary)] transition-colors group/read"
+                    className="flex items-center gap-1 text-[11px] sm:text-xs font-bold text-gray-900 dark:text-white hover:text-[var(--theme-primary)] transition-colors group/read"
                 >
                     Read
-                    <svg className="w-3.5 h-3.5 group-hover/read:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover/read:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
                 </Link>

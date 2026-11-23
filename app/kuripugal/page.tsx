@@ -38,19 +38,19 @@ export default function KuripugalPage() {
     return (
         <div className="max-w-7xl mx-auto space-y-10 animate-in fade-in duration-500 pb-16">
             {/* Header */}
-            <div className="text-center space-y-4 pt-2">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm">
+            <div className="text-center space-y-3 sm:space-y-4 pt-2">
+                <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm">
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                     </svg>
                     {t.nav.kuripugal}
                 </div>
 
-                <h1 className="text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight pb-2 leading-normal">
+                <h1 className="text-2xl xs:text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight pb-1 sm:pb-2 leading-normal">
                     {t.kuripugal.title}
                 </h1>
 
-                <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto text-sm sm:text-base">
+                <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto text-xs sm:text-base px-2">
                     {t.kuripugal.subtitle}
                 </p>
 
@@ -64,7 +64,7 @@ export default function KuripugalPage() {
 
             {/* Content List */}
             {notedItems.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     {notedItems.map((kural) => {
                         const noteText = getNote(kural.number);
                         const isFav = isFavorite(kural.number);
@@ -72,7 +72,7 @@ export default function KuripugalPage() {
                         return (
                             <div
                                 key={kural.number}
-                                className="glass-card p-6 sm:p-7 rounded-3xl border border-white/80 dark:border-white/10 flex flex-col justify-between space-y-5 hover:border-[var(--theme-badge-border)] transition-all duration-300 shadow-sm hover:shadow-xl relative overflow-hidden group"
+                                className="glass-card p-4 sm:p-7 rounded-2xl sm:rounded-3xl border border-white/80 dark:border-white/10 flex flex-col justify-between space-y-4 sm:space-y-5 hover:border-[var(--theme-badge-border)] transition-all duration-300 shadow-sm hover:shadow-xl relative overflow-hidden group"
                             >
                                 {/* Digital Watermark */}
                                 <div className="absolute top-2 right-4 text-7xl font-serif font-black text-[var(--theme-primary)] opacity-5 pointer-events-none select-none group-hover:scale-105 group-hover:opacity-10 transition-all">

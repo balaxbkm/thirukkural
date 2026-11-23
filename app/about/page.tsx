@@ -10,34 +10,34 @@ export default function AboutPage() {
     return (
         <div className="max-w-6xl mx-auto space-y-12 pb-24 animate-in fade-in slide-in-from-bottom-5 duration-700">
             {/* Header */}
-            <div className="text-center space-y-4 pt-4">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm whitespace-nowrap">
+            <div className="text-center space-y-3 sm:space-y-4 pt-4">
+                <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm whitespace-nowrap">
                     {data.hero.badge}
                 </div>
 
-                <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight pb-2 leading-normal">
+                <h1 className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight pb-1 sm:pb-2 leading-normal">
                     {data.hero.title}
                 </h1>
 
-                <p className="text-slate-700 dark:text-slate-200 max-w-2xl mx-auto text-lg sm:text-xl font-medium tracking-wide">
+                <p className="text-slate-700 dark:text-slate-200 max-w-2xl mx-auto text-base sm:text-xl font-medium tracking-wide px-2">
                     {data.hero.subtitle}
                 </p>
             </div>
 
             {/* Quick Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
                 {data.intro.stats.map((stat, idx) => (
                     <div
                         key={idx}
-                        className="glass-card p-5 sm:p-6 text-center space-y-1.5 border border-white/80 dark:border-white/10 hover:border-[var(--theme-badge-border)] transition-all duration-300"
+                        className="glass-card p-3.5 sm:p-6 text-center space-y-1 sm:space-y-1.5 border border-white/80 dark:border-white/10 hover:border-[var(--theme-badge-border)] transition-all duration-300"
                     >
-                        <div className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] bg-clip-text text-transparent font-mono">
+                        <div className="text-2xl xs:text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] bg-clip-text text-transparent font-mono">
                             {stat.value}
                         </div>
-                        <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white whitespace-nowrap">
+                        <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate">
                             {stat.label}
                         </div>
-                        <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                        <div className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400">
                             {stat.hint}
                         </div>
                     </div>
@@ -45,14 +45,14 @@ export default function AboutPage() {
             </div>
 
             {/* Introduction & Significance */}
-            <section className="glass-card p-6 sm:p-10 space-y-5 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+            <section className="glass-card p-4 sm:p-8 md:p-10 space-y-4 sm:space-y-5 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                 <div className="flex items-center gap-3 border-b border-slate-200/60 dark:border-white/10 pb-4">
                     <span className="w-2.5 h-2.5 rounded-full bg-[var(--theme-primary)]" />
-                    <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+                    <h2 className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white">
                         {data.intro.title}
                     </h2>
                 </div>
-                <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-base sm:text-lg">
+                <div className="space-y-3 sm:space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-sm sm:text-lg">
                     {data.intro.paragraphs.map((p, idx) => (
                         <p key={idx}>{p}</p>
                     ))}
@@ -60,7 +60,7 @@ export default function AboutPage() {
             </section>
 
             {/* Author Section: Saint Thiruvalluvar */}
-            <section className="glass-card p-6 sm:p-10 space-y-6 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+            <section className="glass-card p-4 sm:p-8 md:p-10 space-y-5 sm:space-y-6 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                 <div className="flex items-center justify-between border-b border-slate-200/60 dark:border-white/10 pb-4 flex-wrap gap-2">
                     <div className="flex items-center gap-3">
                         <span className="w-2.5 h-2.5 rounded-full bg-[var(--theme-primary)]" />

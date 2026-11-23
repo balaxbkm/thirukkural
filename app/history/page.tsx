@@ -29,8 +29,8 @@ export default function HistoryPage() {
 
     return (
         <div className="max-w-7xl mx-auto space-y-10 animate-in fade-in duration-500 pb-16">
-            <div className="text-center space-y-4 pt-2">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm">
+            <div className="text-center space-y-3 sm:space-y-4 pt-2">
+                <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -47,15 +47,15 @@ export default function HistoryPage() {
                     {t.history?.title || t.home.recentTitle}
                 </div>
 
-                <h1 className="text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight pb-2 leading-normal">
+                <h1 className="text-2xl xs:text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight pb-1 sm:pb-2 leading-normal">
                     {t.history?.title || t.home.recentTitle}
                 </h1>
 
-                <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto text-sm sm:text-base">
+                <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto text-xs sm:text-base px-2">
                     {t.history?.subtitle || t.home.recentSubtitle}
                 </p>
 
-                <div className="flex items-center justify-center gap-4 text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400">
+                <div className="flex items-center justify-center gap-3 sm:gap-4 text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400">
                     <p>
                         <span className="font-bold text-[var(--theme-badge-text)] px-2 py-0.5 rounded-md bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] font-mono">
                             {historyList.length}
@@ -68,7 +68,7 @@ export default function HistoryPage() {
                             <span>•</span>
                             <button
                                 onClick={clearHistory}
-                                className="text-rose-500 hover:text-rose-600 dark:hover:text-rose-400 font-medium hover:underline flex items-center gap-1 cursor-pointer transition-colors"
+                                className="text-rose-500 hover:text-rose-600 dark:hover:text-rose-400 font-medium hover:underline flex items-center gap-1 cursor-pointer transition-colors active:scale-95"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +92,7 @@ export default function HistoryPage() {
             </div>
 
             {historyList.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                     {historyList.map((kural) => (
                         <KuralCard key={`history-${kural.number}`} kural={kural} />
                     ))}

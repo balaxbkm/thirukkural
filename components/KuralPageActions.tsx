@@ -70,14 +70,15 @@ ${kural.meaning_en}`;
     };
 
     return (
-        <div className="flex items-center gap-3 relative">
+        <div className="flex items-center gap-2 sm:gap-3 relative shrink-0">
             {/* Note Button (Bookmark Ribbon - Opens Modal Dialog) */}
             <button
                 onClick={() => onOpenNote ? onOpenNote() : setIsNoteModalOpen(true)}
-                className={`p-2.5 rounded-full transition-all border ${hasCustomNote ? 'text-[var(--theme-primary)] bg-[var(--theme-badge-bg)] border-[var(--theme-badge-border)] shadow-sm' : 'text-gray-400 bg-white dark:bg-black/20 border-gray-200 dark:border-white/10 hover:text-[var(--theme-primary)] hover:border-[var(--theme-badge-border)]'}`}
+                className={`p-2 sm:p-2.5 rounded-full transition-all border active:scale-95 ${hasCustomNote ? 'text-[var(--theme-primary)] bg-[var(--theme-badge-bg)] border-[var(--theme-badge-border)] shadow-sm' : 'text-gray-400 bg-white dark:bg-black/20 border-gray-200 dark:border-white/10 hover:text-[var(--theme-primary)] hover:border-[var(--theme-badge-border)]'}`}
                 title={hasCustomNote ? t.note.editNote : t.note.addNote}
+                aria-label={hasCustomNote ? t.note.editNote : t.note.addNote}
             >
-                <svg className="w-5 h-5" fill={hasCustomNote ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill={hasCustomNote ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                 </svg>
             </button>
@@ -85,10 +86,11 @@ ${kural.meaning_en}`;
             {/* Favorite Button (Heart) */}
             <button
                 onClick={handleFavorite}
-                className={`p-2.5 rounded-full transition-all border ${isFav ? 'text-rose-500 bg-rose-50 dark:bg-rose-900/20 border-rose-300 dark:border-rose-900' : 'text-gray-400 bg-white dark:bg-black/20 border-gray-200 dark:border-white/10 hover:text-rose-500 hover:border-rose-200'}`}
+                className={`p-2 sm:p-2.5 rounded-full transition-all border active:scale-95 ${isFav ? 'text-rose-500 bg-rose-50 dark:bg-rose-900/20 border-rose-300 dark:border-rose-900' : 'text-gray-400 bg-white dark:bg-black/20 border-gray-200 dark:border-white/10 hover:text-rose-500 hover:border-rose-200'}`}
                 title={isFav ? t.kural.favorited : t.kural.favorite}
+                aria-label={isFav ? t.kural.favorited : t.kural.favorite}
             >
-                <svg className="w-5 h-5" fill={isFav ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill={isFav ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
             </button>
@@ -96,10 +98,11 @@ ${kural.meaning_en}`;
             {/* Copy Button */}
             <button
                 onClick={handleCopyContent}
-                className="p-2.5 rounded-full bg-white dark:bg-black/20 text-gray-400 border border-gray-200 dark:border-white/10 hover:text-[var(--theme-primary)] hover:border-[var(--theme-badge-border)] transition-all"
+                className="p-2 sm:p-2.5 rounded-full bg-white dark:bg-black/20 text-gray-400 border border-gray-200 dark:border-white/10 hover:text-[var(--theme-primary)] hover:border-[var(--theme-badge-border)] transition-all active:scale-95"
                 title="நகல்"
+                aria-label="நகல்"
             >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                 </svg>
             </button>
@@ -107,10 +110,11 @@ ${kural.meaning_en}`;
             {/* Share Button */}
             <button
                 onClick={handleShare}
-                className="p-2.5 rounded-full bg-white dark:bg-black/20 text-gray-400 border border-gray-200 dark:border-white/10 hover:text-[var(--theme-primary)] hover:border-[var(--theme-badge-border)] transition-all"
+                className="p-2 sm:p-2.5 rounded-full bg-white dark:bg-black/20 text-gray-400 border border-gray-200 dark:border-white/10 hover:text-[var(--theme-primary)] hover:border-[var(--theme-badge-border)] transition-all active:scale-95"
                 title={t.kural.share}
+                aria-label={t.kural.share}
             >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                 </svg>
             </button>

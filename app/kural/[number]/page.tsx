@@ -3,7 +3,6 @@
 import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import SearchBar from "@/components/SearchBar";
 import { useLanguage } from "@/lib/context/LanguageContext";
 import KuralPageActions from "@/components/KuralPageActions";
 import kuralsData from "@/data/thirukkural.json";
@@ -64,10 +63,10 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
     const hasCustomNote = hasNote(kuralNumber);
 
     const mainCard = (
-        <div className="glass-card p-6 md:p-12 relative overflow-hidden">
+        <div className="glass-card p-4 sm:p-8 md:p-12 relative overflow-hidden">
             {/* Background Decorative */}
-            <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none md:opacity-10" style={{ top: '58px' }}>
-                <span className="text-9xl font-serif font-black text-[var(--theme-primary)]">
+            <div className="absolute top-0 right-0 p-4 sm:p-8 opacity-5 pointer-events-none md:opacity-10" style={{ top: '58px' }}>
+                <span className="text-7xl sm:text-9xl font-serif font-black text-[var(--theme-primary)]">
                     {kural.number}
                 </span>
             </div>
@@ -75,10 +74,10 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
             <div className="relative z-10 space-y-6">
 
                 {/* Header */}
-                <div className="flex flex-col gap-6 pb-2">
-                    <div className="flex flex-wrap justify-between items-center gap-4">
+                <div className="flex flex-col gap-4 sm:gap-6 pb-2">
+                    <div className="flex flex-wrap justify-between items-center gap-3">
                         <div className="flex flex-wrap gap-2 items-center">
-                            <span className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-bold text-sm tracking-wide shadow-sm">
+                            <span className="inline-flex items-center justify-center px-3.5 sm:px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-bold text-xs sm:text-sm tracking-wide shadow-sm font-mono">
                                 {t.kural.number} {kural.number}
                             </span>
                             <div className="hidden sm:flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 ml-2">
@@ -99,7 +98,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                     </div>
 
                     {/* Mobile Breadcrumbs */}
-                    <div className="sm:hidden text-xs text-gray-500 dark:text-gray-400 flex flex-wrap gap-1">
+                    <div className="sm:hidden text-xs text-gray-500 dark:text-gray-400 flex flex-wrap gap-1 items-center">
                         <Link href={`/browse?paal=${encodeURIComponent(kural.paal)}`} className="hover:text-[var(--theme-primary)] hover:underline transition-colors">
                             {kural.paal}
                         </Link>
@@ -113,38 +112,38 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                         </Link>
                     </div>
 
-                    <div className="space-y-4">
-                        <h1 className="font-bold text-gray-900 dark:text-white leading-loose tracking-wide">
-                            <div className="text-[32px] leading-[1.6]">
+                    <div className="space-y-3 sm:space-y-4">
+                        <h1 className="font-bold text-gray-900 dark:text-white leading-relaxed tracking-wide">
+                            <div className="text-xl xs:text-2xl sm:text-3xl md:text-[32px] leading-snug sm:leading-[1.6]">
                                 {kural.line1_ta}
                             </div>
-                            <div className="text-[32px] leading-[1.6] mt-0">
+                            <div className="text-xl xs:text-2xl sm:text-3xl md:text-[32px] leading-snug sm:leading-[1.6] mt-1 sm:mt-0">
                                 {kural.line2_ta}
                             </div>
                         </h1>
-                        <p className="text-gray-500 dark:text-gray-400 text-lg mt-2 font-medium">
+                        <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base md:text-lg mt-2 font-medium">
                             {kural.transliteration_en}
                         </p>
                     </div>
                 </div>
 
                 {/* Meanings */}
-                <div className="space-y-10">
+                <div className="space-y-8 sm:space-y-10">
 
                     {/* Tamil Explanations */}
-                    <div className="space-y-8">
-                        <h2 className="text-xl font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-white/10 pb-2">
+                    <div className="space-y-6 sm:space-y-8">
+                        <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-white/10 pb-2">
                             {t.kural.vilakam}
                         </h2>
 
-                        <div className="grid grid-cols-1 gap-8">
+                        <div className="grid grid-cols-1 gap-6 sm:gap-8">
                             {/* Mu. Varadarajan */}
                             {kural.mv && (
-                                <div className="space-y-2">
-                                    <h3 className="text-md font-semibold text-[var(--theme-primary)]">
+                                <div className="space-y-1.5 sm:space-y-2">
+                                    <h3 className="text-sm sm:text-md font-semibold text-[var(--theme-primary)]">
                                         {t.kural.mv}
                                     </h3>
-                                    <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
+                                    <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
                                         {kural.mv}
                                     </p>
                                 </div>
@@ -152,11 +151,11 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
 
                             {/* Solomon Pappaiah */}
                             {kural.sp && (
-                                <div className="space-y-2">
-                                    <h3 className="text-md font-semibold text-[var(--theme-primary)]">
+                                <div className="space-y-1.5 sm:space-y-2">
+                                    <h3 className="text-sm sm:text-md font-semibold text-[var(--theme-primary)]">
                                         {t.kural.sp}
                                     </h3>
-                                    <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
+                                    <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
                                         {kural.sp}
                                     </p>
                                 </div>
@@ -164,11 +163,11 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
 
                             {/* Kalaignar */}
                             {kural.mk && (
-                                <div className="space-y-2">
-                                    <h3 className="text-md font-semibold text-[var(--theme-primary)]">
+                                <div className="space-y-1.5 sm:space-y-2">
+                                    <h3 className="text-sm sm:text-md font-semibold text-[var(--theme-primary)]">
                                         {t.kural.mk}
                                     </h3>
-                                    <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
+                                    <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
                                         {kural.mk}
                                     </p>
                                 </div>
@@ -176,16 +175,16 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
 
                             {/* Parimelazhagar */}
                             {kural.pm && (
-                                <div className="space-y-2">
+                                <div className="space-y-1.5 sm:space-y-2">
                                     <div className="flex items-center gap-2">
-                                        <h3 className="text-md font-semibold text-[var(--theme-primary)]">
+                                        <h3 className="text-sm sm:text-md font-semibold text-[var(--theme-primary)]">
                                             {t.kural.pm}
                                         </h3>
-                                        <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] border border-[var(--theme-badge-border)] whitespace-nowrap shrink-0">
+                                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] border border-[var(--theme-badge-border)] whitespace-nowrap shrink-0">
                                             {language === 'ta' ? 'செவ்வியல் உரை' : 'Classical Urai'}
                                         </span>
                                     </div>
-                                    <p className="text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
+                                    <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
                                         {kural.pm}
                                     </p>
                                 </div>
@@ -194,11 +193,11 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                     </div>
 
                     {/* English Meaning */}
-                    <div className="space-y-4 pt-6 border-t border-gray-200 dark:border-white/10">
-                        <h2 className="text-lg font-semibold text-[var(--theme-primary)] flex items-center gap-2">
+                    <div className="space-y-3 sm:space-y-4 pt-5 sm:pt-6 border-t border-gray-200 dark:border-white/10">
+                        <h2 className="text-base sm:text-lg font-semibold text-[var(--theme-primary)] flex items-center gap-2">
                             {t.kural.englishMeaning}
                         </h2>
-                        <p className="text-lg text-gray-700 dark:text-gray-200 leading-loose italic">
+                        <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 leading-relaxed sm:leading-loose italic">
                             &ldquo;{kural.meaning_en}&rdquo;
                         </p>
                     </div>
@@ -414,26 +413,28 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
             />
 
             {/* Navigation Footer */}
-            <div className="flex justify-between items-center pt-8">
+            <div className="flex justify-between items-center gap-2 pt-6 sm:pt-8 border-t border-gray-200/60 dark:border-white/10">
                 {kural.number > 1 ? (
-                    <Link href={`/kural/${kuralNumber - 1}`} className="glass-btn px-6 py-3 flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-[var(--theme-primary)]">
-                        &larr; {t.browse.previous}
+                    <Link href={`/kural/${kuralNumber - 1}`} className="glass-btn px-3 sm:px-6 py-2.5 sm:py-3 flex items-center gap-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300 hover:text-[var(--theme-primary)]">
+                        <span>&larr;</span>
+                        <span className="hidden xs:inline">{t.browse.previous}</span>
                     </Link>
-                ) : <div></div>}
+                ) : <div className="w-12 sm:w-16"></div>}
 
-                <Link href="/browse" className="glass-btn px-6 py-3 flex items-center gap-2 text-[var(--theme-primary)] font-medium">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                <Link href="/browse" className="glass-btn px-3.5 sm:px-6 py-2.5 sm:py-3 flex items-center gap-1.5 text-xs sm:text-sm text-[var(--theme-primary)] font-medium">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 sm:w-5 sm:h-5">
                         <circle cx="12" cy="12" r="10" />
                         <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
                     </svg>
-                    {t.nav.browse}
+                    <span>{t.nav.browse}</span>
                 </Link>
 
                 {kural.number < 1330 ? (
-                    <Link href={`/kural/${kuralNumber + 1}`} className="glass-btn px-6 py-3 flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-[var(--theme-primary)]">
-                        {t.browse.next} &rarr;
+                    <Link href={`/kural/${kuralNumber + 1}`} className="glass-btn px-3 sm:px-6 py-2.5 sm:py-3 flex items-center gap-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300 hover:text-[var(--theme-primary)]">
+                        <span className="hidden xs:inline">{t.browse.next}</span>
+                        <span>&rarr;</span>
                     </Link>
-                ) : <div></div>}
+                ) : <div className="w-12 sm:w-16"></div>}
             </div>
         </div>
     );

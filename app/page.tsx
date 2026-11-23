@@ -128,22 +128,22 @@ export default function Home() {
   }, [allKurals, recentKuralNumbers]);
 
   return (
-    <div className="flex flex-col gap-16 pt-4 md:pt-8 pb-4">
+    <div className="flex flex-col gap-5 sm:gap-12 md:gap-16 pt-3 sm:pt-4 md:pt-8 pb-4">
       {/* Hero Section */}
-      <section className="relative flex flex-col items-center justify-center text-center gap-8 pt-6 pb-12 md:py-16">
-        {/* Chapter Badge of the Current Kural */}
+      <section className="relative flex flex-col items-start sm:items-center justify-center text-left sm:text-center gap-2.5 sm:gap-8 pt-4 sm:pt-6 pb-6 sm:pb-12 md:py-16">
+        {/* Chapter Badge of the Current Kural (Desktop only: placed above the Kural) */}
         {dailyKural ? (
           <Link
-            key={dailyKural.number}
+            key={`desktop-badge-${dailyKural.number}`}
             href={`/browse?paal=${encodeURIComponent(dailyKural.paal)}&iyal=${encodeURIComponent(dailyKural.iyal)}&adhigaram=${encodeURIComponent(dailyKural.adhigaram)}`}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider backdrop-blur-md shadow-sm hover:scale-105 transition-all duration-300 hover:border-[var(--theme-primary)] animate-in fade-in zoom-in duration-500"
+            className="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider backdrop-blur-md shadow-sm hover:scale-105 transition-all duration-300 hover:border-[var(--theme-primary)] animate-in fade-in zoom-in duration-500"
             title={dailyKural.adhigaram}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--theme-dot)] animate-ping" />
             {dailyKural.adhigaram}
           </Link>
         ) : (
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider backdrop-blur-md shadow-sm animate-in fade-in zoom-in duration-500">
+          <div className="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider backdrop-blur-md shadow-sm animate-in fade-in zoom-in duration-500">
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--theme-dot)] animate-ping" />
             {t.home.subtitle}
           </div>
@@ -152,39 +152,44 @@ export default function Home() {
         {/* Today's Kural (Daily Kural) - Positioned ABOVE the Search Bar */}
         {dailyKural && (
           <div className="w-full max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <div className="flex flex-col items-center gap-4 text-center px-1 sm:px-4 relative">
+            <div className="flex flex-col items-start sm:items-center gap-3 sm:gap-4 text-left sm:text-center px-1 sm:px-4 relative max-w-full">
               <Link
                 href={`/kural/${dailyKural.number}`}
-                className="flex items-center justify-center gap-2 sm:gap-6 relative z-10 transition-transform hover:scale-[1.01] duration-300 ease-out cursor-pointer w-full"
+                className="flex items-center justify-start sm:justify-center gap-2 sm:gap-6 relative z-10 transition-transform hover:scale-[1.01] duration-300 ease-out cursor-pointer w-full max-w-5xl px-0"
               >
-                <span className="font-serif text-6xl sm:text-8xl md:text-9xl lg:text-[110px] xl:text-[130px] leading-none text-[var(--theme-quote)] select-none flex-shrink-0 self-center">
-                  &ldquo;
-                </span>
-                <div key={dailyKural.number} className="space-y-0 text-center animate-in fade-in duration-300">
+                <div
+                  key={dailyKural.number}
+                  className="relative space-y-0.5 sm:space-y-0 text-left sm:text-center animate-in fade-in duration-300 w-full sm:w-auto"
+                >
+                  {/* Big faded double quote behind the kural */}
+                  <span
+                    className="absolute -top-10 -left-4 sm:-top-16 sm:-left-8 md:-top-20 md:-left-12 font-serif text-[130px] xs:text-[150px] sm:text-[200px] md:text-[240px] lg:text-[280px] leading-none text-[var(--theme-quote)] opacity-25 dark:opacity-20 pointer-events-none select-none -z-10 transition-all"
+                    aria-hidden="true"
+                  >
+                    &ldquo;
+                  </span>
+
                   <p
-                    className="font-bamini whitespace-nowrap text-[20px] sm:text-[30px] md:text-[40px] lg:text-[48px] xl:text-[52px] leading-snug pb-1 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm"
+                    className="relative z-10 font-bamini text-[22px] sm:text-[30px] md:text-[40px] lg:text-[48px] xl:text-[52px] leading-[1.25] sm:leading-snug pb-0 sm:pb-1 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm whitespace-nowrap text-left sm:text-center"
                     aria-label={dailyKural.line1_ta}
                   >
                     {unicodeToBamini(dailyKural.line1_ta)}
                   </p>
                   <p
-                    className="font-bamini whitespace-nowrap text-[20px] sm:text-[30px] md:text-[40px] lg:text-[48px] xl:text-[52px] leading-snug pb-1 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm"
+                    className="relative z-10 font-bamini text-[22px] sm:text-[30px] md:text-[40px] lg:text-[48px] xl:text-[52px] leading-[1.25] sm:leading-snug pb-0 sm:pb-1 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm whitespace-nowrap text-left sm:text-center"
                     aria-label={dailyKural.line2_ta}
                   >
                     {unicodeToBamini(dailyKural.line2_ta)}
                   </p>
                 </div>
-                <span className="font-serif text-6xl sm:text-8xl md:text-9xl lg:text-[110px] xl:text-[130px] leading-none text-[var(--theme-quote)] select-none flex-shrink-0 self-center">
-                  &rdquo;
-                </span>
               </Link>
 
-              {/* Action Buttons & Badge Container */}
-              <div className="relative z-10 flex items-center justify-center gap-3 sm:gap-4 mt-1">
-                {/* Favorite Button */}
+              {/* Action Bar: Single row with equal height on mobile, full controls on desktop */}
+              <div className="relative z-10 flex flex-nowrap items-center justify-start sm:justify-center gap-1.5 sm:gap-4 mt-1 sm:mt-1 w-full px-3 sm:px-0">
+                {/* Favorite (Like) Button - First Position */}
                 <button
                   onClick={() => handleFavorite(dailyKural.number)}
-                  className={`group p-3 rounded-full backdrop-blur-md border shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 ${isDailyFav
+                  className={`group h-8 w-8 sm:h-10 sm:w-10 rounded-full backdrop-blur-md border shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center shrink-0 cursor-pointer ${isDailyFav
                     ? 'bg-rose-500/15 border-rose-400/40 text-rose-500'
                     : 'bg-white/70 dark:bg-slate-900/50 border-white/80 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:border-rose-300 dark:hover:border-rose-500/40 hover:text-rose-500'
                   }`}
@@ -199,16 +204,38 @@ export default function Home() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className={`w-5 h-5 transition-colors duration-300 ${isDailyFav ? "text-rose-500" : "group-hover:text-rose-500"}`}
+                    className={`w-3.5 h-3.5 sm:w-5 sm:h-5 transition-colors duration-300 ${isDailyFav ? "text-rose-500" : "group-hover:text-rose-500"}`}
                   >
                     <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
                 </button>
 
-                {/* Note Button */}
+                {/* Chapter Badge (Mobile only: integrated into this single row) */}
+                <Link
+                  key={`mobile-badge-${dailyKural.number}`}
+                  href={`/browse?paal=${encodeURIComponent(dailyKural.paal)}&iyal=${encodeURIComponent(dailyKural.iyal)}&adhigaram=${encodeURIComponent(dailyKural.adhigaram)}`}
+                  className="sm:hidden h-8 px-3 rounded-full inline-flex items-center justify-center bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-[11px] tracking-wide backdrop-blur-md shadow-sm active:scale-95 transition-all shrink-0"
+                  title={dailyKural.adhigaram}
+                >
+                  {dailyKural.adhigaram}
+                </Link>
+
+                {/* Badge Link (Kural Number) */}
+                <Link href={`/kural/${dailyKural.number}`} className="group cursor-pointer hover:scale-105 transition-all duration-300 shrink-0">
+                  <div className="h-8 sm:h-10 px-3 sm:px-5 rounded-full flex items-center gap-1.5 sm:gap-2 bg-white/70 dark:bg-slate-900/50 backdrop-blur-md border border-white/80 dark:border-white/10 shadow-sm hover:shadow-md hover:border-[var(--theme-primary)] transition-all">
+                    <span className="text-[11px] sm:text-base font-bold text-slate-700 dark:text-slate-300 pr-1.5 sm:pr-3 mr-0.5 sm:mr-1 border-r border-slate-300 dark:border-white/10">
+                      {t.kural?.number || "குறள்"}
+                    </span>
+                    <span className="text-[11px] sm:text-base font-black bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] bg-clip-text text-transparent font-mono">
+                      {dailyKural.number}
+                    </span>
+                  </div>
+                </Link>
+
+                {/* Note Button (Desktop only: hidden on mobile) */}
                 <button
                   onClick={() => setIsNoteOpen(true)}
-                  className={`group relative p-3 rounded-full backdrop-blur-md border shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 ${hasDailyNote
+                  className={`hidden sm:flex group relative sm:h-10 sm:w-10 rounded-full backdrop-blur-md border shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 items-center justify-center shrink-0 ${hasDailyNote
                     ? 'bg-amber-100/80 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-700/60'
                     : 'bg-white/70 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 border-white/80 dark:border-white/10 hover:border-amber-300 dark:hover:border-amber-500/40 hover:text-amber-500'
                   }`}
@@ -223,24 +250,12 @@ export default function Home() {
                   )}
                 </button>
 
-                {/* Badge Link */}
-                <Link href={`/kural/${dailyKural.number}`} className="group cursor-pointer hover:scale-105 transition-all duration-300">
-                  <div className="flex items-center gap-2 px-5 py-2 rounded-full bg-white/70 dark:bg-slate-900/50 backdrop-blur-md border border-white/80 dark:border-white/10 shadow-sm hover:shadow-md hover:border-[var(--theme-primary)] transition-all">
-                    <span className="text-sm sm:text-base font-bold text-slate-700 dark:text-slate-300 pr-3 mr-1 border-r border-slate-300 dark:border-white/10">
-                      {t.kural?.number || "குறள்"}
-                    </span>
-                    <span className="text-sm sm:text-base font-black bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] bg-clip-text text-transparent font-mono">
-                      {dailyKural.number}
-                    </span>
-                  </div>
-                </Link>
-
                 {/* Refresh Button */}
                 <button
                   type="button"
                   onClick={handleRefresh}
                   disabled={isRotating}
-                  className="group p-3 rounded-full bg-white/70 dark:bg-slate-900/50 backdrop-blur-md border border-white/80 dark:border-white/10 shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 hover:border-[var(--theme-primary)] cursor-pointer disabled:opacity-50"
+                  className="group h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-white/70 dark:bg-slate-900/50 backdrop-blur-md border border-white/80 dark:border-white/10 shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 hover:border-[var(--theme-primary)] cursor-pointer disabled:opacity-50 flex items-center justify-center shrink-0"
                   aria-label={t.home.randomBtn || "New Random Kural"}
                   title={t.home.randomBtn || "New Random Kural"}
                 >
@@ -250,7 +265,7 @@ export default function Home() {
                     viewBox="0 0 24 24"
                     strokeWidth="2"
                     stroke="currentColor"
-                    className={`w-5 h-5 text-slate-500 dark:text-slate-400 group-hover:text-[var(--theme-primary)] transition-transform duration-500 ease-in-out ${isRotating ? "rotate-180" : "rotate-0"}`}
+                    className={`w-3.5 h-3.5 sm:w-5 sm:h-5 text-slate-500 dark:text-slate-400 group-hover:text-[var(--theme-primary)] transition-transform duration-500 ease-in-out ${isRotating ? "rotate-180" : "rotate-0"}`}
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
                   </svg>
@@ -288,8 +303,8 @@ export default function Home() {
 
       {/* Recently Viewed Kurals - Only shown when history exists */}
       {isReady && recentKurals.length > 0 && (
-        <section className="space-y-6 animate-in fade-in slide-in-from-bottom-3 duration-500">
-          <div className="flex justify-between items-end px-2">
+        <section className="space-y-3 sm:space-y-6 mb-5 sm:mb-0 animate-in fade-in slide-in-from-bottom-3 duration-500">
+          <div className="flex flex-col xs:flex-row justify-between items-start xs:items-end gap-2 px-2 pt-2.5 sm:pt-0">
             <div>
               <div className="flex items-center gap-2">
                 <span className="p-1.5 rounded-lg bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]">
@@ -317,13 +332,13 @@ export default function Home() {
             </div>
             <Link
               href="/history"
-              className="text-sm font-semibold text-[var(--theme-primary)] hover:text-[var(--theme-primary-hover)] transition-colors flex items-center gap-1 group"
+              className="text-sm font-semibold text-[var(--theme-primary)] hover:text-[var(--theme-primary-hover)] transition-colors flex items-center gap-1 group self-end xs:self-auto"
             >
               {t.home.viewAll} <span className="group-hover:translate-x-1 transition-transform">→</span>
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {recentKurals.map((kural) => (
               <KuralCard key={`recent-${kural.number}`} kural={kural} />
             ))}
@@ -332,23 +347,41 @@ export default function Home() {
       )}
 
       {/* Featured Kurals */}
-      <section className="space-y-8">
-        <div className="flex justify-between items-end px-2">
+      <section className="space-y-3 sm:space-y-6">
+        <div className="flex flex-col xs:flex-row justify-between items-start xs:items-end gap-2 px-2 pt-2.5 sm:pt-0">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-              {t.home.featured}
-            </h2>
-            <div className="h-1 w-20 bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] rounded-full mt-2" />
+            <div className="flex items-center gap-2">
+              <span className="p-1.5 rounded-lg bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="w-4 h-4"
+                >
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              </span>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+                {t.home.featured}
+              </h2>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+              {t.home.featuredSubtitle}
+            </p>
           </div>
           <Link
             href="/browse"
-            className="text-sm font-semibold text-[var(--theme-primary)] hover:text-[var(--theme-primary-hover)] transition-colors flex items-center gap-1 group"
+            className="text-sm font-semibold text-[var(--theme-primary)] hover:text-[var(--theme-primary-hover)] transition-colors flex items-center gap-1 group self-end xs:self-auto"
           >
             {t.home.viewAll} <span className="group-hover:translate-x-1 transition-transform">→</span>
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {randomKurals.length > 0 ? (
             randomKurals.map((kural) => (
               <KuralCard key={kural.number} kural={kural} />

@@ -69,24 +69,24 @@ export default function Footer({ adhigaramData = {} }: FooterProps) {
     return (
         <footer
             style={{ background: 'var(--theme-footer-bg)' }}
-            className="relative w-full mt-auto pt-10 lg:pt-16 pb-12 overflow-hidden backdrop-blur-md border-t border-[var(--theme-badge-border)] transition-colors duration-300"
+            className="relative w-full mt-auto pt-6 sm:pt-10 lg:pt-16 pb-6 sm:pb-12 overflow-hidden backdrop-blur-md border-t border-[var(--theme-badge-border)] transition-colors duration-300"
         >
             {/* Subtle ambient gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-b dark:from-white/[0.02] to-transparent pointer-events-none" />
 
             <div className="max-w-7xl mx-auto px-4 relative z-10">
-                {/* Main Footer Grid: 4 Columns on Desktop, Scrollable Row on Mobile */}
-                <div className="flex flex-col lg:grid lg:grid-cols-4 gap-10 mb-12 border-b border-black/5 dark:border-white/10 pb-12">
+                {/* Main Footer Grid: Hidden on mobile view, 4 Columns on Desktop */}
+                <div className="hidden sm:flex flex-col lg:grid lg:grid-cols-4 gap-10 mb-8 sm:mb-12 border-b border-black/5 dark:border-white/10 pb-8 sm:pb-12">
 
                     {/* Column 1: Brand & Intro */}
-                    <div className="flex flex-col items-start space-y-6 lg:col-span-1">
-                        <div className="flex items-center gap-3">
-                            <div className="relative w-12 h-12 overflow-hidden rounded-full shadow-lg ring-2 ring-[var(--theme-badge-border)] shrink-0">
+                    <div className="flex flex-col items-start space-y-4 sm:space-y-6 lg:col-span-1">
+                        <div className="flex items-center gap-2.5 sm:gap-3">
+                            <div className="relative w-10 h-10 sm:w-12 sm:h-12 overflow-hidden rounded-full shadow-lg ring-2 ring-[var(--theme-badge-border)] shrink-0">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img src="/valluvar-logo-v2.jpg" alt="Thiruvalluvar Logo" className="w-full h-full object-cover" />
                             </div>
                             <span
-                                className="inline-flex items-center gap-[0.5px] sm:gap-[1px] font-bamini text-[28px] sm:text-[32px] tracking-normal leading-none text-slate-900 dark:text-white pr-3 overflow-visible"
+                                className="inline-flex items-center gap-[0.5px] sm:gap-[1px] font-bamini text-[24px] sm:text-[32px] tracking-normal leading-none text-slate-900 dark:text-white pr-2 sm:pr-3 overflow-visible"
                                 aria-label="திருக்குறள்"
                             >
                                 {unicodeToBaminiSyllables('திருக்குறள்').map((syl, i, arr) => (
@@ -99,7 +99,7 @@ export default function Footer({ adhigaramData = {} }: FooterProps) {
                                 ))}
                             </span>
                         </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed text-left">
+                        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed text-left">
                             {t.footer.description}
                         </p>
                     </div>
@@ -143,9 +143,9 @@ export default function Footer({ adhigaramData = {} }: FooterProps) {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-                    {/* Copyright - Left */}
-                    <div className="text-xs text-center md:text-left text-gray-400 dark:text-gray-500">
+                <div className="flex flex-col sm:grid sm:grid-cols-3 gap-2 sm:gap-4 items-center text-center sm:text-left">
+                    {/* Copyright - Left: Hidden on mobile view, shown on desktop */}
+                    <div className="hidden sm:block text-xs text-gray-400 dark:text-gray-500">
                         <p>© 2025 EDITION. ALL RIGHTS RESERVED.</p>
                     </div>
 
@@ -162,7 +162,7 @@ export default function Footer({ adhigaramData = {} }: FooterProps) {
                     </div>
 
                     {/* Made With - Right */}
-                    <div className="flex justify-center md:justify-end items-center gap-4">
+                    <div className="flex justify-center sm:justify-end items-center gap-4">
                         <span className="text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1">
                             Made with <span className="text-red-500 animate-pulse">❤</span> for Tamil
                         </span>

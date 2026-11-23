@@ -134,7 +134,7 @@ export default function ThemeSelector({ variant = "dropdown", onSelect }: ThemeS
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className={`relative w-9 h-9 flex items-center justify-center rounded-full backdrop-blur-md border transition-all duration-300 shadow-sm active:scale-95 cursor-pointer ${
+                className={`relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full backdrop-blur-md border transition-all duration-300 shadow-sm active:scale-95 cursor-pointer shrink-0 ${
                     isOpen
                         ? "bg-white/95 dark:bg-slate-800/90 border-[var(--theme-primary)] ring-2 ring-[var(--theme-primary)]/20 shadow-md"
                         : "bg-white/70 dark:bg-white/10 border-white/80 dark:border-white/15 hover:bg-white/95 dark:hover:bg-white/20 hover:border-[var(--theme-badge-border)]"
@@ -144,18 +144,18 @@ export default function ThemeSelector({ variant = "dropdown", onSelect }: ThemeS
             >
                 {/* Moon / Sun Icon styled with selected color theme */}
                 {mounted && theme === "dark" ? (
-                    <svg className="w-4 h-4 text-[var(--theme-primary)] transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[var(--theme-primary)] transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
                 ) : (
-                    <svg className="w-4 h-4 text-[var(--theme-primary)] transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[var(--theme-primary)] transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
                 )}
 
                 {/* Selected Color Theme Dot Indicator */}
                 <span
-                    className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white dark:border-slate-900 shadow-sm"
+                    className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full border-2 border-white dark:border-slate-900 shadow-sm"
                     style={{
                         background: `linear-gradient(135deg, ${activeTheme.primary}, ${activeTheme.secondary})`
                     }}
@@ -166,7 +166,7 @@ export default function ThemeSelector({ variant = "dropdown", onSelect }: ThemeS
             {isOpen && (
                 <div
                     style={{ background: 'var(--theme-footer-bg)' }}
-                    className="absolute right-0 mt-3 w-[320px] sm:w-[380px] max-w-[calc(100vw-2rem)] p-4 sm:p-5 rounded-3xl bg-white dark:bg-[#0c0a09] border-2 border-[var(--theme-badge-border)] shadow-2xl shadow-black/20 dark:shadow-black/70 z-50 animate-in fade-in zoom-in-95 duration-200 space-y-4 overflow-hidden"
+                    className="absolute right-0 mt-2 sm:mt-3 w-[295px] xs:w-[320px] sm:w-[380px] max-w-[calc(100vw-1.5rem)] p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#0c0a09] border-2 border-[var(--theme-badge-border)] shadow-2xl shadow-black/20 dark:shadow-black/70 z-50 animate-in fade-in zoom-in-95 duration-200 space-y-3.5 sm:space-y-4 overflow-hidden"
                 >
                     {/* Ambient Glow Orbits inside drawer */}
                     <div className="absolute top-0 right-0 -mr-16 -mt-16 w-36 h-36 bg-[var(--theme-glow)] rounded-full blur-3xl pointer-events-none opacity-60" />

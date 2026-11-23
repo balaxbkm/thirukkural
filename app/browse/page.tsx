@@ -100,11 +100,11 @@ function BrowseContent() {
     return (
         <div className="space-y-8 pb-12 animate-in fade-in duration-500">
             {/* Header */}
-            <div className="text-center space-y-4">
-                <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] pb-2 leading-normal">
+            <div className="text-center space-y-3 sm:space-y-4">
+                <h1 className="text-2xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] pb-1 sm:pb-2 leading-normal">
                     {t.browse.title}
                 </h1>
-                <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-sm sm:text-base px-2">
                     {t.browse.subtitle}
                 </p>
             </div>
@@ -170,7 +170,7 @@ function BrowseContent() {
 
             {/* Grid */}
             {filteredKurals.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                     {currentKurals.map((kural) => (
                         <KuralCard key={kural.number} kural={kural} />
                     ))}
@@ -186,18 +186,19 @@ function BrowseContent() {
 
             {/* Pagination */}
             {totalPages > 1 && (
-                <div className="flex justify-center flex-wrap items-center gap-2 pt-8 border-t border-gray-200 dark:border-white/10 mt-8">
+                <div className="flex justify-center flex-wrap items-center gap-1.5 sm:gap-2 pt-6 sm:pt-8 border-t border-gray-200 dark:border-white/10 mt-6 sm:mt-8">
                     <button
                         onClick={() => updateFilters({ page: String(Math.max(1, currentPage - 1)) })}
                         disabled={currentPage === 1}
-                        className="glass-btn px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg text-sm"
+                        className="glass-btn px-2.5 sm:px-4 py-1.5 sm:py-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg text-xs sm:text-sm font-medium flex items-center gap-1"
                     >
-                        {t.browse.previous}
+                        <span>&larr;</span>
+                        <span className="hidden xs:inline">{t.browse.previous}</span>
                     </button>
 
                     {(() => {
                         const range = [];
-                        const delta = 2; // Number of pages to show on each side of current page
+                        const delta = 1; // 1 page on each side of current page for compact mobile view
 
                         for (let i = 1; i <= totalPages; i++) {
                             if (
@@ -230,11 +231,11 @@ function BrowseContent() {
                                 key={index}
                                 onClick={() => typeof page === 'number' ? updateFilters({ page: String(page) }) : null}
                                 disabled={typeof page !== 'number'}
-                                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${page === currentPage
+                                className={`px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors ${page === currentPage
                                     ? "bg-[var(--theme-primary)] text-white shadow-lg shadow-[var(--theme-glow)]"
                                     : typeof page === 'number'
                                         ? "glass-btn text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
-                                        : "cursor-default text-gray-400"
+                                        : "cursor-default text-gray-400 px-1"
                                     }`}
                             >
                                 {page}
@@ -245,9 +246,10 @@ function BrowseContent() {
                     <button
                         onClick={() => updateFilters({ page: String(Math.min(totalPages, currentPage + 1)) })}
                         disabled={currentPage === totalPages}
-                        className="glass-btn px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg text-sm"
+                        className="glass-btn px-2.5 sm:px-4 py-1.5 sm:py-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg text-xs sm:text-sm font-medium flex items-center gap-1"
                     >
-                        {t.browse.next}
+                        <span className="hidden xs:inline">{t.browse.next}</span>
+                        <span>&rarr;</span>
                     </button>
                 </div>
             )}
