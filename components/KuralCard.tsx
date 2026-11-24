@@ -11,11 +11,10 @@ interface KuralCardProps {
     showNote?: boolean;
 }
 
-export default function KuralCard({ kural, showNote = true }: KuralCardProps) {
+export default function KuralCard({ kural }: KuralCardProps) {
     const { t } = useLanguage();
-    const { isFavorite, toggleFavorite, hasNote, getNote } = useUserKuralActions();
+    const { isFavorite, toggleFavorite } = useUserKuralActions();
     const isFav = isFavorite(kural.number);
-    const hasCustomNote = hasNote(kural.number);
 
     const [showToast, setShowToast] = useState(false);
     const [contentCopiedToast, setContentCopiedToast] = useState(false);
@@ -109,16 +108,6 @@ ${kural.meaning_en}`;
                             {kural.meaning_en}
                         </p>
                     </div>
-
-                    {/* Custom Note Preview if present */}
-                    {showNote && hasCustomNote && (
-                        <div className="pt-1">
-                            <div className="p-2.5 rounded-xl bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-xs text-[var(--theme-badge-text)] flex items-start gap-2 backdrop-blur-sm">
-                                <span className="text-[var(--theme-primary)] text-xs shrink-0 mt-0.5">📝</span>
-                                <p className="line-clamp-2 italic font-medium">{getNote(kural.number)}</p>
-                            </div>
-                        </div>
-                    )}
                 </div>
             </Link>
 

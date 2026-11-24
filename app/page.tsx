@@ -232,17 +232,17 @@ export default function Home() {
                   </div>
                 </Link>
 
-                {/* Note Button (Desktop only: hidden on mobile) */}
+                {/* Note Button */}
                 <button
                   onClick={() => setIsNoteOpen(true)}
-                  className={`hidden sm:flex group relative sm:h-10 sm:w-10 rounded-full backdrop-blur-md border shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 items-center justify-center shrink-0 ${hasDailyNote
+                  className={`flex group relative h-8 w-8 sm:h-10 sm:w-10 rounded-full backdrop-blur-md border shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-300 items-center justify-center shrink-0 cursor-pointer ${hasDailyNote
                     ? 'bg-amber-100/80 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-700/60'
                     : 'bg-white/70 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 border-white/80 dark:border-white/10 hover:border-amber-300 dark:hover:border-amber-500/40 hover:text-amber-500'
                   }`}
                   aria-label={hasDailyNote ? t.note.editNote : t.note.addNote}
                   title={hasDailyNote ? t.note.editNote : t.note.addNote}
                 >
-                  <svg className="w-5 h-5" fill={hasDailyNote ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill={hasDailyNote ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                   </svg>
                   {hasDailyNote && (

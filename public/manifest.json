@@ -1,0 +1,35 @@
+{
+  "name": "திருக்குறள் - Thirukkural",
+  "short_name": "திருக்குறள்",
+  "description": "Explore the timeless wisdom of Thirukkural with a modern glassmorphism design.",
+  "start_url": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "window-controls-overlay"],
+  "background_color": "#fffbeb",
+  "theme_color": "#f59e0b",
+  "orientation": "portrait",
+  "categories": ["education", "books", "lifestyle"],
+  "lang": "ta",
+  "dir": "ltr",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icon",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/valluvar-logo-v2.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}

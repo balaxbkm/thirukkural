@@ -4,12 +4,96 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
+  overscroll-behavior-x: none;
 }
 
 body {
   overflow-x: hidden;
   max-width: 100%;
+  width: 100%;
+  position: relative;
   -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-x: none;
+  touch-action: pan-y pinch-zoom;
+}
+
+/* Ensure images, SVGs, videos, and media elements never overflow their containers */
+img, svg, video, canvas, audio, iframe, embed, object {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ------------------------------------------------------------- */
+/* Native Mobile App UI & Ergonomics                             */
+/* ------------------------------------------------------------- */
+
+/* Disable iOS callout menu on long-press on interactive controls */
+*, *::before, *::after {
+  -webkit-touch-callout: none;
+  box-sizing: border-box;
+}
+
+/* UI chrome, buttons, links, icons, cards, navigation are non-selectable like a native app */
+body,
+header,
+footer,
+nav,
+aside,
+button,
+a,
+[role="button"],
+.glass,
+.glass-card,
+.glass-btn,
+.badge,
+.tab {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Explicitly keep interactive button & link descendants non-selectable */
+button *,
+a * {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+}
+
+/* Text inputs and editable areas must always be selectable */
+input,
+textarea,
+[contenteditable="true"] {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  user-select: text !important;
+  -webkit-touch-callout: default !important;
+}
+
+/* Reading content (Kural lines, meanings, explanations) allows user selection */
+.selectable-text,
+.kural-text,
+article,
+main p {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  user-select: text;
+}
+
+/* Safe Area insets for notch and gesture home indicator */
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.safe-left {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+.safe-right {
+  padding-right: env(safe-area-inset-right, 0px);
 }
 
 /* Prevent iOS Safari auto-zoom on form inputs while maintaining design system */

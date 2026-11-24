@@ -95,7 +95,7 @@ export default function Header() {
 
     return (
         <>
-            <header className={`fixed top-0 left-0 right-0 ${isMobileMenuOpen ? 'z-[9995]' : 'z-40'} bg-transparent backdrop-blur-xl border-b-0 sm:border-b border-black/5 dark:border-white/10 transition-all duration-300`}>
+            <header className={`fixed top-0 left-0 right-0 ${isMobileMenuOpen ? 'z-[9995]' : 'z-40'} bg-transparent backdrop-blur-xl border-b-0 sm:border-b border-black/5 dark:border-white/10 transition-all duration-300 pt-[env(safe-area-inset-top,0px)]`}>
                 <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-14 sm:h-20">
                         {/* Logo */}
@@ -229,7 +229,7 @@ export default function Header() {
                     />
 
                     {/* Left-Side Full-Height Drawer */}
-                    <aside className="fixed inset-y-0 left-0 top-0 bottom-0 w-64 xs:w-72 max-w-[82vw] h-screen h-[100dvh] overflow-y-auto overscroll-contain bg-[var(--background)] border-r border-black/10 dark:border-white/10 px-4 py-4 flex flex-col shadow-2xl animate-in slide-in-from-left duration-300 z-[9999]">
+                    <aside className="fixed inset-y-0 left-0 top-0 bottom-0 w-64 xs:w-72 max-w-[82vw] h-screen h-[100dvh] overflow-y-auto overscroll-contain bg-[var(--background)] border-r border-black/10 dark:border-white/10 px-4 pt-[max(env(safe-area-inset-top,0px),1rem)] pb-[max(env(safe-area-inset-bottom,0px),1rem)] flex flex-col shadow-2xl animate-in slide-in-from-left duration-300 z-[9999]">
                         {/* Drawer Header with Logo & Close Button */}
                         <div className="flex items-center justify-between pb-3.5 mb-2 border-b border-black/5 dark:border-white/10 shrink-0">
                             <div className="flex items-center gap-2.5">

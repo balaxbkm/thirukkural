@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeColorProvider } from "@/lib/context/ThemeColorContext";
+import KolamBackground from "@/components/KolamBackground";
 
 
 const outfit = Outfit({
@@ -25,12 +26,31 @@ const muktaMalar = Mukta_Malar({
 export const metadata: Metadata = {
   title: "Thirukkural - Timeless Wisdom",
   description: "Explore the timeless wisdom of Thirukkural with a modern glassmorphism design.",
+  applicationName: "திருக்குறள்",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "திருக்குறள்",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: "/icon",
+    apple: "/valluvar-logo-v2.jpg",
+  },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f59e0b" },
+    { media: "(prefers-color-scheme: dark)", color: "#1c1004" },
+  ],
 };
 
 import { getPaalAdhigarams } from "@/lib/kural-data";
@@ -45,6 +65,13 @@ export default async function RootLayout({
   return (
     <html lang="ta" className={`scroll-smooth ${outfit.variable} ${muktaMalar.variable}`} suppressHydrationWarning>
       <head>
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="திருக்குறள்" />
+        <meta name="apple-touch-fullscreen" content="yes" />
+        <link rel="apple-touch-icon" href="/valluvar-logo-v2.jpg" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/valluvar-logo-v2.jpg" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -52,6 +79,26 @@ export default async function RootLayout({
                 const raw = localStorage.getItem('thirukkural_color_theme') || 'amber';
                 const t = raw === 'sapphire' ? 'monochrome' : raw;
                 document.documentElement.setAttribute('data-theme', t);
+
+                const isDark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                const themeColors = {
+                  amber: { light: '#f59e0b', dark: '#1c1004' },
+                  indigo: { light: '#6366f1', dark: '#020617' },
+                  emerald: { light: '#10b981', dark: '#022017' },
+                  rose: { light: '#f43f5e', dark: '#1e030a' },
+                  monochrome: { light: '#18181b', dark: '#09090b' },
+                  amethyst: { light: '#9333ea', dark: '#140224' }
+                };
+                const color = (themeColors[t] || themeColors.amber)[isDark ? 'dark' : 'light'];
+                const metas = document.querySelectorAll('meta[name="theme-color"]');
+                if (metas.length > 0) {
+                  metas.forEach(function(m) { m.setAttribute('content', color); });
+                } else {
+                  const meta = document.createElement('meta');
+                  meta.setAttribute('name', 'theme-color');
+                  meta.setAttribute('content', color);
+                  document.head.appendChild(meta);
+                }
               } catch (e) {}
             `,
           }}
@@ -62,8 +109,9 @@ export default async function RootLayout({
           <UserKuralActionsProvider>
             <ThemeColorProvider>
               <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+                <KolamBackground />
                 <Header />
-                <main className="flex-grow pt-16 sm:pt-24 md:pt-28 pb-8 sm:pb-12 md:pb-14 px-3 sm:px-6 lg:px-8 max-w-[1600px] mx-auto w-full">
+                <main className="flex-grow pt-[calc(3.75rem+env(safe-area-inset-top,0px))] sm:pt-24 md:pt-28 pb-[calc(2rem+env(safe-area-inset-bottom,0px))] sm:pb-12 md:pb-14 px-3 sm:px-6 lg:px-8 max-w-[1600px] mx-auto w-full">
                   {children}
                 </main>
                 <Footer adhigaramData={adhigaramData} />

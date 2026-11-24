@@ -78,6 +78,57 @@ export const COLOR_THEMES: ColorThemeOption[] = [
     }
 ];
 
+export const THEME_BAR_COLORS: Record<ColorTheme, { light: string; dark: string }> = {
+    amber: {
+        light: "#f59e0b",
+        dark: "#1c1004"
+    },
+    indigo: {
+        light: "#6366f1",
+        dark: "#020617"
+    },
+    emerald: {
+        light: "#10b981",
+        dark: "#022017"
+    },
+    rose: {
+        light: "#f43f5e",
+        dark: "#1e030a"
+    },
+    monochrome: {
+        light: "#18181b",
+        dark: "#09090b"
+    },
+    amethyst: {
+        light: "#9333ea",
+        dark: "#140224"
+    }
+};
+
+export function updateMetaThemeColor(currentTheme?: ColorTheme) {
+    if (typeof window === "undefined" || typeof document === "undefined") return;
+    try {
+        const theme = currentTheme || (document.documentElement.getAttribute("data-theme") as ColorTheme) || "amber";
+        const isDark = document.documentElement.classList.contains("dark");
+        const themeMap = THEME_BAR_COLORS[theme] || THEME_BAR_COLORS.amber;
+        const color = isDark ? themeMap.dark : themeMap.light;
+
+        const metas = document.querySelectorAll('meta[name="theme-color"]');
+        if (metas.length > 0) {
+            metas.forEach((m) => {
+                (m as HTMLMetaElement).content = color;
+            });
+        } else {
+            const meta = document.createElement("meta");
+            meta.name = "theme-color";
+            meta.content = color;
+            document.head.appendChild(meta);
+        }
+    } catch (e) {
+        console.error("Failed to update meta theme-color:", e);
+    }
+}
+
 interface ThemeColorContextType {
     colorTheme: ColorTheme;
     setColorTheme: (theme: ColorTheme) => void;
@@ -92,13 +143,16 @@ export function ThemeColorProvider({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         setMounted(true);
+        let activeTheme: ColorTheme = "amber";
         try {
             const saved = localStorage.getItem("thirukkural_color_theme");
             if (saved === "sapphire") {
+                activeTheme = "monochrome";
                 setColorThemeState("monochrome");
                 document.documentElement.setAttribute("data-theme", "monochrome");
                 localStorage.setItem("thirukkural_color_theme", "monochrome");
             } else if (saved && COLOR_THEMES.some((t) => t.id === saved)) {
+                activeTheme = saved as ColorTheme;
                 setColorThemeState(saved as ColorTheme);
                 document.documentElement.setAttribute("data-theme", saved);
             } else {
@@ -107,6 +161,20 @@ export function ThemeColorProvider({ children }: { children: ReactNode }) {
         } catch (e) {
             console.error("ThemeColor: Failed to read theme from localStorage", e);
         }
+
+        updateMetaThemeColor(activeTheme);
+
+        // Keep Chrome mobile search bar / theme-color synchronized when dark mode or theme class changes
+        const observer = new MutationObserver(() => {
+            updateMetaThemeColor();
+        });
+
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["class", "data-theme"]
+        });
+
+        return () => observer.disconnect();
     }, []);
 
     const setColorTheme = (theme: ColorTheme) => {
@@ -114,6 +182,7 @@ export function ThemeColorProvider({ children }: { children: ReactNode }) {
         try {
             localStorage.setItem("thirukkural_color_theme", theme);
             document.documentElement.setAttribute("data-theme", theme);
+            updateMetaThemeColor(theme);
         } catch (e) {
             console.error("ThemeColor: Failed to save theme to localStorage", e);
         }

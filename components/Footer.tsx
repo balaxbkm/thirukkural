@@ -69,7 +69,7 @@ export default function Footer({ adhigaramData = {} }: FooterProps) {
     return (
         <footer
             style={{ background: 'var(--theme-footer-bg)' }}
-            className="relative w-full mt-auto pt-6 sm:pt-10 lg:pt-16 pb-6 sm:pb-12 overflow-hidden backdrop-blur-md border-t border-[var(--theme-badge-border)] transition-colors duration-300"
+            className="relative w-full mt-auto pt-6 sm:pt-10 lg:pt-16 pb-[max(env(safe-area-inset-bottom,0px),1.5rem)] sm:pb-12 overflow-hidden backdrop-blur-md border-t border-[var(--theme-badge-border)] transition-colors duration-300"
         >
             {/* Subtle ambient gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-b dark:from-white/[0.02] to-transparent pointer-events-none" />
@@ -140,6 +140,24 @@ export default function Footer({ adhigaramData = {} }: FooterProps) {
                             </div>
                         )}
                     </div>
+                </div>
+
+                {/* Traditional Kolam Emblem in Footer */}
+                <div className="flex justify-center items-center my-3 sm:my-5" aria-hidden="true">
+                    <div
+                        className="w-12 h-12 sm:w-16 sm:h-16 transition-colors duration-500 opacity-40 dark:opacity-50 pointer-events-none select-none"
+                        style={{
+                            WebkitMaskImage: `url(/kolams/sikku-kolam.png)`,
+                            WebkitMaskSize: "contain",
+                            WebkitMaskRepeat: "no-repeat",
+                            WebkitMaskPosition: "center",
+                            maskImage: `url(/kolams/sikku-kolam.png)`,
+                            maskSize: "contain",
+                            maskRepeat: "no-repeat",
+                            maskPosition: "center",
+                            backgroundColor: "var(--theme-primary)",
+                        }}
+                    />
                 </div>
 
                 {/* Bottom Bar */}
