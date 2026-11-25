@@ -313,7 +313,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                     opacity: isTransitioningOut ? 0 : swipeOffset !== 0 ? Math.max(0.55, 1 - Math.abs(swipeOffset) / 280) : 1,
                     transition: isDragging ? "none" : "transform 220ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms ease-out",
                 }}
-                className={`max-w-7xl 2xl:max-w-[1440px] mx-auto space-y-6 sm:space-y-8 md:pt-6 lg:pt-8 pb-0 sm:pb-6 ${enterAnimationClass}`}
+                className={`max-w-7xl 2xl:max-w-[1440px] mx-auto space-y-6 sm:space-y-8 md:px-14 xl:px-16 md:pt-6 lg:pt-8 pb-0 sm:pb-6 ${enterAnimationClass}`}
             >
             {/* Two Column Layout on Desktop */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -431,7 +431,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                     href={`/kural/${kuralNumber - 1}`}
                     aria-label={`${t.browse.previous} (${kuralNumber - 1})`}
                     title={`${t.browse.previous} #${kuralNumber - 1}`}
-                    className="group hidden md:flex fixed left-4 sm:left-8 lg:left-12 xl:left-16 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full items-center justify-center border border-gray-200/80 dark:border-white/15 bg-white/80 dark:bg-slate-900/75 hover:bg-white dark:hover:bg-slate-900 hover:border-[var(--theme-badge-border)] backdrop-blur-md shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200 text-gray-700 dark:text-gray-200 hover:text-[var(--theme-primary)]"
+                    className="group hidden md:flex fixed left-2 sm:left-3 xl:left-5 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full items-center justify-center border border-gray-200/80 dark:border-white/15 bg-white/80 dark:bg-slate-900/75 hover:bg-white dark:hover:bg-slate-900 hover:border-[var(--theme-badge-border)] backdrop-blur-md shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200 text-gray-700 dark:text-gray-200 hover:text-[var(--theme-primary)]"
                 >
                     <svg className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:-translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -444,7 +444,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                     href={`/kural/${kuralNumber + 1}`}
                     aria-label={`${t.browse.next} (${kuralNumber + 1})`}
                     title={`${t.browse.next} #${kuralNumber + 1}`}
-                    className="group hidden md:flex fixed right-4 sm:right-8 lg:right-12 xl:right-16 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full items-center justify-center border border-gray-200/80 dark:border-white/15 bg-white/80 dark:bg-slate-900/75 hover:bg-white dark:hover:bg-slate-900 hover:border-[var(--theme-badge-border)] backdrop-blur-md shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200 text-gray-700 dark:text-gray-200 hover:text-[var(--theme-primary)]"
+                    className="group hidden md:flex fixed right-2 sm:right-3 xl:right-5 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full items-center justify-center border border-gray-200/80 dark:border-white/15 bg-white/80 dark:bg-slate-900/75 hover:bg-white dark:hover:bg-slate-900 hover:border-[var(--theme-badge-border)] backdrop-blur-md shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200 text-gray-700 dark:text-gray-200 hover:text-[var(--theme-primary)]"
                 >
                     <svg className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

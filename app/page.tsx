@@ -174,13 +174,13 @@ export default function Home() {
                   </span>
 
                   <p
-                    className="relative z-10 font-oi text-[12px] sm:text-[15px] md:text-[20px] lg:text-[25px] xl:text-[29px] leading-[1.6] py-1 sm:py-1.5 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm whitespace-nowrap text-left sm:text-center"
+                    className="relative z-10 font-oi text-[12px] sm:text-[15px] md:text-[20px] lg:text-[25px] xl:text-[29px] leading-[1.6] py-1 sm:py-1.5 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm whitespace-normal sm:whitespace-nowrap text-left sm:text-center"
                     aria-label={dailyKural.line1_ta}
                   >
                     {dailyKural.line1_ta}
                   </p>
                   <p
-                    className="relative z-10 font-oi text-[12px] sm:text-[15px] md:text-[20px] lg:text-[25px] xl:text-[29px] leading-[1.6] py-1 sm:py-1.5 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm whitespace-nowrap text-left sm:text-center"
+                    className="relative z-10 font-oi text-[12px] sm:text-[15px] md:text-[20px] lg:text-[25px] xl:text-[29px] leading-[1.6] py-1 sm:py-1.5 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm whitespace-normal sm:whitespace-nowrap text-left sm:text-center"
                     aria-label={dailyKural.line2_ta}
                   >
                     {dailyKural.line2_ta}

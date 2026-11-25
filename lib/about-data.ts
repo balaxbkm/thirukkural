@@ -177,12 +177,10 @@ export const aboutData: Record<'ta' | 'en', AboutContent> = {
             title: "இச்செயலியின் சிறப்பம்சங்கள்",
             tagline: "நவீன தலைமுறையினருக்குத் திருக்குறளின் ஞானத்தை எளிய, கண்ணாடி போன்ற தூய இடைமுகத்தில் வழங்குதல்.",
             features: [
-                { icon: "📖", title: "எளிய விளக்கமும் ஆங்கிலப் பொருளும்", desc: "ஒவ்வொரு குறளின் கீழும் நேரடியான ஆங்கிலப் பொருளுடன், மு.வ., சாலமன் பாப்பையா மற்றும் கலைஞர் உரைகளின் சாராம்சமான எளிய தமிழ் விளக்கமும் பரிமேலழகர் உரையும் வழங்கப்பட்டுள்ளன." },
-                { icon: "⚡", title: "இருமொழி உடனடித் தேடல்", desc: "குறள் எண், தமிழ் வார்த்தைகள், ஆங்கில எழுத்துப்பெயர்ப்பு மூலம் மின்னல் வேகத்தில் தேடலாம்." },
-                { icon: "🧠", title: "AI விளக்கப் பகுப்பாய்வு", desc: "ஒவ்வொரு குறளுக்கும் நவீன கால சூழல் (Context), உள்ளார்ந்த தத்துவம் (Insight) மற்றும் பயனுள்ள பாடம் (Takeaway) அறியலாம்." },
-                { icon: "🔖", title: "உள்ளமைந்த சேமிப்பகம் (Bookmarks)", desc: "பிடித்த குறள்களை உள்நுழைவு இன்றியே உங்கள் உலாவியிலேயே பாதுகாப்பாகச் சேமித்து வைத்துப் படிக்கலாம்." },
-                { icon: "✨", title: "அழகிய வண்ணங்கள்", desc: "இரவு மற்றும் பகல் நேரங்களுக்கு உகந்த, கண்களுக்கு இதமான அழகிய நவீன வடிவமைப்பு." },
-                { icon: "📱", title: "எல்லா சாதனங்களிலும் ஆஃப்லைன் பயன்பாடு", desc: "இச்செயலியை உங்கள் கணினி (Desktop) அல்லது கைபேசியில் (Mobile) நிறுவி, இணைய இணைப்பு இல்லாமலும் எளிதாகப் பயன்படுத்தலாம்." }
+                { icon: "📖", title: "எளிய விளக்கமும் ஆங்கிலப் பொருளும்", desc: "மு.வ., சாலமன் பாப்பையா, கலைஞர் உரைகளின் சாராம்சமான எளிய தமிழ் விளக்கம், பரிமேலழகர் உரை மற்றும் ஆங்கிலப் பொருள்." },
+                { icon: "⚡", title: "உடனடித் தேடல் & வடிகட்டி", desc: "குறள் எண், தமிழ், ஆங்கிலம், பால், இயல், அதிகாரம் வாரியாகத் தேடி, பக்க எண் மற்றும் காட்சி எண்ணிக்கையை (12–96) மாற்றலாம்." },
+                { icon: "🔖", title: "விருப்பங்களும் பல குறிப்புகளும்", desc: "பிடித்த குறள்களையும் ஒவ்வொரு குறளுக்கும் பல தனிப்பட்ட குறிப்புகளையும் உள்நுழைவு இன்றி உலாவியிலேயே சேமிக்கலாம்." },
+                { icon: "📱", title: "ஆஃப்லைன் & ஸ்வைப் பயன்பாடு", desc: "கணினி மற்றும் கைபேசியில் நிறுவி இணையமின்றிப் பயன்படுத்தலாம்; கைபேசியில் ஸ்வைப் செய்தும் எளிதாகப் படிக்கலாம்." }
             ]
         }
     },
@@ -311,12 +309,10 @@ export const aboutData: Record<'ta' | 'en', AboutContent> = {
             title: "About This Modern Explorer",
             tagline: "Bridging ancient wisdom with modern interactive glassmorphism technology.",
             features: [
-                { icon: "📖", title: "Unified Simple Explanation", desc: "Each couplet pairs a direct English meaning right below the verse with a clear Tamil explanation synthesized from Mu. Va., Solomon Pappaiah, and Kalaignar, alongside Parimelazhagar's classical commentary." },
-                { icon: "⚡", title: "Lightning Bilingual Search", desc: "Search instantly by verse number, Tamil keywords, English transliteration, or chapter title." },
-                { icon: "🧠", title: "AI-Powered Deconstruction", desc: "Unpack each couplet with contemporary Context, philosophical Core Insight, and actionable Modern Takeaways." },
-                { icon: "🔖", title: "Zero-Friction Offline Bookmarks", desc: "Save and curate your personal collection directly in your browser without requiring any login." },
-                { icon: "✨", title: "Fluid Glassmorphic Aesthetic", desc: "Frosted translucent glass interfaces crafted with light/dark adaptive color grading." },
-                { icon: "📱", title: "Installable & Offline-Ready", desc: "Install the app directly on your desktop or mobile device and explore Kurals seamlessly even without an internet connection." }
+                { icon: "📖", title: "Unified Tamil & English Meanings", desc: "Direct English meaning paired with a clear Tamil explanation synthesized from Mu. Va., Solomon Pappaiah, and Kalaignar, plus Parimelazhagar's commentary." },
+                { icon: "⚡", title: "Smart Search & Pagination", desc: "Search by verse, Tamil, English, or chapter, jump to any page, and customize desktop results per page (12–96)." },
+                { icon: "🔖", title: "Offline Favorites & Multi-Notes", desc: "Bookmark Kurals and save multiple personal notes per verse privately in your browser without any login." },
+                { icon: "📱", title: "Installable & Swipe-Ready", desc: "Install on desktop or mobile for offline reading, with smooth swipe navigation on mobile and side controls on desktop." }
             ]
         }
     }

@@ -130,9 +130,14 @@ export default function CustomSelect({
             {isOpen && (
                 <div className="absolute z-50 w-full mt-2 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-[var(--theme-badge-border)] overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="px-4 py-3 bg-[var(--theme-badge-bg)] border-b border-[var(--theme-badge-border)]">
-                        <h3 className="font-bold text-[var(--theme-primary)] mb-1">
-                            {label}
-                        </h3>
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                            <h3 className="font-bold text-[var(--theme-primary)]">
+                                {label}
+                            </h3>
+                            <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white/70 dark:bg-slate-800/80 text-[var(--theme-badge-text)] border border-[var(--theme-badge-border)] font-mono">
+                                {filteredOptions.length}
+                            </span>
+                        </div>
                         {enableSearch && (
                             <input
                                 ref={searchInputRef}

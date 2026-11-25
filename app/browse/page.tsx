@@ -28,10 +28,25 @@ function BrowseContent() {
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
+    const kurals = kuralsData as Kural[];
+
     // URL State
-    const selectedPaal = searchParams.get("paal") || "";
-    const selectedIyal = searchParams.get("iyal") || "";
+    const urlPaal = searchParams.get("paal") || "";
+    const urlIyal = searchParams.get("iyal") || "";
     const selectedAdhigaram = searchParams.get("adhigaram") || "";
+
+    const matchedAdhigaramKural = useMemo(
+        () => (selectedAdhigaram ? kurals.find((k) => k.adhigaram === selectedAdhigaram) : undefined),
+        [kurals, selectedAdhigaram]
+    );
+
+    const matchedIyalKural = useMemo(
+        () => (urlIyal ? kurals.find((k) => k.iyal === urlIyal) : undefined),
+        [kurals, urlIyal]
+    );
+
+    const selectedPaal = urlPaal || matchedAdhigaramKural?.paal || matchedIyalKural?.paal || "";
+    const selectedIyal = urlIyal || matchedAdhigaramKural?.iyal || "";
     const urlQuery = searchParams.get("q") || "";
     const urlPerPage = Number(searchParams.get("perPage"));
     const desktopPerPage = DESKTOP_PER_PAGE_OPTIONS.includes(urlPerPage) ? urlPerPage : DEFAULT_ITEMS_PER_PAGE;
@@ -59,8 +74,6 @@ function BrowseContent() {
 
     const activeFilterCount = [selectedPaal, selectedIyal, selectedAdhigaram].filter(Boolean).length;
     const hasActiveFilters = Boolean(searchQuery.trim() || activeFilterCount > 0);
-
-    const kurals = kuralsData as Kural[];
 
     // Helper to update URL
     const updateFilters = useCallback((updates: Record<string, string | null>) => {
@@ -298,7 +311,7 @@ function BrowseContent() {
                         label={t.browse.iyal}
                         value={selectedIyal}
                         options={iyals}
-                        onChange={(val) => updateFilters({ iyal: val, adhigaram: null })}
+                        onChange={(val) => updateFilters({ paal: selectedPaal || null, iyal: val, adhigaram: null })}
                         placeholder={t.browse.allIyal}
                         icon={
                             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

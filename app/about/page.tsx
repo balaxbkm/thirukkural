@@ -341,9 +341,9 @@ export default function AboutPage() {
             </section>
 
             {/* About App Features */}
-            <section className="glass-card p-6 sm:p-10 space-y-6 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+            <section className="glass-card p-5 sm:p-8 space-y-5 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                 <SectionHeader
-                    className="border-b border-slate-200/60 dark:border-white/10 pb-4"
+                    className="border-b border-slate-200/60 dark:border-white/10 pb-3.5"
                     alignRight="title"
                     wrapRight
                     icon={
@@ -357,14 +357,14 @@ export default function AboutPage() {
                     subtitle={data.app.tagline}
                 />
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {data.app.features.map((feat, idx) => (
                         <div
                             key={idx}
-                            className="p-5 rounded-2xl bg-white/45 dark:bg-slate-900/40 border border-white/70 dark:border-white/10 backdrop-blur-md space-y-2 hover:border-[var(--theme-badge-border)] transition-colors"
+                            className="p-4 rounded-2xl bg-white/45 dark:bg-slate-900/40 border border-white/70 dark:border-white/10 backdrop-blur-md space-y-1.5 hover:border-[var(--theme-badge-border)] transition-colors"
                         >
-                            <div className="flex items-center gap-3">
-                                <span className="text-2xl">{feat.icon}</span>
+                            <div className="flex items-center gap-2.5">
+                                <span className="text-xl">{feat.icon}</span>
                                 <h3 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white">
                                     {feat.title}
                                 </h3>
@@ -463,12 +463,12 @@ export default function AboutPage() {
 
                     <div className="p-4 sm:p-5 rounded-2xl bg-white/45 dark:bg-slate-900/40 border border-white/70 dark:border-white/10 space-y-1.5">
                         <div className="font-bold text-slate-900 dark:text-white">
-                            {language === 'ta' ? 'சின்னம் மற்றும் AI விளக்கங்கள்' : 'App Logo & AI Explanations'}
+                            {language === 'ta' ? 'சின்னம் மற்றும் எளிய விளக்கங்கள்' : 'App Logo & Simple Explanations'}
                         </div>
                         <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                             {language === 'ta'
-                                ? 'திருவள்ளுவர் சின்னம் மற்றும் குறள் விளக்கங்கள் Google Gemini AI உதவியுடன் உருவாக்கப்பட்டவை.'
-                                : 'Main Thiruvalluvar emblem and contextual Kural explanations generated with Google Gemini AI.'}
+                                ? 'திருவள்ளுவர் சின்னம் மற்றும் குறள்களுக்கான ஒருங்கிணைந்த எளிய தமிழ் விளக்கங்கள் Google Gemini AI உதவியுடன் உருவாக்கப்பட்டவை.'
+                                : 'Main Thiruvalluvar emblem and unified simple Tamil Kural explanations crafted with Google Gemini AI.'}
                         </p>
                     </div>
                 </div>
