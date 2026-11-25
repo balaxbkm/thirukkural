@@ -82,11 +82,11 @@ ${kural.meaning_en}`;
             </div>
 
             <Link href={`/kural/${kural.number}`} className="flex-grow p-3.5 sm:p-5 flex flex-col gap-2.5 sm:gap-3">
-                <div className="flex justify-between items-start">
-                    <span className="inline-block px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] font-mono">
+                <div className="flex items-center gap-2.5 min-w-0">
+                    <span className="inline-block px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] font-mono shrink-0">
                         {kural.number}
                     </span>
-                    <span className="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 font-medium">
+                    <span className="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 font-medium truncate">
                         {kural.adhigaram}
                     </span>
                 </div>

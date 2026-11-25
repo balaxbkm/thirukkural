@@ -119,7 +119,7 @@ export default async function RootLayout({
               <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
                 <KolamBackground />
                 <Header />
-                <main className="flex-grow pt-[calc(3.75rem+env(safe-area-inset-top,0px))] sm:pt-24 md:pt-28 pb-[calc(2rem+env(safe-area-inset-bottom,0px))] sm:pb-12 md:pb-14 px-3 sm:px-6 lg:px-8 max-w-[1600px] mx-auto w-full">
+                <main className="flex-grow pt-[calc(4.25rem+env(safe-area-inset-top,0px))] sm:pt-24 md:pt-28 pb-[calc(2rem+env(safe-area-inset-bottom,0px))] sm:pb-12 md:pb-14 px-3 sm:px-6 lg:px-8 max-w-[1600px] mx-auto w-full">
                   {children}
                 </main>
                 <Footer adhigaramData={adhigaramData} />

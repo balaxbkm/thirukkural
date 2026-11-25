@@ -31,6 +31,7 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
     const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
 
     useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
         if (kuralNumber) {
             recordView(kuralNumber);
         }
@@ -122,8 +123,8 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                                 {kural.line2_ta}
                             </div>
                         </h1>
-                        <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base md:text-lg mt-2 font-medium">
-                            {kural.transliteration_en}
+                        <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 leading-relaxed italic">
+                            &ldquo;{kural.meaning_en}&rdquo;
                         </p>
                     </div>
                 </div>
@@ -145,38 +146,14 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                         />
 
                         <div className="grid grid-cols-1 gap-6 sm:gap-8">
-                            {/* Mu. Varadarajan */}
-                            {kural.mv && (
+                            {/* Simple Explanation (MK, SP, MV) */}
+                            {kural.meaning_ta && (
                                 <div className="space-y-1.5 sm:space-y-2">
                                     <h3 className="text-sm sm:text-md font-semibold text-[var(--theme-primary)]">
-                                        {t.kural.mv}
+                                        {t.kural.meaningTa}
                                     </h3>
                                     <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
-                                        {kural.mv}
-                                    </p>
-                                </div>
-                            )}
-
-                            {/* Solomon Pappaiah */}
-                            {kural.sp && (
-                                <div className="space-y-1.5 sm:space-y-2">
-                                    <h3 className="text-sm sm:text-md font-semibold text-[var(--theme-primary)]">
-                                        {t.kural.sp}
-                                    </h3>
-                                    <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
-                                        {kural.sp}
-                                    </p>
-                                </div>
-                            )}
-
-                            {/* Kalaignar */}
-                            {kural.mk && (
-                                <div className="space-y-1.5 sm:space-y-2">
-                                    <h3 className="text-sm sm:text-md font-semibold text-[var(--theme-primary)]">
-                                        {t.kural.mk}
-                                    </h3>
-                                    <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
-                                        {kural.mk}
+                                        {kural.meaning_ta}
                                     </p>
                                 </div>
                             )}
@@ -198,24 +175,6 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
                                 </div>
                             )}
                         </div>
-                    </div>
-
-                    {/* English Meaning */}
-                    <div className="space-y-3 sm:space-y-4 pt-5 sm:pt-6 border-t border-gray-200 dark:border-white/10">
-                        <SectionHeader
-                            icon={
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
-                                    <path d="M2 12h20" />
-                                </svg>
-                            }
-                            title={t.kural.englishMeaning}
-                            subtitle={t.kural.englishMeaningSubtitle}
-                        />
-                        <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 leading-relaxed sm:leading-loose italic">
-                            &ldquo;{kural.meaning_en}&rdquo;
-                        </p>
                     </div>
                 </div>
             </div>

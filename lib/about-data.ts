@@ -163,7 +163,7 @@ export const aboutData: Record<'ta' | 'en', AboutContent> = {
         },
         commentators: {
             title: "உரையாசிரியர்கள்",
-            description: "திருக்குறளுக்குப் பல அறிஞர்கள் உரை எழுதியுள்ளனர். பழங்காலத்தில் மணக்குடவர், பரிப்பெருமாள், காலிங்கர், பரிதி, பரிமேலழகர் உள்ளிட்ட 'பத்து உரையாசிரியர்கள்' புகழ்பெற்றவர்கள். நமது செயலியில் செவ்வியல் உரையான பரிமேலழகர் உரையுடன், நவீன தலைமுறைக்கு ஏற்ற மூன்று எளிய உரைகளும் சேர்க்கப்பட்டுள்ளன:",
+            description: "திருக்குறளுக்குப் பல அறிஞர்கள் உரை எழுதியுள்ளனர். பழங்காலத்தில் மணக்குடவர், பரிப்பெருமாள், காலிங்கர், பரிதி, பரிமேலழகர் உள்ளிட்ட 'பத்து உரையாசிரியர்கள்' புகழ்பெற்றவர்கள். நமது செயலியில் செவ்வியல் உரையான பரிமேலழகர் உரையுடன், மு.வ., சாலமன் பாப்பையா மற்றும் கலைஞர் ஆகியோரின் உரைகளைத் தழுவி உருவாக்கப்பட்ட எளிய தமிழ் விளக்கமும் வழங்கப்படுகிறது:",
             list: [
                 { name: "மு. வரதராசனார் (மு.வ.)", era: "நவீன காலம் (20-ஆம் நூற்றாண்டு)", style: "எளிய, தெளிவான, யாவரும் எளிதில் உணரத்தக்க தூய தமிழ் உரை; மாணவர்களும் பொதுமக்களும் பெரிதும் விரும்பும் 'திருக்குறள் தெளிவுரை' படைத்தவர்.", badge: "மிகவும் பிரசித்தி பெற்றது" },
                 { name: "கலைஞர் மு. கருணாநிதி", era: "நவீன காலம் (20-ஆம் நூற்றாண்டு)", style: "இலக்கிய நயமும், சமூக விழிப்புணர்வும், கவிதை நடையும் கலந்த 'குறளோவியம்' மற்றும் உரை விளக்கங்களின் மூலம் குறளை மக்கள் மன்றத்தில் எளிமைப்படுத்தியவர்.", badge: "கவித்துவ நடை" },
@@ -177,6 +177,7 @@ export const aboutData: Record<'ta' | 'en', AboutContent> = {
             title: "இச்செயலியின் சிறப்பம்சங்கள்",
             tagline: "நவீன தலைமுறையினருக்குத் திருக்குறளின் ஞானத்தை எளிய, கண்ணாடி போன்ற தூய இடைமுகத்தில் வழங்குதல்.",
             features: [
+                { icon: "📖", title: "எளிய விளக்கமும் ஆங்கிலப் பொருளும்", desc: "ஒவ்வொரு குறளின் கீழும் நேரடியான ஆங்கிலப் பொருளுடன், மு.வ., சாலமன் பாப்பையா மற்றும் கலைஞர் உரைகளின் சாராம்சமான எளிய தமிழ் விளக்கமும் பரிமேலழகர் உரையும் வழங்கப்பட்டுள்ளன." },
                 { icon: "⚡", title: "இருமொழி உடனடித் தேடல்", desc: "குறள் எண், தமிழ் வார்த்தைகள், ஆங்கில எழுத்துப்பெயர்ப்பு மூலம் மின்னல் வேகத்தில் தேடலாம்." },
                 { icon: "🧠", title: "AI விளக்கப் பகுப்பாய்வு", desc: "ஒவ்வொரு குறளுக்கும் நவீன கால சூழல் (Context), உள்ளார்ந்த தத்துவம் (Insight) மற்றும் பயனுள்ள பாடம் (Takeaway) அறியலாம்." },
                 { icon: "🔖", title: "உள்ளமைந்த சேமிப்பகம் (Bookmarks)", desc: "பிடித்த குறள்களை உள்நுழைவு இன்றியே உங்கள் உலாவியிலேயே பாதுகாப்பாகச் சேமித்து வைத்துப் படிக்கலாம்." },
@@ -296,7 +297,7 @@ export const aboutData: Record<'ta' | 'en', AboutContent> = {
         },
         commentators: {
             title: "Distinguished Commentaries",
-            description: "Centuries of scholarship have enriched the understanding of Thirukkural, led by the classical 'Ten Commentators' (Manakudavar, Paripperumal, Kalingar, Paridhi, Parimelalhagar, and others). Our platform integrates Parimelalhagar's classical commentary alongside three acclaimed modern explanations:",
+            description: "Centuries of scholarship have enriched the understanding of Thirukkural, led by the classical 'Ten Commentators' (Manakudavar, Paripperumal, Kalingar, Paridhi, Parimelalhagar, and others). Our platform presents Parimelalhagar's classical commentary alongside a unified simple Tamil explanation synthesized from the works of Mu. Va., Solomon Pappaiah, and Kalaignar:",
             list: [
                 { name: "Dr. Mu. Varadarajan (Mu. Va.)", era: "Modern Era (20th Century)", style: "Crystal-clear, concise, and academically precise contemporary Tamil prose; author of the beloved 'Thirukkural Thelivurai' cherished by students and scholars alike.", badge: "Most Popular" },
                 { name: "Kalaignar M. Karunanidhi", era: "Modern Era (20th Century)", style: "Vibrant, poetic rhythm enriched with deep social consciousness and Dravidian eloquence through his acclaimed 'Kuraloviyam' and accessible modern commentary.", badge: "Poetic & Social" },
@@ -310,6 +311,7 @@ export const aboutData: Record<'ta' | 'en', AboutContent> = {
             title: "About This Modern Explorer",
             tagline: "Bridging ancient wisdom with modern interactive glassmorphism technology.",
             features: [
+                { icon: "📖", title: "Unified Simple Explanation", desc: "Each couplet pairs a direct English meaning right below the verse with a clear Tamil explanation synthesized from Mu. Va., Solomon Pappaiah, and Kalaignar, alongside Parimelazhagar's classical commentary." },
                 { icon: "⚡", title: "Lightning Bilingual Search", desc: "Search instantly by verse number, Tamil keywords, English transliteration, or chapter title." },
                 { icon: "🧠", title: "AI-Powered Deconstruction", desc: "Unpack each couplet with contemporary Context, philosophical Core Insight, and actionable Modern Takeaways." },
                 { icon: "🔖", title: "Zero-Friction Offline Bookmarks", desc: "Save and curate your personal collection directly in your browser without requiring any login." },

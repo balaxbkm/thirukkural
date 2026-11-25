@@ -165,22 +165,22 @@ export default function Home() {
                   key={dailyKural.number}
                   className="relative space-y-0 text-left sm:text-center animate-in fade-in duration-300 w-full sm:w-auto"
                 >
-                  {/* Big faded double quote behind the kural (desktop only) */}
+                  {/* Big faded double quote behind the kural */}
                   <span
-                    className="hidden lg:block absolute top-[60%] -translate-y-1/2 lg:-left-24 xl:-left-28 font-serif lg:text-[230px] leading-none text-[var(--theme-quote)] opacity-25 dark:opacity-20 pointer-events-none select-none -z-10 transition-all"
+                    className="block absolute top-[52%] sm:top-[58%] -translate-y-1/2 -left-3 sm:-left-12 lg:-left-24 xl:-left-28 font-serif text-[140px] sm:text-[180px] lg:text-[230px] leading-none text-[var(--theme-quote)] opacity-20 sm:opacity-25 dark:opacity-20 pointer-events-none select-none -z-10 transition-all"
                     aria-hidden="true"
                   >
                     &ldquo;
                   </span>
 
                   <p
-                    className="relative z-10 font-oi text-[13px] sm:text-[16px] md:text-[21px] lg:text-[26px] xl:text-[30px] leading-[1.6] py-1 sm:py-1.5 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm whitespace-nowrap text-left sm:text-center"
+                    className="relative z-10 font-oi text-[12px] sm:text-[15px] md:text-[20px] lg:text-[25px] xl:text-[29px] leading-[1.6] py-1 sm:py-1.5 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm whitespace-nowrap text-left sm:text-center"
                     aria-label={dailyKural.line1_ta}
                   >
                     {dailyKural.line1_ta}
                   </p>
                   <p
-                    className="relative z-10 font-oi text-[13px] sm:text-[16px] md:text-[21px] lg:text-[26px] xl:text-[30px] leading-[1.6] py-1 sm:py-1.5 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm whitespace-nowrap text-left sm:text-center"
+                    className="relative z-10 font-oi text-[12px] sm:text-[15px] md:text-[20px] lg:text-[25px] xl:text-[29px] leading-[1.6] py-1 sm:py-1.5 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm whitespace-nowrap text-left sm:text-center"
                     aria-label={dailyKural.line2_ta}
                   >
                     {dailyKural.line2_ta}
