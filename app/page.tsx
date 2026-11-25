@@ -7,6 +7,8 @@ import { useUserKuralActions } from "@/lib/hooks/useUserKuralActions";
 import { useState, useEffect, useMemo } from "react";
 import KuralCard from "@/components/KuralCard";
 import NoteModal from "@/components/NoteModal";
+import PageTitleKolam from "@/components/PageTitleKolam";
+import SectionHeader from "@/components/SectionHeader";
 import { Kural } from "@/types/thirukkural";
 import { unicodeToBamini } from "@/lib/utils/bamini";
 
@@ -132,22 +134,25 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative flex flex-col items-start sm:items-center justify-center text-left sm:text-center gap-2.5 sm:gap-8 pt-4 sm:pt-6 pb-6 sm:pb-12 md:py-16">
         {/* Chapter Badge of the Current Kural (Desktop only: placed above the Kural) */}
-        {dailyKural ? (
-          <Link
-            key={`desktop-badge-${dailyKural.number}`}
-            href={`/browse?paal=${encodeURIComponent(dailyKural.paal)}&iyal=${encodeURIComponent(dailyKural.iyal)}&adhigaram=${encodeURIComponent(dailyKural.adhigaram)}`}
-            className="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider backdrop-blur-md shadow-sm hover:scale-105 transition-all duration-300 hover:border-[var(--theme-primary)] animate-in fade-in zoom-in duration-500"
-            title={dailyKural.adhigaram}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--theme-dot)] animate-ping" />
-            {dailyKural.adhigaram}
-          </Link>
-        ) : (
-          <div className="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider backdrop-blur-md shadow-sm animate-in fade-in zoom-in duration-500">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--theme-dot)] animate-ping" />
-            {t.home.subtitle}
-          </div>
-        )}
+        <div className="hidden sm:inline-flex relative items-center justify-center">
+          <PageTitleKolam sizeClass="w-14 h-14 md:w-16 md:h-16" />
+          {dailyKural ? (
+            <Link
+              key={`desktop-badge-${dailyKural.number}`}
+              href={`/browse?paal=${encodeURIComponent(dailyKural.paal)}&iyal=${encodeURIComponent(dailyKural.iyal)}&adhigaram=${encodeURIComponent(dailyKural.adhigaram)}`}
+              className="relative z-10 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider backdrop-blur-md shadow-sm hover:scale-105 transition-all duration-300 hover:border-[var(--theme-primary)] animate-in fade-in zoom-in duration-500"
+              title={dailyKural.adhigaram}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--theme-dot)] animate-ping" />
+              {dailyKural.adhigaram}
+            </Link>
+          ) : (
+            <div className="relative z-10 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider backdrop-blur-md shadow-sm animate-in fade-in zoom-in duration-500">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--theme-dot)] animate-ping" />
+              {t.home.subtitle}
+            </div>
+          )}
+        </div>
 
         {/* Today's Kural (Daily Kural) - Positioned ABOVE the Search Bar */}
         {dailyKural && (
@@ -163,7 +168,7 @@ export default function Home() {
                 >
                   {/* Big faded double quote behind the kural */}
                   <span
-                    className="absolute -top-10 -left-4 sm:-top-16 sm:-left-8 md:-top-20 md:-left-12 font-serif text-[130px] xs:text-[150px] sm:text-[200px] md:text-[240px] lg:text-[280px] leading-none text-[var(--theme-quote)] opacity-25 dark:opacity-20 pointer-events-none select-none -z-10 transition-all"
+                    className="absolute -top-7 -left-4 sm:-top-12 sm:-left-8 md:-top-14 md:-left-12 font-serif text-[130px] xs:text-[150px] sm:text-[200px] md:text-[240px] lg:text-[280px] leading-none text-[var(--theme-quote)] opacity-25 dark:opacity-20 pointer-events-none select-none -z-10 transition-all"
                     aria-hidden="true"
                   >
                     &ldquo;
@@ -181,6 +186,14 @@ export default function Home() {
                   >
                     {unicodeToBamini(dailyKural.line2_ta)}
                   </p>
+
+                  {/* Big faded closing double quote behind the end of the kural (hidden on mobile) */}
+                  <span
+                    className="hidden sm:block absolute sm:-bottom-24 sm:-right-8 md:-bottom-28 md:-right-12 lg:-bottom-32 font-serif sm:text-[200px] md:text-[240px] lg:text-[280px] leading-none text-[var(--theme-quote)] opacity-25 dark:opacity-20 pointer-events-none select-none -z-10 transition-all"
+                    aria-hidden="true"
+                  >
+                    &rdquo;
+                  </span>
                 </div>
               </Link>
 
@@ -304,39 +317,34 @@ export default function Home() {
       {/* Recently Viewed Kurals - Only shown when history exists */}
       {isReady && recentKurals.length > 0 && (
         <section className="space-y-3 sm:space-y-6 mb-5 sm:mb-0 animate-in fade-in slide-in-from-bottom-3 duration-500">
-          <div className="flex flex-col xs:flex-row justify-between items-start xs:items-end gap-2 px-2 pt-2.5 sm:pt-0">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="p-1.5 rounded-lg bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="w-4 h-4"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                </span>
-                <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                  {t.home.recentTitle}
-                </h2>
-              </div>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-                {t.home.recentSubtitle}
-              </p>
-            </div>
-            <Link
-              href="/history"
-              className="text-sm font-semibold text-[var(--theme-primary)] hover:text-[var(--theme-primary-hover)] transition-colors flex items-center gap-1 group self-end xs:self-auto"
-            >
-              {t.home.viewAll} <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </Link>
-          </div>
+          <SectionHeader
+            className="px-2 pt-2.5 sm:pt-0"
+            icon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4 h-4"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            }
+            title={t.home.recentTitle}
+            subtitle={t.home.recentSubtitle}
+            rightSlot={
+              <Link
+                href="/history"
+                className="text-xs sm:text-sm font-semibold text-[var(--theme-primary)] hover:text-[var(--theme-primary-hover)] transition-colors flex items-center gap-1 group whitespace-nowrap"
+              >
+                {t.home.viewAll} <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </Link>
+            }
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {recentKurals.map((kural) => (
@@ -348,38 +356,33 @@ export default function Home() {
 
       {/* Featured Kurals */}
       <section className="space-y-3 sm:space-y-6">
-        <div className="flex flex-col xs:flex-row justify-between items-start xs:items-end gap-2 px-2 pt-2.5 sm:pt-0">
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-[var(--theme-badge-bg)] text-[var(--theme-primary)]">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-4 h-4"
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
-              </span>
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                {t.home.featured}
-              </h2>
-            </div>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-              {t.home.featuredSubtitle}
-            </p>
-          </div>
-          <Link
-            href="/browse"
-            className="text-sm font-semibold text-[var(--theme-primary)] hover:text-[var(--theme-primary-hover)] transition-colors flex items-center gap-1 group self-end xs:self-auto"
-          >
-            {t.home.viewAll} <span className="group-hover:translate-x-1 transition-transform">→</span>
-          </Link>
-        </div>
+        <SectionHeader
+          className="px-2 pt-2.5 sm:pt-0"
+          icon={
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-4 h-4"
+            >
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+          }
+          title={t.home.featured}
+          subtitle={t.home.featuredSubtitle}
+          rightSlot={
+            <Link
+              href="/browse"
+              className="text-xs sm:text-sm font-semibold text-[var(--theme-primary)] hover:text-[var(--theme-primary-hover)] transition-colors flex items-center gap-1 group whitespace-nowrap"
+            >
+              {t.home.viewAll} <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
+          }
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {randomKurals.length > 0 ? (

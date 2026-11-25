@@ -48,7 +48,7 @@ function generateKolams(): KolamItem[] {
 
     const placedKolams: KolamItem[] = [];
     const usedKolams = new Set<number>();
-    const MIN_DISTANCE = 16; // Minimum 16% Euclidean distance to guarantee no crowding
+    const MIN_DISTANCE = 18; // Minimum 18% Euclidean distance to prevent crowding
 
     for (const zone of shuffledZones) {
         if (placedKolams.length >= targetCount) break;
@@ -84,8 +84,8 @@ function generateKolams(): KolamItem[] {
             }
             usedKolams.add(kolamNum);
 
-            // Small, delicate size: 38px to 54px (compact, graceful watermark seals)
-            const size = Math.round(38 + Math.random() * 16);
+            // Graceful medium watermark size: 64px to 92px
+            const size = Math.round(64 + Math.random() * 28);
             const rotation = Math.round(Math.random() * 8) * 45;
             // Subtle opacity (6% to 9%)
             const opacity = Math.round((0.06 + Math.random() * 0.03) * 1000) / 1000;

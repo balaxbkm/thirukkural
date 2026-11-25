@@ -10,6 +10,7 @@ import { generateKuralExplanation, AIExplanationResponse } from "@/app/actions/g
 import { Kural } from "@/types/thirukkural";
 import { useUserKuralActions } from "@/lib/hooks/useUserKuralActions";
 import NoteModal from "@/components/NoteModal";
+import SectionHeader from "@/components/SectionHeader";
 
 export default function KuralPage({ params }: { params: Promise<{ number: string }> }) {
     const { number } = use(params);
@@ -132,9 +133,16 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
 
                     {/* Tamil Explanations */}
                     <div className="space-y-6 sm:space-y-8">
-                        <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-white/10 pb-2">
-                            {t.kural.vilakam}
-                        </h2>
+                        <SectionHeader
+                            className="border-b border-gray-200 dark:border-white/10 pb-3"
+                            icon={
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                                </svg>
+                            }
+                            title={t.kural.vilakam}
+                            subtitle={t.kural.vilakamSubtitle}
+                        />
 
                         <div className="grid grid-cols-1 gap-6 sm:gap-8">
                             {/* Mu. Varadarajan */}
@@ -194,9 +202,17 @@ export default function KuralPage({ params }: { params: Promise<{ number: string
 
                     {/* English Meaning */}
                     <div className="space-y-3 sm:space-y-4 pt-5 sm:pt-6 border-t border-gray-200 dark:border-white/10">
-                        <h2 className="text-base sm:text-lg font-semibold text-[var(--theme-primary)] flex items-center gap-2">
-                            {t.kural.englishMeaning}
-                        </h2>
+                        <SectionHeader
+                            icon={
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                                    <path d="M2 12h20" />
+                                </svg>
+                            }
+                            title={t.kural.englishMeaning}
+                            subtitle={t.kural.englishMeaningSubtitle}
+                        />
                         <p className="text-base sm:text-lg text-gray-700 dark:text-gray-200 leading-relaxed sm:leading-loose italic">
                             &ldquo;{kural.meaning_en}&rdquo;
                         </p>

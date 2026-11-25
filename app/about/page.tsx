@@ -2,6 +2,9 @@
 
 import { useLanguage } from "@/lib/context/LanguageContext";
 import { aboutData } from "@/lib/about-data";
+import PageTitle from "@/components/PageTitle";
+import SectionHeader from "@/components/SectionHeader";
+import PaalIcon from "@/components/PaalIcon";
 
 export default function AboutPage() {
     const { language } = useLanguage();
@@ -15,11 +18,12 @@ export default function AboutPage() {
                     {data.hero.badge}
                 </div>
 
-                <h1 className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight pb-1 sm:pb-2 leading-normal">
-                    {data.hero.title}
-                </h1>
+                <PageTitle
+                    title={data.hero.title}
+                    sizeClassName="text-2xl xs:text-3xl sm:text-5xl md:text-6xl"
+                />
 
-                <p className="text-slate-700 dark:text-slate-200 max-w-2xl mx-auto text-base sm:text-xl font-medium tracking-wide px-2">
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-2xl mx-auto px-2">
                     {data.hero.subtitle}
                 </p>
             </div>
@@ -31,7 +35,7 @@ export default function AboutPage() {
                         key={idx}
                         className="glass-card p-3.5 sm:p-6 text-center space-y-1 sm:space-y-1.5 border border-white/80 dark:border-white/10 hover:border-[var(--theme-badge-border)] transition-all duration-300"
                     >
-                        <div className="text-2xl xs:text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] bg-clip-text text-transparent font-mono">
+                        <div className="text-2xl xs:text-3xl sm:text-4xl font-serif font-black bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] bg-clip-text text-transparent">
                             {stat.value}
                         </div>
                         <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate">
@@ -46,12 +50,18 @@ export default function AboutPage() {
 
             {/* Introduction & Significance */}
             <section className="glass-card p-4 sm:p-8 md:p-10 space-y-4 sm:space-y-5 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-                <div className="flex items-center gap-3 border-b border-slate-200/60 dark:border-white/10 pb-4">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[var(--theme-primary)]" />
-                    <h2 className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white">
-                        {data.intro.title}
-                    </h2>
-                </div>
+                <SectionHeader
+                    className="border-b border-slate-200/60 dark:border-white/10 pb-4"
+                    alignRight="title"
+                    wrapRight
+                    icon={
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                        </svg>
+                    }
+                    title={data.intro.title}
+                    subtitle={data.intro.subtitle}
+                />
                 <div className="space-y-3 sm:space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-sm sm:text-lg">
                     {data.intro.paragraphs.map((p, idx) => (
                         <p key={idx}>{p}</p>
@@ -61,17 +71,29 @@ export default function AboutPage() {
 
             {/* Author Section: Saint Thiruvalluvar */}
             <section className="glass-card p-4 sm:p-8 md:p-10 space-y-5 sm:space-y-6 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-                <div className="flex items-center justify-between border-b border-slate-200/60 dark:border-white/10 pb-4 flex-wrap gap-2">
-                    <div className="flex items-center gap-3">
-                        <span className="w-2.5 h-2.5 rounded-full bg-[var(--theme-primary)]" />
-                        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
-                            {data.author.title} — {data.author.name}
-                        </h2>
-                    </div>
-                    <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] border border-[var(--theme-badge-border)] whitespace-nowrap shrink-0">
-                        {language === 'ta' ? 'கிமு 31 • சங்க காலம்' : 'c. 31 BCE • Sangam Era'}
-                    </span>
-                </div>
+                <SectionHeader
+                    className="border-b border-slate-200/60 dark:border-white/10 pb-4"
+                    alignRight="title"
+                    wrapRight
+                    icon={
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    }
+                    title={data.author.name}
+                    titleBadge={
+                        <span className="sm:hidden text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] border border-[var(--theme-badge-border)] whitespace-nowrap shrink-0">
+                            {language === 'ta' ? 'கி.மு 31' : '31 BCE'}
+                        </span>
+                    }
+                    subtitle={data.author.subtitle}
+                    rightSlot={
+                        <span className="hidden sm:inline-flex text-xs font-semibold px-3 py-1 rounded-full bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] border border-[var(--theme-badge-border)] whitespace-nowrap shrink-0">
+                            {language === 'ta' ? 'கி.மு 31 • சங்க காலம்' : 'c. 31 BCE • Sangam Era'}
+                        </span>
+                    }
+                />
 
                 <div className="space-y-3 text-slate-700 dark:text-slate-300 leading-relaxed text-base sm:text-lg">
                     {data.author.description.map((p, idx) => (
@@ -129,14 +151,19 @@ export default function AboutPage() {
 
             {/* Tripartite Structure (முப்பால்) */}
             <section className="space-y-6">
-                <div className="text-center space-y-2">
-                    <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                        {data.structure.title}
-                    </h2>
-                    <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto text-sm sm:text-base">
-                        {data.structure.description}
-                    </p>
-                </div>
+                <SectionHeader
+                    className="px-2"
+                    icon={
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                            <rect width="7" height="7" x="3" y="3" rx="1" />
+                            <rect width="7" height="7" x="14" y="3" rx="1" />
+                            <rect width="7" height="7" x="14" y="14" rx="1" />
+                            <rect width="7" height="7" x="3" y="14" rx="1" />
+                        </svg>
+                    }
+                    title={data.structure.title}
+                    subtitle={data.structure.description}
+                />
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {data.structure.paals.map((paal, idx) => {
@@ -175,15 +202,24 @@ export default function AboutPage() {
                                 <div className="space-y-4">
                                     <div className="flex justify-between items-start gap-2">
                                         <div>
-                                            <h3 className={`text-2xl font-black whitespace-nowrap ${colorClasses.text}`}>
-                                                {paal.title}
-                                            </h3>
-                                            <div className="text-xs text-slate-500 dark:text-slate-400 font-medium whitespace-nowrap">
+                                            <div className="flex items-center gap-2.5">
+                                                <span className={`p-1.5 rounded-lg border shrink-0 ${colorClasses.badge}`} aria-hidden="true">
+                                                    <PaalIcon paal={paal.title} className="w-4 h-4 sm:w-5 sm:h-5" />
+                                                </span>
+                                                <h3 className={`text-2xl font-black whitespace-nowrap ${colorClasses.text}`}>
+                                                    {paal.title}
+                                                </h3>
+                                            </div>
+                                            <div className="text-xs text-slate-500 dark:text-slate-400 font-medium whitespace-nowrap mt-1">
                                                 {paal.englishTitle}
                                             </div>
                                         </div>
-                                        <div className={`text-xs font-bold px-3 py-1 rounded-full border whitespace-nowrap shrink-0 ${colorClasses.badge}`}>
-                                            {paal.chapters} {language === 'ta' ? 'அதிகாரங்கள்' : 'Chapters'}
+                                        <div
+                                            className={`text-base sm:text-lg font-serif font-black whitespace-nowrap shrink-0 ${colorClasses.text}`}
+                                            title={`${paal.chapters} ${language === 'ta' ? 'அதிகாரங்கள்' : 'Chapters'}`}
+                                            aria-label={`${paal.chapters} ${language === 'ta' ? 'அதிகாரங்கள்' : 'Chapters'}`}
+                                        >
+                                            {paal.chapters}
                                         </div>
                                     </div>
 
@@ -201,7 +237,7 @@ export default function AboutPage() {
                                                 <div key={iIdx} className="text-xs bg-white/60 dark:bg-slate-900/40 p-2.5 rounded-xl border border-white/60 dark:border-white/5 space-y-0.5">
                                                     <div className="flex justify-between items-center gap-2 font-bold text-slate-900 dark:text-white">
                                                         <span>{iyal.name}</span>
-                                                        <span className={`${colorClasses.text} whitespace-nowrap shrink-0`}>{iyal.count} {language === 'ta' ? 'அதிகாரம்' : 'Ch'}</span>
+                                                        <span className={`${colorClasses.text} whitespace-nowrap shrink-0`}>{iyal.count} {language === 'ta' ? (iyal.count === 1 ? 'அதிகாரம்' : 'அதிகாரங்கள்') : 'Ch'}</span>
                                                     </div>
                                                     <div className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1">
                                                         {iyal.desc}
@@ -230,12 +266,18 @@ export default function AboutPage() {
 
             {/* Linguistic & Mathematical Marvels */}
             <section className="glass-card p-6 sm:p-10 space-y-6 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-                <div className="flex items-center gap-3 border-b border-slate-200/60 dark:border-white/10 pb-4">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[var(--theme-primary)]" />
-                    <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
-                        {data.marvels.title}
-                    </h2>
-                </div>
+                <SectionHeader
+                    className="border-b border-slate-200/60 dark:border-white/10 pb-4"
+                    alignRight="title"
+                    wrapRight
+                    icon={
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                        </svg>
+                    }
+                    title={data.marvels.title}
+                    subtitle={data.marvels.subtitle}
+                />
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {data.marvels.items.map((item, idx) => (
@@ -259,17 +301,19 @@ export default function AboutPage() {
 
             {/* Commentators Section */}
             <section className="glass-card p-6 sm:p-10 space-y-6 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-                <div className="space-y-1 border-b border-slate-200/60 dark:border-white/10 pb-4">
-                    <div className="flex items-center gap-3">
-                        <span className="w-2.5 h-2.5 rounded-full bg-[var(--theme-primary)]" />
-                        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
-                            {data.commentators.title}
-                        </h2>
-                    </div>
-                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-                        {data.commentators.description}
-                    </p>
-                </div>
+                <SectionHeader
+                    className="border-b border-slate-200/60 dark:border-white/10 pb-4"
+                    alignRight="title"
+                    wrapRight
+                    icon={
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                            <path d="M12 20h9" />
+                            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+                        </svg>
+                    }
+                    title={data.commentators.title}
+                    subtitle={data.commentators.description}
+                />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {data.commentators.list.map((c, idx) => (
@@ -298,17 +342,20 @@ export default function AboutPage() {
 
             {/* About App Features */}
             <section className="glass-card p-6 sm:p-10 space-y-6 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-                <div className="space-y-1 border-b border-slate-200/60 dark:border-white/10 pb-4">
-                    <div className="flex items-center gap-3">
-                        <span className="w-2.5 h-2.5 rounded-full bg-[var(--theme-primary)]" />
-                        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
-                            {data.app.title}
-                        </h2>
-                    </div>
-                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-                        {data.app.tagline}
-                    </p>
-                </div>
+                <SectionHeader
+                    className="border-b border-slate-200/60 dark:border-white/10 pb-4"
+                    alignRight="title"
+                    wrapRight
+                    icon={
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="16" x2="12" y2="12" />
+                            <line x1="12" y1="8" x2="12.01" y2="8" />
+                        </svg>
+                    }
+                    title={data.app.title}
+                    subtitle={data.app.tagline}
+                />
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {data.app.features.map((feat, idx) => (

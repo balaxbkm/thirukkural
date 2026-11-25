@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import KuralCard from "@/components/KuralCard";
 import CustomSelect from "@/components/CustomSelect";
+import PageTitle from "@/components/PageTitle";
 import kuralsData from "@/data/thirukkural.json";
 import { Kural } from "@/types/thirukkural";
 import { useLanguage } from "@/lib/context/LanguageContext";
@@ -100,11 +101,9 @@ function BrowseContent() {
     return (
         <div className="space-y-8 pb-12 animate-in fade-in duration-500">
             {/* Header */}
-            <div className="text-center space-y-3 sm:space-y-4">
-                <h1 className="text-2xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] pb-1 sm:pb-2 leading-normal">
-                    {t.browse.title}
-                </h1>
-                <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-sm sm:text-base px-2">
+            <div className="text-center space-y-3 sm:space-y-4 pt-2">
+                <PageTitle title={t.browse.title} />
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-2xl mx-auto px-2">
                     {t.browse.subtitle}
                 </p>
             </div>

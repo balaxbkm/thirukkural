@@ -4,6 +4,7 @@ import { useLanguage } from "@/lib/context/LanguageContext";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { unicodeToBamini, unicodeToBaminiSyllables } from "@/lib/utils/bamini";
+import PaalIcon from "@/components/PaalIcon";
 
 interface FooterProps {
     adhigaramData?: Record<string, string[]>;
@@ -109,9 +110,14 @@ export default function Footer({ adhigaramData = {} }: FooterProps) {
                         {sortedKeys.map((paal) => (
                             <div key={paal} className="min-w-[75vw] sm:min-w-[350px] lg:min-w-0 flex flex-col items-start space-y-4 snap-start lg:snap-align-none flex-shrink-0 lg:flex-shrink">
                                 <div className="flex items-center justify-between w-full border-b-2 border-[var(--theme-badge-border)] pb-2 gap-4">
-                                    <h3 className="text-lg font-bold text-gray-900 dark:text-white truncate">
-                                        {getPaalTitle(paal)}
-                                    </h3>
+                                    <div className="flex items-center gap-2 min-w-0">
+                                        <span className="p-1.5 rounded-lg bg-[var(--theme-badge-bg)] text-[var(--theme-primary)] shrink-0" aria-hidden="true">
+                                            <PaalIcon paal={paal} />
+                                        </span>
+                                        <h3 className="text-lg font-bold text-gray-900 dark:text-white truncate">
+                                            {getPaalTitle(paal)}
+                                        </h3>
+                                    </div>
                                     <Link
                                         href={`/browse?paal=${paal}`}
                                         className="text-xs font-semibold text-[var(--theme-primary)] hover:text-[var(--theme-primary-hover)] transition-colors whitespace-nowrap flex items-center gap-1 group/link"

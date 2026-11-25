@@ -56,6 +56,7 @@ export const translations = {
         },
         favorites: {
             title: "Favorite Kurals",
+            subtitle: "Your cherished collection of Kurals saved for daily reflection",
             emptyTitle: "No Favorites Yet",
             emptyMsg: "You haven't added any Kurals to your favorites yet. Click the heart icon on any Kural to save it.",
             startBrowsing: "Start Browsing",
@@ -117,7 +118,9 @@ export const translations = {
             tamil: "Tamil",
             english: "English",
             englishMeaning: "Meaning in English",
+            englishMeaningSubtitle: "Concise English rendering of the couplet's core meaning",
             vilakam: "Vilakam (Tamil Meaning)",
+            vilakamSubtitle: "Classical and contemporary Tamil commentaries by renowned scholars",
             pm: "Parimelazhagar Urai",
             mk: "Kalaignar Urai",
             mv: "Mu. Varadarajan Urai",
@@ -157,7 +160,7 @@ export const translations = {
             favorites: "விருப்பங்கள்",
             kuripugal: "குறிப்புகள்",
             bookmarks: "விருப்பங்கள்",
-            about: "பற்றி",
+            about: "அறிமுகம்",
             search: "திருக்குறளைத் தேடுக...",
             kurals: "குறள்கள்",
         },
@@ -204,7 +207,8 @@ export const translations = {
             of: "இல்"
         },
         favorites: {
-            title: "விருப்பக் குறள்கள்",
+            title: "விருப்பங்கள்",
+            subtitle: "உங்கள் மனதைக் கவர்ந்த, சேமித்து வைத்த திருக்குறள்கள்",
             emptyTitle: "விருப்பங்கள் எதுவும் இல்லை",
             emptyMsg: "நீங்கள் இன்னும் எந்தக் குறளையும் விருப்பப் பட்டியலில் சேர்க்கவில்லை. விருப்பமான குறள்களைச் சேர்க்க இதயக் குறியீட்டை அழுத்தவும்.",
             startBrowsing: "குறள்களை ஆராய்க",
@@ -220,7 +224,7 @@ export const translations = {
             viewedCount: "பார்வையிட்ட குறள்கள்"
         },
         kuripugal: {
-            title: "என் குறிப்புகள்",
+            title: "குறிப்புகள்",
             subtitle: "குறள்களுக்காக நீங்கள் எழுதிய தனிப்பட்ட சிந்தனைகளும் விளக்கங்களும்",
             emptyTitle: "குறிப்புகள் எதுவும் இல்லை",
             emptyMsg: "நீங்கள் இன்னும் எந்தக் குறளுக்கும் தனிப்பட்ட குறிப்பு எழுதவில்லை. உங்கள் சிந்தனைகளைச் சேர்க்க குறளின் குறிப்புப் பொத்தானை அழுத்தவும்.",
@@ -266,7 +270,9 @@ export const translations = {
             tamil: "தமிழ்",
             english: "ஆங்கிலம்",
             englishMeaning: "Meaning in English",
+            englishMeaningSubtitle: "குறளின் மையக் கருத்தை விளக்கும் எளிய ஆங்கிலப் பொருள்",
             vilakam: "விளக்கம் (தமிழ் பொருள்)",
+            vilakamSubtitle: "புகழ்பெற்ற உரையாசிரியர்களின் எளிய மற்றும் செவ்வியல் தமிழ் உரைகள்",
             pm: "பரிமேலழகர் உரை",
             mk: "கலைஞர் உரை",
             mv: "மு. வரதராசனார் உரை",
@@ -277,7 +283,7 @@ export const translations = {
             aiError: "விளக்கம் பெற இயலவில்லை. மீண்டும் முயற்சிக்கவும்."
         },
         about: {
-            title: "திருக்குறள் பற்றி",
+            title: "அறிமுகம்",
             description: "தமிழ் இலக்கியத்தின் தலைசிறந்த படைப்பு.",
             thiruvalluvar: "திருவள்ளுவர்",
             thiruvalluvarDesc: "திருக்குறள் திருவள்ளுவரால் இயற்றப்பட்டது. இது அறம், நீதி மற்றும் பண்புநலன்களைக் கூறும் உலகப் பொதுமறை.",

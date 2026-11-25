@@ -139,49 +139,32 @@ export default function Header() {
                         {/* Desktop Navigation Menus */}
                         <div className="hidden md:flex gap-3 items-center">
                             <nav className="flex gap-1.5 items-center">
-                                {navLinks.map((link) => {
-                                    const isActive = pathname === link.href;
-                                    const isAbout = link.href === '/about';
-                                    const badgeCount = link.badgeCount || 0;
+                                {navLinks
+                                    .filter((link) => link.href !== '/')
+                                    .map((link) => {
+                                        const isActive = pathname === link.href;
+                                        const badgeCount = link.badgeCount || 0;
 
-                                    if (isAbout) {
                                         return (
                                             <Link
                                                 key={link.href}
                                                 href={link.href}
-                                                aria-label={link.name}
-                                                title={link.name}
-                                                className={`relative flex items-center justify-center p-2.5 rounded-full transition-all duration-300 backdrop-blur-md active:scale-95 ${
+                                                className={`relative flex items-center gap-2 px-3.5 py-2 rounded-full text-sm font-semibold transition-all duration-300 backdrop-blur-md ${
                                                     isActive
                                                         ? "bg-[var(--theme-badge-bg)] text-[var(--theme-primary)] border border-[var(--theme-badge-border)] shadow-sm"
                                                         : "text-slate-600 dark:text-slate-300 hover:bg-white/70 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white border border-transparent hover:border-white/50 dark:hover:border-white/10"
                                                 }`}
                                             >
                                                 {link.icon}
+                                                <span>{link.name}</span>
+                                                {badgeCount > 0 && (
+                                                    <span className={`flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-gradient-to-r ${link.badgeColor || 'from-indigo-500 to-violet-500'} text-[10px] font-bold text-white shadow-sm ring-1 ring-white dark:ring-slate-900`}>
+                                                        {badgeCount > 9 ? '9+' : badgeCount}
+                                                    </span>
+                                                )}
                                             </Link>
                                         );
-                                    }
-
-                                    return (
-                                        <Link
-                                            key={link.href}
-                                            href={link.href}
-                                            className={`relative flex items-center gap-2 px-3.5 py-2 rounded-full text-sm font-semibold transition-all duration-300 backdrop-blur-md ${
-                                                isActive
-                                                    ? "bg-[var(--theme-badge-bg)] text-[var(--theme-primary)] border border-[var(--theme-badge-border)] shadow-sm"
-                                                    : "text-slate-600 dark:text-slate-300 hover:bg-white/70 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white border border-transparent hover:border-white/50 dark:hover:border-white/10"
-                                            }`}
-                                        >
-                                            {link.icon}
-                                            <span>{link.name}</span>
-                                            {badgeCount > 0 && (
-                                                <span className={`flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-gradient-to-r ${link.badgeColor || 'from-indigo-500 to-violet-500'} text-[10px] font-bold text-white shadow-sm ring-1 ring-white dark:ring-slate-900`}>
-                                                    {badgeCount > 9 ? '9+' : badgeCount}
-                                                </span>
-                                            )}
-                                        </Link>
-                                    );
-                                })}
+                                    })}
                             </nav>
 
                             {/* Divider */}

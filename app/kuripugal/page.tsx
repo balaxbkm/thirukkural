@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useMemo, useState, useEffect } from "react";
 import { Kural } from "@/types/thirukkural";
 import NoteModal from "@/components/NoteModal";
+import PageTitle from "@/components/PageTitle";
+import KuralCountPill from "@/components/KuralCountPill";
 
 export default function KuripugalPage() {
     const { notedKurals, getNote, isFavorite, toggleFavorite, deleteNote } = useUserKuralActions();
@@ -39,32 +41,18 @@ export default function KuripugalPage() {
         <div className="max-w-7xl mx-auto space-y-10 animate-in fade-in duration-500 pb-16">
             {/* Header */}
             <div className="text-center space-y-3 sm:space-y-4 pt-2">
-                <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm">
-                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                    </svg>
-                    {t.nav.kuripugal}
-                </div>
+                <PageTitle title={t.kuripugal.title} />
 
-                <h1 className="text-2xl xs:text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight pb-1 sm:pb-2 leading-normal">
-                    {t.kuripugal.title}
-                </h1>
-
-                <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto text-xs sm:text-base px-2">
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-2xl mx-auto px-2">
                     {t.kuripugal.subtitle}
                 </p>
-
-                <div className="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400">
-                    <span className="font-bold text-[var(--theme-badge-text)] px-2 py-0.5 rounded-md bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] font-mono">
-                        {notedItems.length}
-                    </span>{" "}
-                    {t.kuripugal.savedCount}
-                </div>
             </div>
 
             {/* Content List */}
             {notedItems.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                <div className="space-y-4">
+                    <KuralCountPill count={notedItems.length} />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     {notedItems.map((kural) => {
                         const noteText = getNote(kural.number);
                         const isFav = isFavorite(kural.number);
@@ -162,6 +150,7 @@ export default function KuripugalPage() {
                             </div>
                         );
                     })}
+                    </div>
                 </div>
             ) : (
                 <div className="flex flex-col items-center justify-center py-20 text-center space-y-6 bg-white/40 dark:bg-slate-900/40 rounded-3xl border border-dashed border-slate-300 dark:border-white/10 p-8 backdrop-blur-md max-w-xl mx-auto">

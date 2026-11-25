@@ -2,6 +2,7 @@
 
 import { useUserKuralActions } from "@/lib/hooks/useUserKuralActions";
 import KuralCard from "@/components/KuralCard";
+import PageTitle from "@/components/PageTitle";
 import kuralsData from "@/data/thirukkural.json";
 import { useLanguage } from "@/lib/context/LanguageContext";
 import Link from "next/link";
@@ -47,11 +48,9 @@ export default function HistoryPage() {
                     {t.history?.title || t.home.recentTitle}
                 </div>
 
-                <h1 className="text-2xl xs:text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight pb-1 sm:pb-2 leading-normal">
-                    {t.history?.title || t.home.recentTitle}
-                </h1>
+                <PageTitle title={t.history?.title || t.home.recentTitle} />
 
-                <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto text-xs sm:text-base px-2">
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-2xl mx-auto px-2">
                     {t.history?.subtitle || t.home.recentSubtitle}
                 </p>
 

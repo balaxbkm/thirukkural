@@ -2,6 +2,8 @@
 
 import { useUserKuralActions } from "@/lib/hooks/useUserKuralActions";
 import KuralCard from "@/components/KuralCard";
+import PageTitle from "@/components/PageTitle";
+import KuralCountPill from "@/components/KuralCountPill";
 import kuralsData from "@/data/thirukkural.json";
 import { useLanguage } from "@/lib/context/LanguageContext";
 import Link from "next/link";
@@ -30,27 +32,21 @@ export default function FavoritesPage() {
     return (
         <div className="max-w-7xl mx-auto space-y-10 animate-in fade-in duration-500 pb-16">
             <div className="text-center space-y-3 sm:space-y-4 pt-2">
-                <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold text-xs tracking-wider uppercase backdrop-blur-md shadow-sm">
-                    ❤️ {t.nav.favorites}
-                </div>
+                <PageTitle title={t.favorites.title} />
 
-                <h1 className="text-2xl xs:text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] tracking-tight pb-1 sm:pb-2 leading-normal">
-                    {t.favorites.title}
-                </h1>
-
-                <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-base">
-                    <span className="font-bold text-[var(--theme-badge-text)] px-2 py-0.5 rounded-md bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] font-mono">
-                        {favoriteList.length}
-                    </span>{" "}
-                    {t.favorites.savedCount}
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-2xl mx-auto px-2">
+                    {t.favorites.subtitle}
                 </p>
             </div>
 
             {favoriteList.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                    {favoriteList.map((kural) => (
-                        <KuralCard key={kural.number} kural={kural} showNote={false} />
-                    ))}
+                <div className="space-y-4">
+                    <KuralCountPill count={favoriteList.length} />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                        {favoriteList.map((kural) => (
+                            <KuralCard key={kural.number} kural={kural} showNote={false} />
+                        ))}
+                    </div>
                 </div>
             ) : (
                 <div className="flex flex-col items-center justify-center py-12 sm:py-20 text-center space-y-5 sm:space-y-6 bg-white/40 dark:bg-slate-900/40 rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 dark:border-white/10 p-6 sm:p-8 backdrop-blur-md max-w-xl mx-auto">
