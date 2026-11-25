@@ -7,7 +7,8 @@ import PageTitle from "@/components/PageTitle";
 import kuralsData from "@/data/thirukkural.json";
 import { Kural } from "@/types/thirukkural";
 import { useLanguage } from "@/lib/context/LanguageContext";
-const ITEMS_PER_PAGE = 12;
+const DEFAULT_ITEMS_PER_PAGE = 12;
+const DESKTOP_PER_PAGE_OPTIONS = [12, 24, 48, 96];
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { Suspense, useCallback } from "react";
@@ -32,10 +33,25 @@ function BrowseContent() {
     const selectedIyal = searchParams.get("iyal") || "";
     const selectedAdhigaram = searchParams.get("adhigaram") || "";
     const urlQuery = searchParams.get("q") || "";
+    const urlPerPage = Number(searchParams.get("perPage"));
+    const desktopPerPage = DESKTOP_PER_PAGE_OPTIONS.includes(urlPerPage) ? urlPerPage : DEFAULT_ITEMS_PER_PAGE;
     const currentPage = Number(searchParams.get("page")) || 1;
+
+    const [isDesktop, setIsDesktop] = useState(false);
+
+    useEffect(() => {
+        const media = window.matchMedia("(min-width: 768px)");
+        const update = () => setIsDesktop(media.matches);
+        update();
+        media.addEventListener("change", update);
+        return () => media.removeEventListener("change", update);
+    }, []);
+
+    const itemsPerPage = isDesktop ? desktopPerPage : DEFAULT_ITEMS_PER_PAGE;
 
     const [searchQuery, setSearchQuery] = useState(urlQuery);
     const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+    const [jumpPageInput, setJumpPageInput] = useState(String(currentPage));
 
     useEffect(() => {
         setSearchQuery(urlQuery);
@@ -63,7 +79,8 @@ function BrowseContent() {
             params.delete("page");
         }
 
-        router.push(`${pathname}?${params.toString()}`);
+        const keepScroll = updates.hasOwnProperty("page") || updates.hasOwnProperty("perPage");
+        router.push(`${pathname}?${params.toString()}`, { scroll: !keepScroll });
     }, [pathname, router, searchParams]);
 
     // Derived Lists (Dependent Options)
@@ -116,11 +133,47 @@ function BrowseContent() {
     }, [kurals, selectedPaal, selectedIyal, selectedAdhigaram, searchQuery]);
 
     // Pagination Logic
-    const totalPages = Math.ceil(filteredKurals.length / ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(filteredKurals.length / itemsPerPage);
+    const safeCurrentPage = Math.min(currentPage, Math.max(1, totalPages));
     const currentKurals = filteredKurals.slice(
-        (currentPage - 1) * ITEMS_PER_PAGE,
-        currentPage * ITEMS_PER_PAGE
+        (safeCurrentPage - 1) * itemsPerPage,
+        safeCurrentPage * itemsPerPage
     );
+
+    useEffect(() => {
+        setJumpPageInput(String(safeCurrentPage));
+    }, [safeCurrentPage]);
+
+    const goToPage = useCallback((targetPage: number) => {
+        const clamped = Math.max(1, Math.min(totalPages || 1, targetPage));
+        if (clamped === safeCurrentPage && currentPage === clamped) return;
+        updateFilters({ page: String(clamped) });
+    }, [currentPage, safeCurrentPage, totalPages, updateFilters]);
+
+    useEffect(() => {
+        if (totalPages <= 1) return;
+        const onKeyDown = (e: KeyboardEvent) => {
+            const tag = (e.target as HTMLElement)?.tagName;
+            if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+            if (e.key === "ArrowLeft" && safeCurrentPage > 1) {
+                goToPage(safeCurrentPage - 1);
+            } else if (e.key === "ArrowRight" && safeCurrentPage < totalPages) {
+                goToPage(safeCurrentPage + 1);
+            }
+        };
+        window.addEventListener("keydown", onKeyDown);
+        return () => window.removeEventListener("keydown", onKeyDown);
+    }, [safeCurrentPage, totalPages, goToPage]);
+
+    const handleJumpSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const parsed = parseInt(jumpPageInput, 10);
+        if (!Number.isNaN(parsed)) {
+            goToPage(parsed);
+        } else {
+            setJumpPageInput(String(safeCurrentPage));
+        }
+    };
 
     const handleSearchChange = (value: string) => {
         setSearchQuery(value);
@@ -275,6 +328,33 @@ function BrowseContent() {
                 <div>
                     {t.browse.showing} <span className="font-semibold text-gray-900 dark:text-white">{filteredKurals.length}</span> {t.browse.results}
                 </div>
+
+                {/* Desktop Per-Page Selector */}
+                <div className="hidden md:flex items-center gap-2">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                        {t.nav.kurals || "Kurals"} / {t.browse.page}:
+                    </span>
+                    <div className="inline-flex items-center p-1 rounded-xl border border-gray-200 dark:border-white/10 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md">
+                        {DESKTOP_PER_PAGE_OPTIONS.map((count) => {
+                            const isActive = desktopPerPage === count;
+                            return (
+                                <button
+                                    key={count}
+                                    type="button"
+                                    onClick={() => updateFilters({ perPage: count === DEFAULT_ITEMS_PER_PAGE ? null : String(count) })}
+                                    className={`px-2.5 py-1 rounded-lg text-xs font-mono font-semibold transition-all cursor-pointer ${
+                                        isActive
+                                            ? "bg-[var(--theme-primary)] text-white shadow-sm"
+                                            : "text-gray-600 dark:text-gray-300 hover:text-[var(--theme-primary)] hover:bg-white/70 dark:hover:bg-white/10"
+                                    }`}
+                                >
+                                    {count}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+
                 {hasActiveFilters && (
                     <button
                         type="button"
@@ -307,71 +387,117 @@ function BrowseContent() {
 
             {/* Pagination */}
             {totalPages > 1 && (
-                <div className="flex justify-center flex-wrap items-center gap-1.5 sm:gap-2 pt-6 sm:pt-8 border-t border-gray-200 dark:border-white/10 mt-6 sm:mt-8">
-                    <button
-                        onClick={() => updateFilters({ page: String(Math.max(1, currentPage - 1)) })}
-                        disabled={currentPage === 1}
-                        className="glass-btn px-2.5 sm:px-4 py-1.5 sm:py-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg text-xs sm:text-sm font-medium flex items-center gap-1"
-                    >
-                        <span>&larr;</span>
-                        <span className="hidden xs:inline">{t.browse.previous}</span>
-                    </button>
+                <div className="flex flex-col sm:flex-row justify-center items-center gap-3 pt-2 sm:pt-4 mt-4 sm:mt-6">
+                    <div className="glass-card min-h-[48px] sm:h-[52px] px-2.5 py-1.5 sm:px-3.5 rounded-2xl flex flex-wrap justify-center items-center gap-1 sm:gap-1.5 border border-white/80 dark:border-white/10 shadow-sm">
+                        <button
+                            type="button"
+                            onClick={() => goToPage(safeCurrentPage - 1)}
+                            disabled={safeCurrentPage === 1}
+                            aria-label={t.browse.previous}
+                            className="group px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-medium flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:bg-white/70 dark:hover:bg-white/10 hover:text-[var(--theme-primary)] disabled:opacity-40 disabled:pointer-events-none active:scale-95 transition-all cursor-pointer"
+                        >
+                            <svg className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
+                            <span className="hidden xs:inline">{t.browse.previous}</span>
+                        </button>
 
-                    {(() => {
-                        const range = [];
-                        const delta = 1; // 1 page on each side of current page for compact mobile view
+                        {(() => {
+                            const range = [];
+                            const delta = 1;
 
-                        for (let i = 1; i <= totalPages; i++) {
-                            if (
-                                i === 1 || // First Page
-                                i === totalPages || // Last Page
-                                (i >= currentPage - delta && i <= currentPage + delta) // Range around current page
-                            ) {
-                                range.push(i);
-                            }
-                        }
-
-                        // Add ellipses
-                        const rangeWithDots: (number | string)[] = [];
-                        let l: number | null = null;
-
-                        for (const i of range) {
-                            if (l) {
-                                if (i - l === 2) {
-                                    rangeWithDots.push(l + 1);
-                                } else if (i - l !== 1) {
-                                    rangeWithDots.push("...");
+                            for (let i = 1; i <= totalPages; i++) {
+                                if (
+                                    i === 1 ||
+                                    i === totalPages ||
+                                    (i >= safeCurrentPage - delta && i <= safeCurrentPage + delta)
+                                ) {
+                                    range.push(i);
                                 }
                             }
-                            rangeWithDots.push(i);
-                            l = i;
-                        }
 
-                        return rangeWithDots.map((page, index) => (
-                            <button
-                                key={index}
-                                onClick={() => typeof page === 'number' ? updateFilters({ page: String(page) }) : null}
-                                disabled={typeof page !== 'number'}
-                                className={`px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors ${page === currentPage
-                                    ? "bg-[var(--theme-primary)] text-white shadow-lg shadow-[var(--theme-glow)]"
-                                    : typeof page === 'number'
-                                        ? "glass-btn text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10"
-                                        : "cursor-default text-gray-400 px-1"
-                                    }`}
-                            >
-                                {page}
-                            </button>
-                        ));
-                    })()}
+                            const rangeWithDots: { type: "page" | "dots"; value: number; key: string }[] = [];
+                            let l: number | null = null;
 
-                    <button
-                        onClick={() => updateFilters({ page: String(Math.min(totalPages, currentPage + 1)) })}
-                        disabled={currentPage === totalPages}
-                        className="glass-btn px-2.5 sm:px-4 py-1.5 sm:py-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg text-xs sm:text-sm font-medium flex items-center gap-1"
+                            for (const i of range) {
+                                if (l) {
+                                    if (i - l === 2) {
+                                        rangeWithDots.push({ type: "page", value: l + 1, key: `p-${l + 1}` });
+                                    } else if (i - l !== 1) {
+                                        const jumpTarget = i > safeCurrentPage ? Math.min(totalPages, safeCurrentPage + 5) : Math.max(1, safeCurrentPage - 5);
+                                        rangeWithDots.push({ type: "dots", value: jumpTarget, key: `dots-${l}-${i}` });
+                                    }
+                                }
+                                rangeWithDots.push({ type: "page", value: i, key: `p-${i}` });
+                                l = i;
+                            }
+
+                            return rangeWithDots.map((item) =>
+                                item.type === "dots" ? (
+                                    <button
+                                        key={item.key}
+                                        type="button"
+                                        onClick={() => goToPage(item.value)}
+                                        title={`${t.browse.page} ${item.value}`}
+                                        className="px-2 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-gray-400 hover:text-[var(--theme-primary)] hover:bg-white/60 dark:hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
+                                    >
+                                        •••
+                                    </button>
+                                ) : (
+                                    <button
+                                        key={item.key}
+                                        type="button"
+                                        onClick={() => goToPage(item.value)}
+                                        aria-current={item.value === safeCurrentPage ? "page" : undefined}
+                                        className={`min-w-[34px] sm:min-w-[38px] px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold font-mono transition-all cursor-pointer active:scale-95 ${
+                                            item.value === safeCurrentPage
+                                                ? "bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] text-white shadow-md shadow-[var(--theme-glow)] scale-105"
+                                                : "text-gray-700 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-white/10 hover:text-[var(--theme-primary)]"
+                                        }`}
+                                    >
+                                        {item.value}
+                                    </button>
+                                )
+                            );
+                        })()}
+
+                        <button
+                            type="button"
+                            onClick={() => goToPage(safeCurrentPage + 1)}
+                            disabled={safeCurrentPage === totalPages}
+                            aria-label={t.browse.next}
+                            className="group px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-medium flex items-center gap-1 text-gray-700 dark:text-gray-200 hover:bg-white/70 dark:hover:bg-white/10 hover:text-[var(--theme-primary)] disabled:opacity-40 disabled:pointer-events-none active:scale-95 transition-all cursor-pointer"
+                        >
+                            <span className="hidden xs:inline">{t.browse.next}</span>
+                            <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    {/* Quick Jump to Page */}
+                    <form
+                        onSubmit={handleJumpSubmit}
+                        className="glass-card min-h-[48px] sm:h-[52px] px-3 py-1.5 rounded-2xl border border-white/80 dark:border-white/10 flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400 shadow-sm"
                     >
-                        <span className="hidden xs:inline">{t.browse.next}</span>
-                        <span>&rarr;</span>
-                    </button>
+                        <span>{t.browse.page}</span>
+                        <input
+                            type="number"
+                            min={1}
+                            max={totalPages}
+                            value={jumpPageInput}
+                            onChange={(e) => setJumpPageInput(e.target.value)}
+                            aria-label={t.browse.page}
+                            className="w-14 h-9 px-2 rounded-xl border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-slate-900/60 text-center font-mono font-semibold text-gray-900 dark:text-white focus:outline-none focus:border-[var(--theme-primary)]"
+                        />
+                        <span className="font-mono">/ {totalPages}</span>
+                        <button
+                            type="submit"
+                            className="h-9 px-3.5 rounded-xl bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] text-[var(--theme-badge-text)] font-semibold hover:scale-105 active:scale-95 transition-all cursor-pointer inline-flex items-center justify-center"
+                        >
+                            Go
+                        </button>
+                    </form>
                 </div>
             )}
         </div>

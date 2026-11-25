@@ -11,12 +11,13 @@ import PageTitle from "@/components/PageTitle";
 import KuralCountPill from "@/components/KuralCountPill";
 
 export default function KuripugalPage() {
-    const { notedKurals, getNote, isFavorite, toggleFavorite, deleteNote } = useUserKuralActions();
+    const { notedKurals, getNotesForKural, isFavorite, toggleFavorite, deleteNoteById } = useUserKuralActions();
     const { t } = useLanguage();
     const kurals = kuralsData as Kural[];
 
     const [mounted, setMounted] = useState(false);
     const [selectedKural, setSelectedKural] = useState<Kural | null>(null);
+    const [editingNote, setEditingNote] = useState<{ id: number; text: string } | null>(null);
     const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
 
     useEffect(() => {
@@ -32,8 +33,9 @@ export default function KuripugalPage() {
 
     if (!mounted) return null;
 
-    const handleEditNote = (kural: Kural) => {
+    const handleEditNote = (kural: Kural, id: number, text: string) => {
         setSelectedKural(kural);
+        setEditingNote({ id, text });
         setIsNoteModalOpen(true);
     };
 
@@ -54,7 +56,7 @@ export default function KuripugalPage() {
                     <KuralCountPill count={notedItems.length} />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     {notedItems.map((kural) => {
-                        const noteText = getNote(kural.number);
+                        const kuralNotes = getNotesForKural(kural.number);
                         const isFav = isFavorite(kural.number);
 
                         return (
@@ -104,32 +106,45 @@ export default function KuripugalPage() {
                                         </p>
                                     </Link>
 
-                                    {/* User Custom Note Block */}
-                                    <div className="p-4 rounded-2xl bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] space-y-2 backdrop-blur-md">
-                                        <div className="flex items-center justify-between text-xs font-bold text-[var(--theme-badge-text)] uppercase tracking-wider">
-                                            <span className="flex items-center gap-1.5">
-                                                <span>📝</span> {t.note.title}
-                                            </span>
-                                            <div className="flex items-center gap-2">
-                                                <button
-                                                    onClick={() => handleEditNote(kural)}
-                                                    className="hover:underline font-semibold text-[var(--theme-badge-text)] capitalize"
-                                                >
-                                                    {t.note.editNote}
-                                                </button>
-                                                <span>•</span>
-                                                <button
-                                                    onClick={() => deleteNote(kural.number)}
-                                                    className="hover:underline font-semibold text-rose-600 dark:text-rose-400 capitalize"
-                                                >
-                                                    {t.note.deleteNote}
-                                                </button>
-                                            </div>
-                                        </div>
+                                    {/* User Custom Notes Block */}
+                                    <div className="space-y-2.5">
+                                        {kuralNotes.map((note) => (
+                                            <div key={note.id} className="p-4 rounded-2xl bg-[var(--theme-badge-bg)] border border-[var(--theme-badge-border)] space-y-2 backdrop-blur-md">
+                                                <div className="flex items-center justify-between text-xs font-bold text-[var(--theme-badge-text)] uppercase tracking-wider">
+                                                    <span className="flex items-center gap-1.5">
+                                                        <span>📝</span> {t.note.title}
+                                                    </span>
+                                                    <div className="flex items-center gap-1">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => note.id !== undefined && handleEditNote(kural, note.id, note.text)}
+                                                            aria-label={t.note.editNote}
+                                                            title={t.note.editNote}
+                                                            className="p-1.5 rounded-lg text-[var(--theme-badge-text)] hover:bg-white/40 dark:hover:bg-white/10 transition-colors cursor-pointer"
+                                                        >
+                                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                            </svg>
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => note.id !== undefined && deleteNoteById(note.id)}
+                                                            aria-label={t.note.deleteNote}
+                                                            title={t.note.deleteNote}
+                                                            className="p-1.5 rounded-lg text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition-colors cursor-pointer"
+                                                        >
+                                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </div>
 
-                                        <p className="text-sm text-slate-800 dark:text-slate-200 leading-relaxed italic whitespace-pre-wrap">
-                                            "{noteText}"
-                                        </p>
+                                                <p className="text-sm text-slate-800 dark:text-slate-200 leading-relaxed italic whitespace-pre-wrap">
+                                                    "{note.text}"
+                                                </p>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
 
@@ -181,11 +196,14 @@ export default function KuripugalPage() {
                     onClose={() => {
                         setIsNoteModalOpen(false);
                         setSelectedKural(null);
+                        setEditingNote(null);
                     }}
                     kuralNumber={selectedKural.number}
                     adhigaram={selectedKural.adhigaram}
                     line1={selectedKural.line1_ta}
                     line2={selectedKural.line2_ta}
+                    noteId={editingNote?.id}
+                    initialText={editingNote?.text}
                 />
             )}
         </div>

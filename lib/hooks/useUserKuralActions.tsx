@@ -1,12 +1,12 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode, useCallback, useMemo } from "react";
-import { db, Favorite, Bookmark, KuralNote, requestPersistentStorage } from "@/lib/db";
+import { db, Favorite, Bookmark, KuralNoteEntry, requestPersistentStorage } from "@/lib/db";
 import { useLiveQuery } from "dexie-react-hooks";
 
 export interface FavoriteItem extends Favorite {}
 export interface BookmarkItem extends Bookmark {}
-export interface NoteItem extends KuralNote {}
+export interface NoteItem extends KuralNoteEntry {}
 
 interface KuralActionsContextType {
     // Favorites (Separately Managed)
@@ -23,15 +23,19 @@ interface KuralActionsContextType {
     isBookmarked: (kuralNumber: number) => boolean;
     clearAllBookmarks: () => Promise<void>;
 
-    // Notes (Separately Managed Kuripugal)
+    // Notes (Separately Managed Kuripugal - Multiple notes per Kural)
     notedKurals: number[];
     notesList: NoteItem[];
     notes: Record<number, string>;
     getNote: (kuralNumber: number) => string;
     getNoteItem: (kuralNumber: number) => NoteItem | undefined;
+    getNotesForKural: (kuralNumber: number) => NoteItem[];
     hasNote: (kuralNumber: number) => boolean;
     saveNote: (kuralNumber: number, text: string) => Promise<void>;
+    addNote: (kuralNumber: number, text: string) => Promise<void>;
+    updateNoteById: (id: number, text: string) => Promise<void>;
     deleteNote: (kuralNumber: number) => Promise<void>;
+    deleteNoteById: (id: number) => Promise<void>;
 
     // History (Recently Viewed)
     recentKuralNumbers: number[];
@@ -54,7 +58,7 @@ export function UserKuralActionsProvider({ children }: { children: ReactNode }) 
 
     // Live reactive query for Notes from IndexedDB (ordered newest first)
     const liveNotes = useLiveQuery(
-        () => db.notes.orderBy("updatedAt").reverse().toArray(),
+        () => db.kuralNotes.orderBy("updatedAt").reverse().toArray(),
         [],
         []
     );
@@ -117,6 +121,29 @@ export function UserKuralActionsProvider({ children }: { children: ReactNode }) 
             } catch (err) {
                 console.error("Dexie: Error migrating favorites:", err);
             }
+
+            try {
+                if (typeof window === "undefined") return;
+                const multiNoteCount = await db.kuralNotes.count();
+                if (multiNoteCount === 0) {
+                    const legacyNotes = await db.notes.toArray();
+                    if (legacyNotes.length > 0) {
+                        const entries: KuralNoteEntry[] = legacyNotes
+                            .filter((n) => n.text && n.text.trim().length > 0)
+                            .map((n) => ({
+                                kuralNumber: n.kuralNumber,
+                                text: n.text.trim(),
+                                createdAt: n.updatedAt || Date.now(),
+                                updatedAt: n.updatedAt || Date.now(),
+                            }));
+                        if (entries.length > 0) {
+                            await db.kuralNotes.bulkAdd(entries);
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error("Dexie: Error migrating notes to kuralNotes:", err);
+            }
         };
 
         migrateLegacyStorage();
@@ -177,9 +204,15 @@ export function UserKuralActionsProvider({ children }: { children: ReactNode }) 
     }, [notesList]);
 
     const notedKurals = useMemo(() => {
-        return notesList
-            .filter((n) => n.text && n.text.trim().length > 0)
-            .map((n) => n.kuralNumber);
+        const seen = new Set<number>();
+        const list: number[] = [];
+        for (const n of notesList) {
+            if (n.text && n.text.trim().length > 0 && !seen.has(n.kuralNumber)) {
+                seen.add(n.kuralNumber);
+                list.push(n.kuralNumber);
+            }
+        }
+        return list;
     }, [notesList]);
 
     const getNote = useCallback(
@@ -192,31 +225,75 @@ export function UserKuralActionsProvider({ children }: { children: ReactNode }) 
         [notesList]
     );
 
+    const getNotesForKural = useCallback(
+        (num: number) => notesList.filter((n) => n.kuralNumber === num && n.text && n.text.trim().length > 0),
+        [notesList]
+    );
+
     const hasNote = useCallback(
         (num: number) => Boolean(notesMap[num] && notesMap[num].trim().length > 0),
         [notesMap]
     );
 
-    const saveNote = useCallback(async (kuralNumber: number, text: string) => {
+    const addNote = useCallback(async (kuralNumber: number, text: string) => {
+        const trimmed = text.trim();
+        if (!trimmed) return;
+        try {
+            const now = Date.now();
+            await db.kuralNotes.add({
+                kuralNumber,
+                text: trimmed,
+                createdAt: now,
+                updatedAt: now
+            });
+        } catch (err) {
+            console.error("Dexie: Error adding note:", err);
+        }
+    }, []);
+
+    const updateNoteById = useCallback(async (id: number, text: string) => {
         const trimmed = text.trim();
         try {
             if (!trimmed) {
-                await db.notes.delete(kuralNumber);
+                await db.kuralNotes.delete(id);
             } else {
-                await db.notes.put({
-                    kuralNumber,
+                await db.kuralNotes.update(id, {
                     text: trimmed,
                     updatedAt: Date.now()
                 });
             }
         } catch (err) {
+            console.error("Dexie: Error updating note:", err);
+        }
+    }, []);
+
+    const saveNote = useCallback(async (kuralNumber: number, text: string) => {
+        const trimmed = text.trim();
+        try {
+            if (!trimmed) return;
+            const now = Date.now();
+            await db.kuralNotes.add({
+                kuralNumber,
+                text: trimmed,
+                createdAt: now,
+                updatedAt: now
+            });
+        } catch (err) {
             console.error("Dexie: Error saving note:", err);
+        }
+    }, []);
+
+    const deleteNoteById = useCallback(async (id: number) => {
+        try {
+            await db.kuralNotes.delete(id);
+        } catch (err) {
+            console.error("Dexie: Error deleting note by id:", err);
         }
     }, []);
 
     const deleteNote = useCallback(async (kuralNumber: number) => {
         try {
-            await db.notes.delete(kuralNumber);
+            await db.kuralNotes.where("kuralNumber").equals(kuralNumber).delete();
         } catch (err) {
             console.error("Dexie: Error deleting note:", err);
         }
@@ -265,9 +342,13 @@ export function UserKuralActionsProvider({ children }: { children: ReactNode }) 
                 notes: notesMap,
                 getNote,
                 getNoteItem,
+                getNotesForKural,
                 hasNote,
                 saveNote,
+                addNote,
+                updateNoteById,
                 deleteNote,
+                deleteNoteById,
 
                 // History
                 recentKuralNumbers,

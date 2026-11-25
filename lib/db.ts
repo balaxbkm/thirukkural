@@ -18,6 +18,14 @@ export interface KuralNote {
     updatedAt: number;
 }
 
+export interface KuralNoteEntry {
+    id?: number;
+    kuralNumber: number;
+    text: string;
+    createdAt: number;
+    updatedAt: number;
+}
+
 export interface ReadingHistory {
     id?: number;
     kuralNumber: number;
@@ -34,6 +42,7 @@ export class ThirukkuralDatabase extends Dexie {
     favorites!: EntityTable<Favorite, 'kuralNumber'>;
     bookmarks!: EntityTable<Bookmark, 'kuralNumber'>;
     notes!: EntityTable<KuralNote, 'kuralNumber'>;
+    kuralNotes!: EntityTable<KuralNoteEntry, 'id'>;
     history!: EntityTable<ReadingHistory, 'id'>;
     settings!: EntityTable<AppSetting, 'key'>;
 
@@ -49,6 +58,9 @@ export class ThirukkuralDatabase extends Dexie {
         });
         this.version(3).stores({
             favorites: 'kuralNumber, createdAt'
+        });
+        this.version(4).stores({
+            kuralNotes: '++id, kuralNumber, updatedAt'
         });
     }
 }

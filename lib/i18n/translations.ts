@@ -93,11 +93,12 @@ export const translations = {
             savedCount: "favorite Kurals"
         },
         note: {
-            title: "Custom Note",
+            title: "Note",
             notes: "Notes",
             addNote: "Add Note",
             editNote: "Edit Note",
             saveNote: "Save Note",
+            save: "Save",
             saving: "Saving...",
             saved: "Note saved successfully!",
             deleteNote: "Delete Note",
@@ -105,6 +106,7 @@ export const translations = {
             placeholder: "Write your personal thoughts, reflections, or interpretations on this kural...",
             characterCount: "characters",
             close: "Close",
+            cancel: "Cancel",
             lastUpdated: "Last updated",
             empty: "No personal note added yet. Click above to add your thoughts!"
         },
@@ -249,11 +251,12 @@ export const translations = {
             savedCount: "சேமிக்கப்பட்ட குறள்கள்"
         },
         note: {
-            title: "தனிப்பட்ட குறிப்பு",
+            title: "குறிப்பு",
             notes: "குறிப்புகள்",
             addNote: "குறிப்பு சேர்க்க",
             editNote: "குறிப்பைத் திருத்து",
             saveNote: "குறிப்பைச் சேமி",
+            save: "Save",
             saving: "சேமிக்கப்படுகிறது...",
             saved: "குறிப்பு சேமிக்கப்பட்டது!",
             deleteNote: "குறிப்பை நீக்கு",
@@ -261,6 +264,7 @@ export const translations = {
             placeholder: "இந்தக் குறளைப் பற்றிய உங்கள் சிந்தனைகள், கருத்துக்கள் அல்லது குறிப்புகளை இங்கே எழுதவும்...",
             characterCount: "எழுத்துக்கள்",
             close: "மூடுக",
+            cancel: "Cancel",
             lastUpdated: "கடைசியாக புதுப்பிக்கப்பட்டது",
             empty: "இதுவரை தனிப்பட்ட குறிப்பு எதுவும் சேர்க்கப்படவில்லை. குறிப்பைச் சேர்க்க மேலே கிளிக் செய்யவும்!"
         },

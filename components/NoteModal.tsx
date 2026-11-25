@@ -12,6 +12,8 @@ interface NoteModalProps {
     adhigaram?: string;
     line1?: string;
     line2?: string;
+    noteId?: number;
+    initialText?: string;
 }
 
 export default function NoteModal({
@@ -20,9 +22,11 @@ export default function NoteModal({
     kuralNumber,
     adhigaram,
     line1,
-    line2
+    line2,
+    noteId,
+    initialText = ""
 }: NoteModalProps) {
-    const { getNote, saveNote, deleteNote, hasNote } = useUserKuralActions();
+    const { addNote, updateNoteById, deleteNoteById } = useUserKuralActions();
     const { t } = useLanguage();
 
     const [mounted, setMounted] = useState(false);
@@ -31,7 +35,7 @@ export default function NoteModal({
     const [savedNotice, setSavedNotice] = useState(false);
     const [topOffset, setTopOffset] = useState<number>(0);
 
-    const exists = hasNote(kuralNumber);
+    const isEditing = noteId !== undefined;
 
     useEffect(() => {
         setMounted(true);
@@ -66,7 +70,7 @@ export default function NoteModal({
 
     useEffect(() => {
         if (isOpen) {
-            setText(getNote(kuralNumber));
+            setText(isEditing ? initialText : "");
             setSavedNotice(false);
             document.body.style.overflow = "hidden";
         } else {
@@ -75,13 +79,21 @@ export default function NoteModal({
         return () => {
             document.body.style.overflow = "";
         };
-    }, [isOpen, kuralNumber, getNote]);
+    }, [isOpen, isEditing, initialText]);
 
     if (!isOpen || !mounted) return null;
 
     const handleSave = async () => {
+        if (!text.trim() && !isEditing) {
+            onClose();
+            return;
+        }
         setIsSaving(true);
-        await saveNote(kuralNumber, text);
+        if (isEditing && noteId !== undefined) {
+            await updateNoteById(noteId, text);
+        } else {
+            await addNote(kuralNumber, text);
+        }
         setIsSaving(false);
         setSavedNotice(true);
         setTimeout(() => {
@@ -91,7 +103,9 @@ export default function NoteModal({
     };
 
     const handleDelete = async () => {
-        await deleteNote(kuralNumber);
+        if (isEditing && noteId !== undefined) {
+            await deleteNoteById(noteId);
+        }
         setText("");
         onClose();
     };
@@ -115,17 +129,9 @@ export default function NoteModal({
                             </svg>
                         </span>
                         <div>
-                            <h3 className="text-sm sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-1.5 sm:gap-2">
-                                <span>{t.note.title}</span>
-                                <span className="text-[11px] sm:text-xs px-2 py-0.5 rounded-full bg-[var(--theme-badge-bg)] text-[var(--theme-badge-text)] font-semibold border border-[var(--theme-badge-border)] font-mono">
-                                    {t.kural.number} {kuralNumber}
-                                </span>
+                            <h3 className="text-sm sm:text-lg font-bold text-slate-900 dark:text-white">
+                                {t.note.title}
                             </h3>
-                            {adhigaram && (
-                                <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">
-                                    {adhigaram}
-                                </p>
-                            )}
                         </div>
                     </div>
 
@@ -142,9 +148,20 @@ export default function NoteModal({
 
                 {/* Couplet Preview */}
                 {line1 && (
-                    <div className="p-2 sm:p-3 rounded-xl bg-white/50 dark:bg-slate-900/40 border border-white/60 dark:border-white/5 space-y-0.5 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 leading-snug">
-                        <p className="truncate sm:line-clamp-2">{line1}</p>
-                        {line2 && <p className="truncate sm:line-clamp-2 hidden xs:block">{line2}</p>}
+                    <div className="relative overflow-hidden p-2.5 sm:p-3 rounded-xl bg-white/50 dark:bg-slate-900/40 border border-white/60 dark:border-white/5 space-y-0.5 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 leading-relaxed">
+                        <span
+                            className="absolute top-1/2 -translate-y-1/2 right-3 text-4xl sm:text-5xl font-serif font-black leading-none text-gray-900 dark:text-white opacity-5 pointer-events-none select-none"
+                            aria-hidden="true"
+                        >
+                            {kuralNumber}
+                        </span>
+                        {adhigaram && (
+                            <p className="relative z-10 text-[11px] font-semibold text-[var(--theme-primary)] mb-1">
+                                {adhigaram}
+                            </p>
+                        )}
+                        <p className="relative z-10">{line1}</p>
+                        {line2 && <p className="relative z-10">{line2}</p>}
                     </div>
                 )}
 
@@ -161,8 +178,8 @@ export default function NoteModal({
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                         placeholder={t.note.placeholder}
-                        rows={3}
-                        className="w-full p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/15 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[var(--theme-primary)]/40 text-base sm:text-sm leading-relaxed transition-all resize-none shadow-inner h-20 sm:h-28"
+                        rows={9}
+                        className="w-full p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/15 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[var(--theme-primary)]/40 text-[11px] sm:text-xs leading-relaxed transition-all resize-none shadow-inner h-56 sm:h-72"
                         autoFocus
                     />
                 </div>
@@ -170,7 +187,7 @@ export default function NoteModal({
                 {/* Footer Buttons */}
                 <div className="flex items-center justify-between gap-2 pt-1 sm:pt-2">
                     <div>
-                        {exists && (
+                        {isEditing && (
                             <button
                                 type="button"
                                 onClick={handleDelete}
@@ -185,9 +202,12 @@ export default function NoteModal({
                         <button
                             type="button"
                             onClick={onClose}
-                            className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 rounded-xl transition-colors active:scale-95 cursor-pointer"
+                            className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 rounded-xl transition-colors active:scale-95 cursor-pointer"
                         >
-                            {t.note.close}
+                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                            <span>{t.note.cancel}</span>
                         </button>
 
                         <button
@@ -198,13 +218,20 @@ export default function NoteModal({
                         >
                             {savedNotice ? (
                                 <>
-                                    <span>✓</span>
+                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                                    </svg>
                                     <span>{t.note.saved}</span>
                                 </>
                             ) : isSaving ? (
                                 <span>{t.note.saving}</span>
                             ) : (
-                                <span>{t.note.saveNote}</span>
+                                <>
+                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    <span>{t.note.save}</span>
+                                </>
                             )}
                         </button>
                     </div>
