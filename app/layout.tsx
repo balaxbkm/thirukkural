@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeColorProvider } from "@/lib/context/ThemeColorContext";
 import KolamBackground from "@/components/KolamBackground";
+import { getSiteUrl } from "@/lib/seo";
 
 
 const outfit = Outfit({
@@ -30,9 +31,68 @@ const oi = Oi({
   display: "swap",
 });
 
+const siteUrl = getSiteUrl();
+
 export const metadata: Metadata = {
-  title: "Thirukkural - Timeless Wisdom",
-  description: "Explore the timeless wisdom of Thirukkural with a modern glassmorphism design.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "திருக்குறள் - Thirukkural | Timeless Wisdom",
+    template: "%s | திருக்குறள் - Thirukkural",
+  },
+  description:
+    "Explore all 1,330 Thirukkural couplets by Saint Thiruvalluvar with clear Tamil explanations, Parimelazhagar commentary, English meanings, instant bilingual search, and offline notes.",
+  keywords: [
+    "Thirukkural",
+    "திருக்குறள்",
+    "Thiruvalluvar",
+    "திருவள்ளுவர்",
+    "Kural",
+    "Tamil Literature",
+    "Parimelazhagar",
+    "பரிமேலழகர்",
+    "Aram Porul Inbam",
+    "திருக்குறள் விளக்கம்",
+  ],
+  authors: [{ name: "Thiruvalluvar" }],
+  creator: "Ansverse",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "ta_IN",
+    alternateLocale: ["en_US"],
+    url: siteUrl,
+    siteName: "திருக்குறள் - Thirukkural",
+    title: "திருக்குறள் - Thirukkural | Timeless Wisdom",
+    description:
+      "Explore all 1,330 Thirukkural couplets with clear Tamil explanations, Parimelazhagar commentary, English meanings, and offline personal notes.",
+    images: [
+      {
+        url: "/valluvar-logo-v2.jpg",
+        width: 512,
+        height: 512,
+        alt: "திருக்குறள் - Saint Thiruvalluvar",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "திருக்குறள் - Thirukkural | Timeless Wisdom",
+    description:
+      "Explore all 1,330 Thirukkural couplets with clear Tamil explanations, Parimelazhagar commentary, and English meanings.",
+    images: ["/valluvar-logo-v2.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+    },
+  },
   applicationName: "திருக்குறள்",
   appleWebApp: {
     capable: true,
@@ -109,6 +169,25 @@ export default async function RootLayout({
                 }
               } catch (e) {}
             `,
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "திருக்குறள் - Thirukkural",
+              url: siteUrl,
+              description:
+                "Explore all 1,330 Thirukkural couplets with clear Tamil explanations, Parimelazhagar commentary, and English meanings.",
+              inLanguage: ["ta", "en"],
+              potentialAction: {
+                "@type": "SearchAction",
+                target: `${siteUrl}/browse?q={search_term_string}`,
+                "query-input": "required name=search_term_string",
+              },
+            }),
           }}
         />
       </head>

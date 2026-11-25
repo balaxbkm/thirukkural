@@ -33,11 +33,21 @@ function BrowseContent() {
     // URL State
     const urlPaal = searchParams.get("paal") || "";
     const urlIyal = searchParams.get("iyal") || "";
-    const selectedAdhigaram = searchParams.get("adhigaram") || "";
+    const urlAdhigaram = searchParams.get("adhigaram") || "";
+
+    const [adhigaramPaalHint, adhigaramName] = urlAdhigaram.includes("::")
+        ? urlAdhigaram.split("::", 2)
+        : ["", urlAdhigaram];
 
     const matchedAdhigaramKural = useMemo(
-        () => (selectedAdhigaram ? kurals.find((k) => k.adhigaram === selectedAdhigaram) : undefined),
-        [kurals, selectedAdhigaram]
+        () => {
+            if (!adhigaramName) return undefined;
+            const paalFilter = urlPaal || adhigaramPaalHint;
+            return kurals.find(
+                (k) => k.adhigaram === adhigaramName && (!paalFilter || k.paal === paalFilter)
+            );
+        },
+        [kurals, adhigaramName, urlPaal, adhigaramPaalHint]
     );
 
     const matchedIyalKural = useMemo(
@@ -45,8 +55,9 @@ function BrowseContent() {
         [kurals, urlIyal]
     );
 
-    const selectedPaal = urlPaal || matchedAdhigaramKural?.paal || matchedIyalKural?.paal || "";
+    const selectedPaal = urlPaal || adhigaramPaalHint || matchedAdhigaramKural?.paal || matchedIyalKural?.paal || "";
     const selectedIyal = urlIyal || matchedAdhigaramKural?.iyal || "";
+    const selectedAdhigaram = adhigaramName;
     const urlQuery = searchParams.get("q") || "";
     const urlPerPage = Number(searchParams.get("perPage"));
     const desktopPerPage = DESKTOP_PER_PAGE_OPTIONS.includes(urlPerPage) ? urlPerPage : DEFAULT_ITEMS_PER_PAGE;
@@ -109,14 +120,36 @@ function BrowseContent() {
         let filtered = kurals;
         if (selectedPaal) filtered = filtered.filter(k => k.paal === selectedPaal);
         if (selectedIyal) filtered = filtered.filter(k => k.iyal === selectedIyal);
-        const unique = Array.from(new Set(filtered.map((k) => k.adhigaram)));
 
-        return unique.map(adh => ({
-            value: adh,
-            label: adh,
-            searchKey: (adhigaramTitles[adh] || "") + " " + (adhigaramTransliterations[adh] || "")
-        }));
+        const seen = new Map<string, { paal: string; iyal: string; adhigaram: string }>();
+        for (const k of filtered) {
+            const key = `${k.paal}::${k.iyal}::${k.adhigaram}`;
+            if (!seen.has(key)) {
+                seen.set(key, { paal: k.paal, iyal: k.iyal, adhigaram: k.adhigaram });
+            }
+        }
+
+        const nameCounts = new Map<string, number>();
+        for (const item of seen.values()) {
+            nameCounts.set(item.adhigaram, (nameCounts.get(item.adhigaram) || 0) + 1);
+        }
+
+        return Array.from(seen.values()).map((item) => {
+            const isDuplicateName = (nameCounts.get(item.adhigaram) || 0) > 1;
+            return {
+                value: isDuplicateName ? `${item.paal}::${item.adhigaram}` : item.adhigaram,
+                label: isDuplicateName ? `${item.adhigaram} (${item.iyal})` : item.adhigaram,
+                searchKey: (adhigaramTitles[item.adhigaram] || "") + " " + (adhigaramTransliterations[item.adhigaram] || "") + " " + item.iyal
+            };
+        });
     }, [kurals, selectedPaal, selectedIyal]);
+
+    const adhigaramSelectValue = useMemo(() => {
+        if (!selectedAdhigaram) return "";
+        const composite = `${selectedPaal}::${selectedAdhigaram}`;
+        if (adhigarams.some((a) => a.value === composite)) return composite;
+        return selectedAdhigaram;
+    }, [adhigarams, selectedAdhigaram, selectedPaal]);
 
     // Filter Logic
     const filteredKurals = useMemo(() => {
@@ -322,9 +355,17 @@ function BrowseContent() {
 
                     <CustomSelect
                         label={t.browse.adhigaram}
-                        value={selectedAdhigaram}
+                        value={adhigaramSelectValue}
                         options={adhigarams}
-                        onChange={(val) => updateFilters({ adhigaram: val })}
+                        onChange={(val) => {
+                            if (val.includes("::")) {
+                                const [p, adh] = val.split("::", 2);
+                                const match = kurals.find((k) => k.paal === p && k.adhigaram === adh);
+                                updateFilters({ paal: p, iyal: match?.iyal || null, adhigaram: val });
+                            } else {
+                                updateFilters({ adhigaram: val });
+                            }
+                        }}
                         placeholder={t.browse.allAdhigaram}
                         icon={
                             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
