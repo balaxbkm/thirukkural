@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit, Mukta_Malar } from "next/font/google";
+import { Outfit, Mukta_Malar, Oi } from "next/font/google";
 import "./globals.css";
 import { UserKuralActionsProvider } from "@/lib/hooks/useUserKuralActions";
 import { LanguageProvider } from "@/lib/context/LanguageContext";
@@ -20,6 +20,13 @@ const muktaMalar = Mukta_Malar({
   subsets: ["tamil", "latin"],
   weight: ["200", "300", "400", "500", "600", "700", "800"],
   variable: "--font-mukta",
+  display: "swap",
+});
+
+const oi = Oi({
+  subsets: ["tamil", "latin"],
+  weight: "400",
+  variable: "--font-oi",
   display: "swap",
 });
 
@@ -64,7 +71,7 @@ export default async function RootLayout({
   const adhigaramData = await getPaalAdhigarams();
 
   return (
-    <html lang="ta" className={`scroll-smooth ${outfit.variable} ${muktaMalar.variable}`} suppressHydrationWarning>
+    <html lang="ta" className={`scroll-smooth ${outfit.variable} ${muktaMalar.variable} ${oi.variable}`} suppressHydrationWarning>
       <head>
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />

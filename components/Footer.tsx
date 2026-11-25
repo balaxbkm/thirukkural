@@ -3,7 +3,6 @@
 import { useLanguage } from "@/lib/context/LanguageContext";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { unicodeToBamini, unicodeToBaminiSyllables } from "@/lib/utils/bamini";
 import PaalIcon from "@/components/PaalIcon";
 
 interface FooterProps {
@@ -87,17 +86,9 @@ export default function Footer({ adhigaramData = {} }: FooterProps) {
                                 <img src="/valluvar-logo-v2.jpg" alt="Thiruvalluvar Logo" className="w-full h-full object-cover" />
                             </div>
                             <span
-                                className="inline-flex items-center gap-[0.5px] sm:gap-[1px] font-bamini text-[24px] sm:text-[32px] tracking-normal leading-none text-slate-900 dark:text-white pr-2 sm:pr-3 overflow-visible"
-                                aria-label="திருக்குறள்"
+                                className="inline-flex items-center font-mukta font-extrabold text-[17px] sm:text-[21px] tracking-normal leading-none text-[var(--theme-hero-from)] pr-2 sm:pr-3 overflow-visible"
                             >
-                                {unicodeToBaminiSyllables('திருக்குறள்').map((syl, i, arr) => (
-                                    <span
-                                        key={i}
-                                        className={`inline-block ${i === arr.length - 1 ? 'pr-2' : ''}`}
-                                    >
-                                        {syl}
-                                    </span>
-                                ))}
+                                திருக்குறள்
                             </span>
                         </div>
                         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed text-left">
@@ -174,7 +165,7 @@ export default function Footer({ adhigaramData = {} }: FooterProps) {
                     </div>
 
                     {/* Site Link - Center */}
-                    <div className="flex justify-center">
+                    <div className="flex flex-col items-center gap-1.5 text-center">
                         <a
                             href="https://ansverse.xyz"
                             target="_blank"
@@ -183,6 +174,44 @@ export default function Footer({ adhigaramData = {} }: FooterProps) {
                         >
                             ansverse.xyz
                         </a>
+                        <p className="text-[10px] text-gray-400 dark:text-gray-500 leading-relaxed">
+                            Kolam icons made by{" "}
+                            <a
+                                href="https://www.flaticon.com/authors/amoghdesign"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline hover:text-[var(--theme-primary)] transition-colors"
+                            >
+                                amoghdesign
+                            </a>
+                            {", "}
+                            <a
+                                href="https://www.flaticon.com/authors/magnific"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline hover:text-[var(--theme-primary)] transition-colors"
+                            >
+                                Magnific
+                            </a>
+                            {" & "}
+                            <a
+                                href="https://www.flaticon.com/authors/metami-septiana"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline hover:text-[var(--theme-primary)] transition-colors"
+                            >
+                                Metami septiana
+                            </a>
+                            {" from "}
+                            <a
+                                href="https://www.flaticon.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline hover:text-[var(--theme-primary)] transition-colors"
+                            >
+                                www.flaticon.com
+                            </a>
+                        </p>
                     </div>
 
                     {/* Made With - Right */}

@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useLanguage } from "@/lib/context/LanguageContext";
 import { useUserKuralActions } from "@/lib/hooks/useUserKuralActions";
-import { unicodeToBamini, unicodeToBaminiSyllables } from "@/lib/utils/bamini";
 import ThemeSelector from "@/components/ThemeSelector";
 
 export default function Header() {
@@ -109,30 +108,14 @@ export default function Header() {
                                 />
                             </div>
                             <span
-                                className="hidden sm:inline-flex items-center gap-[1px] font-bamini text-[28px] sm:text-[32px] tracking-normal leading-none text-slate-900 dark:text-white pr-3 overflow-visible"
-                                aria-label="திருக்குறள்"
+                                className="hidden sm:inline-flex items-center font-mukta font-extrabold text-[18px] sm:text-[21px] tracking-normal leading-none text-[var(--theme-hero-from)] pr-2 overflow-visible"
                             >
-                                {unicodeToBaminiSyllables('திருக்குறள்').map((syl, i, arr) => (
-                                    <span
-                                        key={i}
-                                        className={`inline-block ${i === arr.length - 1 ? 'pr-2' : ''}`}
-                                    >
-                                        {syl}
-                                    </span>
-                                ))}
+                                திருக்குறள்
                             </span>
                             <span
-                                className="sm:hidden inline-flex items-center gap-[0.5px] font-bamini text-[23px] tracking-normal leading-none text-slate-900 dark:text-white pr-1 overflow-visible"
-                                aria-label="திருக்குறள்"
+                                className="sm:hidden inline-flex items-center font-mukta font-extrabold text-[15px] tracking-normal leading-none text-[var(--theme-hero-from)] pr-1 overflow-visible"
                             >
-                                {unicodeToBaminiSyllables('திருக்குறள்').map((syl, i, arr) => (
-                                    <span
-                                        key={i}
-                                        className={`inline-block ${i === arr.length - 1 ? 'pr-1' : ''}`}
-                                    >
-                                        {syl}
-                                    </span>
-                                ))}
+                                திருக்குறள்
                             </span>
                         </Link>
 
@@ -225,17 +208,9 @@ export default function Header() {
                                     />
                                 </div>
                                 <span
-                                    className="inline-flex items-center gap-[0.5px] font-bamini text-[20px] tracking-normal leading-none text-slate-900 dark:text-white overflow-visible"
-                                    aria-label="திருக்குறள்"
+                                    className="inline-flex items-center font-mukta font-extrabold text-[14px] tracking-normal leading-none text-[var(--theme-hero-from)] overflow-visible"
                                 >
-                                    {unicodeToBaminiSyllables('திருக்குறள்').map((syl, i, arr) => (
-                                        <span
-                                            key={i}
-                                            className={`inline-block ${i === arr.length - 1 ? 'pr-1' : ''}`}
-                                        >
-                                            {syl}
-                                        </span>
-                                    ))}
+                                    திருக்குறள்
                                 </span>
                             </div>
                             <button

@@ -10,7 +10,6 @@ import NoteModal from "@/components/NoteModal";
 import PageTitleKolam from "@/components/PageTitleKolam";
 import SectionHeader from "@/components/SectionHeader";
 import { Kural } from "@/types/thirukkural";
-import { unicodeToBamini } from "@/lib/utils/bamini";
 
 export default function Home() {
   const { t } = useLanguage();
@@ -164,32 +163,32 @@ export default function Home() {
               >
                 <div
                   key={dailyKural.number}
-                  className="relative space-y-0.5 sm:space-y-0 text-left sm:text-center animate-in fade-in duration-300 w-full sm:w-auto"
+                  className="relative space-y-0 text-left sm:text-center animate-in fade-in duration-300 w-full sm:w-auto"
                 >
-                  {/* Big faded double quote behind the kural */}
+                  {/* Big faded double quote behind the kural (desktop only) */}
                   <span
-                    className="absolute -top-7 -left-4 sm:-top-12 sm:-left-8 md:-top-14 md:-left-12 font-serif text-[130px] xs:text-[150px] sm:text-[200px] md:text-[240px] lg:text-[280px] leading-none text-[var(--theme-quote)] opacity-25 dark:opacity-20 pointer-events-none select-none -z-10 transition-all"
+                    className="hidden lg:block absolute top-[60%] -translate-y-1/2 lg:-left-24 xl:-left-28 font-serif lg:text-[230px] leading-none text-[var(--theme-quote)] opacity-25 dark:opacity-20 pointer-events-none select-none -z-10 transition-all"
                     aria-hidden="true"
                   >
                     &ldquo;
                   </span>
 
                   <p
-                    className="relative z-10 font-bamini text-[22px] sm:text-[30px] md:text-[40px] lg:text-[48px] xl:text-[52px] leading-[1.25] sm:leading-snug pb-0 sm:pb-1 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm whitespace-nowrap text-left sm:text-center"
+                    className="relative z-10 font-oi text-[13px] sm:text-[16px] md:text-[21px] lg:text-[26px] xl:text-[30px] leading-[1.6] py-1 sm:py-1.5 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm whitespace-nowrap text-left sm:text-center"
                     aria-label={dailyKural.line1_ta}
                   >
-                    {unicodeToBamini(dailyKural.line1_ta)}
+                    {dailyKural.line1_ta}
                   </p>
                   <p
-                    className="relative z-10 font-bamini text-[22px] sm:text-[30px] md:text-[40px] lg:text-[48px] xl:text-[52px] leading-[1.25] sm:leading-snug pb-0 sm:pb-1 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm whitespace-nowrap text-left sm:text-center"
+                    className="relative z-10 font-oi text-[13px] sm:text-[16px] md:text-[21px] lg:text-[26px] xl:text-[30px] leading-[1.6] py-1 sm:py-1.5 bg-gradient-to-r from-[var(--theme-hero-from)] via-[var(--theme-hero-via)] to-[var(--theme-hero-to)] bg-clip-text text-transparent drop-shadow-sm whitespace-nowrap text-left sm:text-center"
                     aria-label={dailyKural.line2_ta}
                   >
-                    {unicodeToBamini(dailyKural.line2_ta)}
+                    {dailyKural.line2_ta}
                   </p>
 
-                  {/* Big faded closing double quote behind the end of the kural (hidden on mobile) */}
+                  {/* Big faded closing double quote behind the end of the kural (desktop only) */}
                   <span
-                    className="hidden sm:block absolute sm:-bottom-24 sm:-right-8 md:-bottom-28 md:-right-12 lg:-bottom-32 font-serif sm:text-[200px] md:text-[240px] lg:text-[280px] leading-none text-[var(--theme-quote)] opacity-25 dark:opacity-20 pointer-events-none select-none -z-10 transition-all"
+                    className="hidden lg:block absolute top-[60%] -translate-y-1/2 lg:-right-24 xl:-right-28 font-serif lg:text-[230px] leading-none text-[var(--theme-quote)] opacity-25 dark:opacity-20 pointer-events-none select-none -z-10 transition-all"
                     aria-hidden="true"
                   >
                     &rdquo;

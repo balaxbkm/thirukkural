@@ -376,6 +376,103 @@ export default function AboutPage() {
                     ))}
                 </div>
             </section>
+
+            {/* Credits & Attributions */}
+            <section className="glass-card p-6 sm:p-10 space-y-6 border border-white/80 dark:border-white/10 shadow-[0_16px_40px_rgba(31,38,135,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+                <SectionHeader
+                    className="border-b border-slate-200/60 dark:border-white/10 pb-4"
+                    alignRight="title"
+                    wrapRight
+                    icon={
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                    }
+                    title={language === 'ta' ? 'நன்றி மற்றும் உரிமங்கள்' : 'Credits & Attributions'}
+                    subtitle={language === 'ta'
+                        ? 'இச்செயலியில் பயன்படுத்தப்பட்டுள்ள தரவுகள், படங்கள் மற்றும் எழுத்துருக்களுக்கான உரிம விவரங்கள்'
+                        : 'Licensing and attribution details for datasets, icons, fonts, and media used in this app'}
+                />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+                    <div className="p-4 sm:p-5 rounded-2xl bg-white/45 dark:bg-slate-900/40 border border-white/70 dark:border-white/10 space-y-1.5">
+                        <div className="font-bold text-slate-900 dark:text-white">
+                            {language === 'ta' ? 'திருக்குறள் தரவுத்தொகுப்பு' : 'Thirukkural Dataset'}
+                        </div>
+                        <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            {language === 'ta'
+                                ? 'தரவுகள் tk120404/thirukkural களஞ்சியத்திலிருந்து Apache 2.0 உரிமத்தின் கீழ் பெறப்பட்டவை.'
+                                : 'Sourced from the tk120404/thirukkural repository under the Apache License 2.0.'}
+                        </p>
+                        <a
+                            href="https://github.com/tk120404/thirukkural"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block text-[var(--theme-primary)] hover:underline font-medium"
+                        >
+                            github.com/tk120404/thirukkural
+                        </a>
+                    </div>
+
+                    <div className="p-4 sm:p-5 rounded-2xl bg-white/45 dark:bg-slate-900/40 border border-white/70 dark:border-white/10 space-y-1.5">
+                        <div className="font-bold text-slate-900 dark:text-white">
+                            {language === 'ta' ? 'கோலம் சின்னங்கள்' : 'Kolam Icons'}
+                        </div>
+                        <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            {language === 'ta' ? (
+                                <>
+                                    பின்னணி மற்றும் தலைப்புக் கோல வடிவங்கள்{' '}
+                                    <a href="https://www.flaticon.com/authors/amoghdesign" target="_blank" rel="noopener noreferrer" className="text-[var(--theme-primary)] hover:underline font-medium">amoghdesign</a>,{' '}
+                                    <a href="https://www.flaticon.com/authors/magnific" target="_blank" rel="noopener noreferrer" className="text-[var(--theme-primary)] hover:underline font-medium">Magnific</a>, மற்றும்{' '}
+                                    <a href="https://www.flaticon.com/authors/metami-septiana" target="_blank" rel="noopener noreferrer" className="text-[var(--theme-primary)] hover:underline font-medium">Metami septiana</a>{' '}
+                                    ஆகியோரால் உருவாக்கப்பட்டு{' '}
+                                    <a href="https://www.flaticon.com" target="_blank" rel="noopener noreferrer" className="text-[var(--theme-primary)] hover:underline font-medium">www.flaticon.com</a>{' '}
+                                    தளத்திலிருந்து பெறப்பட்டவை.
+                                </>
+                            ) : (
+                                <>
+                                    Kolam icons made by{' '}
+                                    <a href="https://www.flaticon.com/authors/amoghdesign" target="_blank" rel="noopener noreferrer" className="text-[var(--theme-primary)] hover:underline font-medium">amoghdesign</a>,{' '}
+                                    <a href="https://www.flaticon.com/authors/magnific" target="_blank" rel="noopener noreferrer" className="text-[var(--theme-primary)] hover:underline font-medium">Magnific</a>, and{' '}
+                                    <a href="https://www.flaticon.com/authors/metami-septiana" target="_blank" rel="noopener noreferrer" className="text-[var(--theme-primary)] hover:underline font-medium">Metami septiana</a>{' '}
+                                    from{' '}
+                                    <a href="https://www.flaticon.com" target="_blank" rel="noopener noreferrer" className="text-[var(--theme-primary)] hover:underline font-medium">www.flaticon.com</a>.
+                                </>
+                            )}
+                        </p>
+                    </div>
+
+                    <div className="p-4 sm:p-5 rounded-2xl bg-white/45 dark:bg-slate-900/40 border border-white/70 dark:border-white/10 space-y-1.5">
+                        <div className="font-bold text-slate-900 dark:text-white">
+                            {language === 'ta' ? 'எழுத்துருக்கள்' : 'Typography'}
+                        </div>
+                        <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            {language === 'ta'
+                                ? 'தமிழ் மற்றும் ஆங்கில எழுத்துருக்களுக்கு Google Fonts (Oi, Mukta Malar மற்றும் Outfit) SIL Open Font License (OFL) உரிமத்தின் கீழ் பயன்படுத்தப்படுகின்றன.'
+                                : 'Tamil and English typography uses Google Fonts (Oi, Mukta Malar, and Outfit) under the SIL Open Font License (OFL).'}
+                        </p>
+                        <a
+                            href="https://fonts.google.com/specimen/Mukta+Malar"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block text-[var(--theme-primary)] hover:underline font-medium"
+                        >
+                            fonts.google.com
+                        </a>
+                    </div>
+
+                    <div className="p-4 sm:p-5 rounded-2xl bg-white/45 dark:bg-slate-900/40 border border-white/70 dark:border-white/10 space-y-1.5">
+                        <div className="font-bold text-slate-900 dark:text-white">
+                            {language === 'ta' ? 'சின்னம் மற்றும் AI விளக்கங்கள்' : 'App Logo & AI Explanations'}
+                        </div>
+                        <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            {language === 'ta'
+                                ? 'திருவள்ளுவர் சின்னம் மற்றும் குறள் விளக்கங்கள் Google Gemini AI உதவியுடன் உருவாக்கப்பட்டவை.'
+                                : 'Main Thiruvalluvar emblem and contextual Kural explanations generated with Google Gemini AI.'}
+                        </p>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 }
